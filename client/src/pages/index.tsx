@@ -16,7 +16,7 @@ const IndexPage = () => {
   return (
     <Router>
       <Home path="/" />
-      <Auth path="/auth" />
+      <Auth path="/auth"/>
       <Profile path="/profile"/>
     </Router>
   );

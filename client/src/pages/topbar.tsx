@@ -55,7 +55,7 @@ const TopBar = () => {
                     <Link to="/" style={{textDecoration: "none", color: "white"}}>TL;DR Websites</Link>
                     </div>
                 <div style={button}>
-                    <Link to="/auth" style={{textDecoration:'none'}}> Log Out</Link>
+                    <Link to="/auth?signup=false" style={{textDecoration:'none'}}> Log Out</Link>
                     </div>
                 <div style={{float: 'right', marginRight: '2%', marginTop: '0.25%', cursor: 'pointer'}}>
                     <Link to="/profile"><img src={imgURL} style={profPic}/></Link>
