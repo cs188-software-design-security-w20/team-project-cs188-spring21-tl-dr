@@ -1,6 +1,6 @@
 branch-defaults:
   main:
-    environment: Backend-env
+    environment: main
 global:
   application_name: backend
   branch: null
