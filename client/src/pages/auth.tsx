@@ -25,9 +25,14 @@ const parseURLParams = function (params?: string): string[] | null {
     return input
 }
 
-class Auth extends React.Component<ISignupPageProps, {showSignUp: boolean}> {
+class Auth extends React.Component<ISignupPageProps> {
     constructor(props) {
         super(props);
+    }
+
+    render()
+    {
+        console.log(this.props.location?.search)
         const params = parseURLParams(this.props.location?.search);
         let isLogin = true;
         params?.forEach((element: string) => {
@@ -36,16 +41,10 @@ class Auth extends React.Component<ISignupPageProps, {showSignUp: boolean}> {
                 isLogin = false;
             }
         })
-        console.log(isLogin)
-        this.state={showSignUp: !isLogin}
-        
-    }
 
-    render()
-    {
         return (
             <div>
-                {this.state.showSignUp ? <div>
+                {!isLogin ? <div>
                     <div style={{display: "flex", justifyContent: "center", alignItems:"center", marginTop: 150, fontFamily: "Rhodium Libre", color: "#C4C4C4", marginLeft: 400}}>TL;DR Websites</div>
                         <div style={{display: "flex", justifyContent: "center", alignItems:"center"}}>
                             <div style={{boxShadow: "5px 5px 5px 5px #C4C4C4", width: 500, padding: "30px 50px 30px 50px", borderRadius: 25}}>
@@ -90,7 +89,9 @@ class Auth extends React.Component<ISignupPageProps, {showSignUp: boolean}> {
                                 outline: 'none' }}
                                 />
                                 <div style={{display: "flex", alignItems:"center", marginTop: 50}}>
-                                    <div style={{textDecoration: "underline", color: "black", marginRight: 180, cursor: "pointer", fontFamily: "Open Sans" }}  onClick={()=> {this.setState({showSignUp: false})}}>Already Have an Account?</div>
+                                    <div style={{textDecoration: "underline", color: "black", marginRight: 180, cursor: "pointer", fontFamily: "Open Sans" }}>
+                                        <Link to ="/auth?signup=false" style={{color: "black"}}>Already Have an Account?</Link>
+                                    </div>
                                     <div style={button}><Link to="/" style={{textDecoration: "none", color: "white"}}>Enter</Link></div>
                                 </div>
                             </div>
@@ -129,7 +130,9 @@ class Auth extends React.Component<ISignupPageProps, {showSignUp: boolean}> {
                                 outline: 'none' }}
                                 />
                                 <div style={{display: "flex", alignItems:"center", marginTop: 50}}>
-                                    <div style={{textDecoration: "underline", color: "black", marginRight: 180, cursor: "pointer", fontFamily: "Open Sans" }} onClick={()=> {this.setState({showSignUp: true})}}>Don't Have an Account?</div>
+                                    <div style={{textDecoration: "underline", color: "black", marginRight: 180, cursor: "pointer", fontFamily: "Open Sans" }}>
+                                        <Link to ="/auth?signup=true" style={{color: "black"}}>Don't Have an Account?</Link>
+                                    </div>
                                     <div style={button}><Link to="/" style={{textDecoration: "none", color: "white"}}>Enter</Link></div>
                                 </div>
                             </div>
