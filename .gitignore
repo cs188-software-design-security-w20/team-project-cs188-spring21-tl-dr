@@ -1,5 +1,8 @@
 node_modules/
 
+#AWS Key files
+*.pem
+
 # Elastic Beanstalk Files
 # .elasticbeanstalk/*
 # !.elasticbeanstalk/*.cfg.yml
