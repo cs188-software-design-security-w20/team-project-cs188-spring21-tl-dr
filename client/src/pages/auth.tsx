@@ -1,6 +1,5 @@
 import { Link } from "gatsby";
 import * as React from "react";
-import { parse } from "../../public/render-page";
 import {ISignupPageProps} from './index';
 
 
