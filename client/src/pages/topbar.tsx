@@ -52,7 +52,7 @@ const TopBar = () => {
         <div style={topbar}>
             <div className="flex" style={{display: "flex-row"}}>
                 <div style={{fontFamily:"Rhodium Libre", fontSize: 36, marginLeft: 10, float: "left", cursor: "pointer"}}>
-                    <Link to="/" style={{textDecoration: "none", color: "white"}}>TL;DR Websites</Link>
+                    <Link to="/home" style={{textDecoration: "none", color: "white"}}>TL;DR Websites</Link>
                     </div>
                 <div style={button}>
                     <Link to="/auth?signup=false" style={{textDecoration:'none'}}> Log Out</Link>

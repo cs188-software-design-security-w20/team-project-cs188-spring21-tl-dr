@@ -7,6 +7,7 @@ import { RouteComponentProps } from '@reach/router';
 
 import "@fontsource/rhodium-libre";
 import "@fontsource/open-sans";
+import Landing from "./landing";
 
 export interface ISignupPageProps extends RouteComponentProps {
   path: string;
@@ -15,7 +16,8 @@ export interface ISignupPageProps extends RouteComponentProps {
 const IndexPage = () => {
   return (
     <Router>
-      <Home path="/" />
+      <Landing path="/" />
+      <Home path="/home" />
       <Auth path="/auth"/>
       <Profile path="/profile"/>
     </Router>

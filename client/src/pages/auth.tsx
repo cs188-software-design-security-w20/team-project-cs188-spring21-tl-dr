@@ -92,7 +92,7 @@ class Auth extends React.Component<ISignupPageProps> {
                                     <div style={{textDecoration: "underline", color: "black", marginRight: 180, cursor: "pointer", fontFamily: "Open Sans" }}>
                                         <Link to ="/auth?signup=false" style={{color: "black"}}>Already Have an Account?</Link>
                                     </div>
-                                    <div style={button}><Link to="/" style={{textDecoration: "none", color: "white"}}>Enter</Link></div>
+                                    <div style={button}><Link to="/home" style={{textDecoration: "none", color: "white"}}>Enter</Link></div>
                                 </div>
                             </div>
                             
@@ -133,7 +133,7 @@ class Auth extends React.Component<ISignupPageProps> {
                                     <div style={{textDecoration: "underline", color: "black", marginRight: 180, cursor: "pointer", fontFamily: "Open Sans" }}>
                                         <Link to ="/auth?signup=true" style={{color: "black"}}>Don't Have an Account?</Link>
                                     </div>
-                                    <div style={button}><Link to="/" style={{textDecoration: "none", color: "white"}}>Enter</Link></div>
+                                    <div style={button}><Link to="/home" style={{textDecoration: "none", color: "white"}}>Enter</Link></div>
                                 </div>
                             </div>
                             
