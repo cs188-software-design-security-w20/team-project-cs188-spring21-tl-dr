@@ -44,7 +44,9 @@ class Auth extends React.Component<ISignupPageProps> {
         return (
             <div>
                 {!isLogin ? <div>
-                    <div style={{display: "flex", justifyContent: "center", alignItems:"center", marginTop: 150, fontFamily: "Rhodium Libre", color: "#C4C4C4", marginLeft: 400}}>TL;DR Websites</div>
+                    <div style={{display: "flex", justifyContent: "center", alignItems:"center", marginTop: 150, fontFamily: "Rhodium Libre", color: "#C4C4C4", marginLeft: 400}}>
+                        <Link to="/" style={{textDecoration:'none', color: "#C4C4C4"}}>TL;DR Websites</Link>
+                        </div>
                         <div style={{display: "flex", justifyContent: "center", alignItems:"center"}}>
                             <div style={{boxShadow: "5px 5px 5px 5px #C4C4C4", width: 500, padding: "30px 50px 30px 50px", borderRadius: 25}}>
                                 <div style={{fontFamily: "Rhodium Libre", fontSize: 36}}>Sign Up!</div>
@@ -98,7 +100,9 @@ class Auth extends React.Component<ISignupPageProps> {
                         </div>
                 </div> :
                 <div>
-                    <div style={{display: "flex", justifyContent: "center", alignItems:"center", marginTop: 150, fontFamily: "Rhodium Libre", color: "#C4C4C4", marginLeft: 400}}>TL;DR Websites</div>
+                    <div style={{display: "flex", justifyContent: "center", alignItems:"center", marginTop: 150, fontFamily: "Rhodium Libre", color: "#C4C4C4", marginLeft: 400}}>
+                        <Link to="/" style={{textDecoration:'none', color: "#C4C4C4"}}>TL;DR Websites</Link>
+                        </div>
                         <div style={{display: "flex", justifyContent: "center", alignItems:"center"}}>
                             <div style={{boxShadow: "5px 5px 5px 5px #C4C4C4", width: 500, padding: "30px 50px 30px 50px", borderRadius: 25}}>
                                 <div style={{fontFamily: "Rhodium Libre", fontSize: 36}}>Log In</div>
