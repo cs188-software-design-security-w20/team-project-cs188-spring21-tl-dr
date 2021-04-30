@@ -17,7 +17,7 @@ const button: React.CSSProperties = {
     width: 50,
     textAlign: 'center',
     cursor: 'pointer',
-    marginLeft: '225px'
+    marginLeft: '25%'
 };
 
 const greyButton: React.CSSProperties= {
