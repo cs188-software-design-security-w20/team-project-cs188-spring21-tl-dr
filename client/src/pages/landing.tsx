@@ -44,7 +44,8 @@ class Landing extends React.Component<ISignupPageProps> {
         return (
             <div style={{textAlign: 'right'}}>
                 <div style ={{fontSize:80, fontFamily: "Rhodium Libre", marginTop: "30%", marginRight: 50}}>
-                    <ReactTypingEffect text={["Too Long, Didn't Read Websites", "TL;DR Websites"]}/>
+                    <ReactTypingEffect text={["Too Long, Didn't Read", "TL;DR"]}/>
+                    Websites
                 </div>
                 <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
                     <div style={signupButton}>
