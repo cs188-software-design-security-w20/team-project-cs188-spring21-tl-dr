@@ -46,8 +46,8 @@ const profPic: React.CSSProperties = {
 };
 
 const TopBar = () => {
-    const user:string = "User";
-    const imgURL: string= 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
+    const [user, setUser] = React.useState("User");
+    const [imgURL, setImgURL] = React.useState('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png');
     return (
         <div style={topbar}>
             <div className="flex" style={{display: "flex-row"}}>

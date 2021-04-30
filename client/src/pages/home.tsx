@@ -77,9 +77,9 @@ class Home extends React.Component<ISignupPageProps, {showInputField: boolean, i
                     <div>
                         <div style={{marginLeft: '30%', marginRight: 'auto', marginTop: '200px'}}>
                         <div style={{fontSize: 36, fontFamily: "Rhodium Libre"}} >We shortened:</div>
-                        <div style={{minWidth: 100, marginRight: "40%", borderRadius: 15, minHeight: 50, backgroundColor: "#C4C4C4", color: "white", padding: 10, fontFamily: "Open Sans"}}>{this.state.input}</div>
+                        <div style={{minWidth: 100, marginRight: "40%", borderRadius: 15, minHeight: 50, backgroundColor: "#C4C4C4", color: "white", padding: 10, fontFamily: "Open Sans", boxShadow: "2px 2px 2px 2px #6b6d70"}}>{this.state.input}</div>
                         <div style={{fontSize: 36, fontFamily: "Rhodium Libre", marginTop: 25}} >Into...</div>
-                        <div style={{minWidth: 100, marginRight: "40%", borderRadius: 15, minHeight: 50, backgroundColor: "#C4C4C4", color: "white", padding: 10, fontFamily: "Open Sans"}}>**SUMMARY HERE**</div>
+                        <div style={{minWidth: 100, marginRight: "40%", borderRadius: 15, minHeight: 50, backgroundColor: "#C4C4C4", color: "white", padding: 10, fontFamily: "Open Sans", boxShadow: "2px 2px 2px 2px #6b6d70"}}>**SUMMARY HERE**</div>
                         </div>
                         <div style={{display: "flex", marginLeft: "22%"}} className="flex-row">
                             <div style={greyButton} onClick={() => {this.setState({showInputField: true})}}>Back</div>
