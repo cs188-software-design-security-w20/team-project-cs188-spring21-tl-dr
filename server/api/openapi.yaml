@@ -1,0 +1,272 @@
+openapi: 3.0.0
+info:
+  title: TL;DR websites
+  version: 1.0.0
+servers:
+- url: /
+paths:
+  /user:
+    get:
+      operationId: userGET
+      parameters:
+      - description: User ID to retreive information for.
+        explode: true
+        in: cookie
+        name: id
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: OK
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Returns information and stored summaries for current user.
+      tags:
+      - user
+      x-eov-operation-handler: controllers/UserController
+  /user/summaries:
+    get:
+      operationId: userSummariesGET
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Summary'
+                type: array
+          description: OK
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Returns list of summaries for current user.
+      tags:
+      - user
+      - summary
+      x-eov-operation-handler: controllers/UserController
+  /user/summaries/{id}:
+    get:
+      operationId: userSummariesIdGET
+      parameters:
+      - description: Summary ID for current user
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Summary'
+          description: Summarized text
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Return summary with given id.
+      tags:
+      - user
+      - summary
+      x-eov-operation-handler: controllers/UserController
+  /login:
+    get:
+      operationId: loginGET
+      requestBody:
+        content:
+          text:
+            schema:
+              type: string
+        description: User ID to retreive information for
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Log in user.
+      tags:
+      - auth
+      x-eov-operation-handler: controllers/AuthController
+  /logout:
+    get:
+      operationId: logoutGET
+      responses:
+        "204":
+          description: Invalidate session cookie.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Log out user.
+      tags:
+      - auth
+      x-eov-operation-handler: controllers/AuthController
+  /signup:
+    post:
+      operationId: signupPOST
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Sign up new user given credentials.
+      tags:
+      - user
+      - auth
+      x-eov-operation-handler: controllers/UserController
+  /summarize:
+    get:
+      operationId: summarizeGET
+      parameters:
+      - description: URL of webpage to be summarized
+        explode: true
+        in: query
+        name: url
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Summary'
+          description: Summarized text
+      summary: Summarize webpage given URL.
+      tags:
+      - summary
+      x-eov-operation-handler: controllers/SummaryController
+    post:
+      operationId: summarizePOST
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+        description: Input text for summarization
+        required: true
+      responses:
+        "200":
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Summary'
+          description: Summarized text
+      summary: Summarize webpage given text.
+      tags:
+      - summary
+      x-eov-operation-handler: controllers/SummaryController
+components:
+  responses:
+    Summary:
+      content:
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/Summary'
+      description: Summarized text
+    UnexpectedError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unexpected error
+  schemas:
+    User:
+      example:
+        name: name
+        summaries:
+        - summary: summary
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          plaintext: plaintext
+          id: 0
+          userID: userID
+          url: url
+        - summary: summary
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          plaintext: plaintext
+          id: 0
+          userID: userID
+          url: url
+      properties:
+        name:
+          type: string
+        summaries:
+          items:
+            $ref: '#/components/schemas/Summary'
+          type: array
+      required:
+      - name
+      type: object
+    Summary:
+      example:
+        summary: summary
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        plaintext: plaintext
+        id: 0
+        userID: userID
+        url: url
+      properties:
+        id:
+          type: integer
+        userID:
+          type: string
+        plaintext:
+          description: Text to be summarized.
+          type: string
+        url:
+          description: URL of webpage to be summarized.
+          type: string
+        summary:
+          type: string
+        createdAt:
+          description: Time summary was first requested.
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - id
+      - summary
+      - userID
+      type: object
+    Error:
+      example:
+        code: 0
+        message: message
+      properties:
+        code:
+          description: Error code.
+          format: int32
+          type: integer
+        message:
+          description: Error message.
+          type: string
+      required:
+      - code
+      - message
+      type: object

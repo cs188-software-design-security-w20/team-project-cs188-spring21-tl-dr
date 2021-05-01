@@ -1,0 +1,194 @@
+openapi: '3.0.0'
+info:
+  title: TL;DR websites
+  version: '1.0.0'
+#TODO: OAuth and security
+paths:
+  /user:
+    get:
+      tags: 
+        - user
+      summary: Returns information and stored summaries for current user.
+      parameters:
+        - name: id
+          in: cookie #placeholder until OAuth2 implemented
+          description: User ID to retreive information for.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200': 
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+  /user/summaries:
+    get:
+      tags:
+      - user
+      - summary
+      summary: Returns list of summaries for current user.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Summary'
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+  /user/summaries/{id}:
+    get:
+      tags:
+      - user
+      - summary
+      parameters:
+        - name: id
+          in: path
+          description: Summary ID for current user
+          required: true
+          schema:
+            type: integer
+      summary: Return summary with given id.
+      responses:
+        '200':
+          $ref: '#/components/responses/Summary'
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+  /login:
+    get:
+      tags:
+      - auth
+      summary: Log in user.
+      requestBody:
+        description: User ID to retreive information for
+        required: true
+        content:
+          'text':
+            schema:
+              type: string
+      responses:
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+  /logout:
+    get:
+      tags:
+      - auth
+      summary: Log out user.
+      responses:
+        '204':
+          description: Invalidate session cookie.
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+  /signup:
+    post:
+      tags:
+      - user
+      - auth
+      summary: Sign up new user given credentials.
+      responses:
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+  /summarize:
+    get:
+      tags:
+      - summary
+      summary: Summarize webpage given URL.
+      parameters:
+        - name: url
+          in: query
+          description: URL of webpage to be summarized          
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Summary'
+        # TODO: handle responses for cases with unscrapable text?
+    post:
+      tags:
+      - summary
+      summary: Summarize webpage given text.
+      requestBody:
+        description: Input text for summarization
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/Summary'
+
+components:
+  responses:
+    Summary:
+      description: Summarized text
+      content:
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/Summary'
+    UnexpectedError:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    User:
+      type: object
+      required: 
+        - name
+        # summaries are optional, in case we need to query the current user without their summaries
+      properties:
+        name:
+          type: string
+        summaries:
+          type: array
+          items:
+            $ref: '#/components/schemas/Summary'
+    Summary:
+      type: object
+      required:
+        - id
+        - userID
+        - summary
+        - createdAt
+      properties:
+        id:
+          type: integer
+        userID:
+          # username (i.e. alphanumeric) or IDs (i.e. numeric)?
+          type: string
+        plaintext:
+          description: Text to be summarized.
+          type: string
+        url:
+          description: URL of webpage to be summarized.
+          type: string
+        summary:
+          type: string
+        createdAt:
+          description: Time summary was first requested.
+          type: string
+          format: date-time
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          description: Error code.
+          type: integer
+          format: int32
+        message:
+          description: Error message.
+          type: string
+# security:
+# tags:
