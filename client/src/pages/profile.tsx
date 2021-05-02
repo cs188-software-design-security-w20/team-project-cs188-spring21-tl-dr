@@ -95,21 +95,26 @@ const button: React.CSSProperties = {
     marginLeft: '40%'
 };
 
-class Profile extends React.Component<ISignupPageProps, {username: string, imgURL: string, email: string, isEditing: boolean}> {
+class Profile extends React.Component<ISignupPageProps, {username: string, imgURL: string, email: string, isEditing: boolean, saved: string[]}> {
     constructor(props) {
         super(props)
         this.state = {
             username: "User",
             imgURL: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
             email: "user@tldr.com",
-            isEditing: false
+            isEditing: false,
+            saved: ["test1", "test2"]
         }
     }
     render()
     {
         return (<div>
             <TopBar/>
-            <div style={{display: "flex", flexDirection: "row", marginTop: 150}}>
+            <div style={{textAlign: 'center', fontFamily: "Rhodium Libre", fontSize: 36, marginTop: 150}}>
+                User Info
+            </div>
+            <hr style={{width: 100}}/>
+            <div style={{display: "flex", flexDirection: "row", marginTop: 20}}>
                 <div style={{marginLeft: "25%"}}>
                     <img src={this.state.imgURL} style={userPic}/>
                     <div style={{textAlign: 'center', fontFamily: "Rhodium Libre", fontSize: 24}}>{this.state.username}</div>
@@ -147,6 +152,18 @@ class Profile extends React.Component<ISignupPageProps, {username: string, imgUR
             <div style={editButton} onClick={() => {this.setState({isEditing: !this.state.isEditing})}}>
                 Edit
             </div>}
+            <div style={{textAlign: 'center', fontFamily: "Rhodium Libre", fontSize: 36, marginTop: 75}}>
+                Saved
+            </div>
+            <hr style={{width: 100}}/>
+            <div style={{display: "flex", flexDirection: "column"}}>
+                {this.state.saved.map((search) => {
+                    return (
+                        <div style={{width: 500, marginLeft: "31%", marginTop: 20, marginBottom: 20, borderRadius: 15, minHeight: 50, backgroundColor: "#C4C4C4", color: "white", padding: 10, fontFamily: "Open Sans", boxShadow: "2px 2px 2px 2px #6b6d70"}}>
+                        {search}
+                    </div>)
+                })}
+            </div>
              </div>);
     }
 }
