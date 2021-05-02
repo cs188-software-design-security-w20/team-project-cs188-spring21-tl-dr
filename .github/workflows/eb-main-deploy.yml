@@ -21,7 +21,10 @@ jobs:
 
       # Generates a zip file that will be uploaded to EB
       - name: Generate deployment package
-        run: zip -r deploy.zip server/
+        run: |
+          cd server
+          zip -r ../deploy.zip .
+          cd ..
 
       # Get current timestamp. Needed to name deployment package pushed to EB
       - name: Get timestamp
