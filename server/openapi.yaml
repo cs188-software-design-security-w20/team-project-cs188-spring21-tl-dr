@@ -103,29 +103,12 @@ paths:
       summary: Summarize webpage given text.
       description: Calls external summarizer API to summarize given text. Summary is saved under user's profile.
       requestBody:
-        description: Input text for summarization
+        description: Input text or the URL of webpage to be summarized.
         required: true
         content:
-          text/plain:
+          application/json:
             schema:
-              type: string
-      responses:
-        '200':
-          $ref: '#/components/responses/Summary'
-  /summarizeByURL:
-    post:
-      tags:
-      - summarize
-      summary: Summarize webpage given URL.
-      description: Calls external summarizer API to 
-      requestBody:
-        description: URL of website to be scraped.
-        required: true
-        content:
-          text/plain:
-            schema:
-              type: string
-              format: uri
+              $ref: '#/components/schemas/SummarizeRequest'
       responses:
         '200':
           $ref: '#/components/responses/Summary'
@@ -156,6 +139,25 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Summary'
+    SummarizeRequest:
+      oneOf:
+        - $ref: '#/components/schemas/SummarizeByText'
+        - $ref: '#/components/schemas/SummarizeByURL'
+    SummarizeByText:
+      type: object
+      required:
+        - plaintext
+      properties:
+        plaintext:
+          type: string
+    SummarizeByURL:
+      type: object
+      required:
+        - url
+      properties:
+        url:
+          type: string
+          format: uri
     Summary:
       type: object
       required:

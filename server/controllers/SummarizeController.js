@@ -8,16 +8,11 @@
 
 const Controller = require('./Controller');
 const service = require('../services/SummarizeService');
-const summarizeByURLPOST = async (request, response) => {
-  await Controller.handleRequest(request, response, service.summarizeByURLPOST);
-};
-
 const summarizePOST = async (request, response) => {
   await Controller.handleRequest(request, response, service.summarizePOST);
 };
 
 
 module.exports = {
-  summarizeByURLPOST,
   summarizePOST,
 };
