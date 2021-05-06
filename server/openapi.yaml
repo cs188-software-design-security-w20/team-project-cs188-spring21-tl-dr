@@ -100,8 +100,8 @@ paths:
     post:
       tags:
       - summarize
-      summary: Summarize webpage given text.
-      description: Calls external summarizer API to summarize given text. Summary is saved under user's profile.
+      summary: Call DeepAI to summarize raw text or a webpage. Summary is saved under user's profile.
+      # TODO: get userID parameter from cookie
       requestBody:
         description: Input text or the URL of webpage to be summarized.
         required: true
@@ -117,7 +117,7 @@ components:
     Summary:
       description: Summarized text
       content:
-        text/plain:
+        application/json:
           schema:
             $ref: '#/components/schemas/Summary'
     UnexpectedError:

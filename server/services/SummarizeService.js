@@ -2,8 +2,7 @@
 const Service = require('./Service');
 
 /**
-* Summarize webpage given text.
-* Calls external summarizer API to summarize given text. Summary is saved under user's profile.
+* Call DeepAI to summarize raw text or a webpage. Summary is saved under user's profile.
 *
 * summarizeRequest SummarizeRequest Input text or the URL of webpage to be summarized.
 * returns Summary

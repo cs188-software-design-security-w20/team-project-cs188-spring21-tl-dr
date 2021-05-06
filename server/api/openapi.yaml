@@ -78,7 +78,7 @@ paths:
       responses:
         "200":
           content:
-            text/plain:
+            application/json:
               schema:
                 $ref: '#/components/schemas/Summary'
           description: Summarized text
@@ -147,8 +147,6 @@ paths:
       x-eov-operation-handler: controllers/AuthController
   /summarize:
     post:
-      description: Calls external summarizer API to summarize given text. Summary
-        is saved under user's profile.
       operationId: summarizePOST
       requestBody:
         content:
@@ -160,11 +158,12 @@ paths:
       responses:
         "200":
           content:
-            text/plain:
+            application/json:
               schema:
                 $ref: '#/components/schemas/Summary'
           description: Summarized text
-      summary: Summarize webpage given text.
+      summary: Call DeepAI to summarize raw text or a webpage. Summary is saved under
+        user's profile.
       tags:
       - summarize
       x-eov-operation-handler: controllers/SummarizeController
@@ -172,7 +171,7 @@ components:
   responses:
     Summary:
       content:
-        text/plain:
+        application/json:
           schema:
             $ref: '#/components/schemas/Summary'
       description: Summarized text
