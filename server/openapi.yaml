@@ -3,6 +3,10 @@ info:
   title: TL;DR websites
   version: '1.0.0'
 #TODO: OAuth and security
+# USAGE: To regenerate boilerplate code, make sure openapi-generator-cli is installed, then from the ./server directory, 
+#        run  $openapi-generator-cli generate -g nodejs-express-server -o . -i .\openapi.yaml
+#        Note that existing files WILL be overwritten; you will need to manually revert changes to those.
+
 paths:
   /user:
     get:
@@ -29,7 +33,6 @@ paths:
     get:
       tags:
       - user
-      - summary
       summary: Returns list of summaries for current user.
       responses:
         '200':
@@ -46,7 +49,6 @@ paths:
     get:
       tags:
       - user
-      - summary
       parameters:
         - name: id
           in: path
@@ -65,6 +67,7 @@ paths:
       tags:
       - auth
       summary: Log in user.
+      description: Called after Google Sign In. Given Google's Auth response, set a JWT to establish user session.
       requestBody:
         description: User ID to retreive information for
         required: true
@@ -79,7 +82,7 @@ paths:
     get:
       tags:
       - auth
-      summary: Log out user.
+      summary: Log out user by invalidating JWT.
       responses:
         '204':
           description: Invalidate session cookie.
@@ -88,32 +91,17 @@ paths:
   /signup:
     post:
       tags:
-      - user
       - auth
       summary: Sign up new user given credentials.
       responses:
         default:
           $ref: '#/components/responses/UnexpectedError'
   /summarize:
-    get:
-      tags:
-      - summary
-      summary: Summarize webpage given URL.
-      parameters:
-        - name: url
-          in: query
-          description: URL of webpage to be summarized          
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          $ref: '#/components/responses/Summary'
-        # TODO: handle responses for cases with unscrapable text?
     post:
       tags:
-      - summary
+      - summarize
       summary: Summarize webpage given text.
+      description: Calls external summarizer API to summarize given text. Summary is saved under user's profile.
       requestBody:
         description: Input text for summarization
         required: true
@@ -124,7 +112,23 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/Summary'
-
+  /summarizeByURL:
+    post:
+      tags:
+      - summarize
+      summary: Summarize webpage given URL.
+      description: Calls external summarizer API to 
+      requestBody:
+        description: URL of website to be scraped.
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+              format: uri
+      responses:
+        '200':
+          $ref: '#/components/responses/Summary'
 components:
   responses:
     Summary:
@@ -165,13 +169,15 @@ components:
         userID:
           # username (i.e. alphanumeric) or IDs (i.e. numeric)?
           type: string
+        # if /summarize is called
         plaintext:
-          description: Text to be summarized.
+          description: Original text that was summarized.
           type: string
+        # if /summarizeByURL is called
         url:
-          description: URL of webpage to be summarized.
+          description: URL of webpage that was summarized.
           type: string
-        summary:
+        summarizedText:
           type: string
         createdAt:
           description: Time summary was first requested.
@@ -191,4 +197,10 @@ components:
           description: Error message.
           type: string
 # security:
-# tags:
+tags:
+  - name: 'summarize'
+    description: "Endpoints for summarizing input. "
+  - name: 'user'
+    description: "Endpoints for retrieving the user's profile and stored summaries."
+  - name: 'auth'
+    description: "Endpoints for handling authentication and user creation."

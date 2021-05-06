@@ -8,10 +8,6 @@
 
 const Controller = require('./Controller');
 const service = require('../services/UserService');
-const signupPOST = async (request, response) => {
-  await Controller.handleRequest(request, response, service.signupPOST);
-};
-
 const userGET = async (request, response) => {
   await Controller.handleRequest(request, response, service.userGET);
 };
@@ -26,7 +22,6 @@ const userSummariesIdGET = async (request, response) => {
 
 
 module.exports = {
-  signupPOST,
   userGET,
   userSummariesGET,
   userSummariesIdGET,

@@ -1,9 +1,9 @@
 const AuthService = require('./AuthService');
-const SummaryService = require('./SummaryService');
+const SummarizeService = require('./SummarizeService');
 const UserService = require('./UserService');
 
 module.exports = {
   AuthService,
-  SummaryService,
+  SummarizeService,
   UserService,
 };

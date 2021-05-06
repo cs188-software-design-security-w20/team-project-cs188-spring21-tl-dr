@@ -1,11 +1,10 @@
 .eslintrc.json
-.openapi-generator-ignore
 README.md
 api/openapi.yaml
 config.js
 controllers/AuthController.js
 controllers/Controller.js
-controllers/SummaryController.js
+controllers/SummarizeController.js
 controllers/UserController.js
 controllers/index.js
 expressServer.js
@@ -14,7 +13,7 @@ logger.js
 package.json
 services/AuthService.js
 services/Service.js
-services/SummaryService.js
+services/SummarizeService.js
 services/UserService.js
 services/index.js
 utils/openapiRouter.js

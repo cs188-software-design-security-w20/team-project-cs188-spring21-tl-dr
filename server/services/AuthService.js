@@ -3,6 +3,7 @@ const Service = require('./Service');
 
 /**
 * Log in user.
+* Called after Google Sign In. Given Google's Auth response, set a JWT to establish user session.
 *
 * body String User ID to retreive information for
 * returns Error
@@ -22,7 +23,7 @@ const loginGET = ({ body }) => new Promise(
   },
 );
 /**
-* Log out user.
+* Log out user by invalidating JWT.
 *
 * no response value expected for this operation
 * */

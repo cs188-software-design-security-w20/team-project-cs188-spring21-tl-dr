@@ -4,6 +4,13 @@ info:
   version: 1.0.0
 servers:
 - url: /
+tags:
+- description: 'Endpoints for summarizing input. '
+  name: summarize
+- description: Endpoints for retrieving the user's profile and stored summaries.
+  name: user
+- description: Endpoints for handling authentication and user creation.
+  name: auth
 paths:
   /user:
     get:
@@ -55,7 +62,6 @@ paths:
       summary: Returns list of summaries for current user.
       tags:
       - user
-      - summary
       x-eov-operation-handler: controllers/UserController
   /user/summaries/{id}:
     get:
@@ -85,10 +91,11 @@ paths:
       summary: Return summary with given id.
       tags:
       - user
-      - summary
       x-eov-operation-handler: controllers/UserController
   /login:
     get:
+      description: Called after Google Sign In. Given Google's Auth response, set
+        a JWT to establish user session.
       operationId: loginGET
       requestBody:
         content:
@@ -120,7 +127,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Unexpected error
-      summary: Log out user.
+      summary: Log out user by invalidating JWT.
       tags:
       - auth
       x-eov-operation-handler: controllers/AuthController
@@ -136,33 +143,12 @@ paths:
           description: Unexpected error
       summary: Sign up new user given credentials.
       tags:
-      - user
       - auth
-      x-eov-operation-handler: controllers/UserController
+      x-eov-operation-handler: controllers/AuthController
   /summarize:
-    get:
-      operationId: summarizeGET
-      parameters:
-      - description: URL of webpage to be summarized
-        explode: true
-        in: query
-        name: url
-        required: true
-        schema:
-          type: string
-        style: form
-      responses:
-        "200":
-          content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/Summary'
-          description: Summarized text
-      summary: Summarize webpage given URL.
-      tags:
-      - summary
-      x-eov-operation-handler: controllers/SummaryController
     post:
+      description: Calls external summarizer API to summarize given text. Summary
+        is saved under user's profile.
       operationId: summarizePOST
       requestBody:
         content:
@@ -180,8 +166,31 @@ paths:
           description: Summarized text
       summary: Summarize webpage given text.
       tags:
-      - summary
-      x-eov-operation-handler: controllers/SummaryController
+      - summarize
+      x-eov-operation-handler: controllers/SummarizeController
+  /summarizeByURL:
+    post:
+      description: Calls external summarizer API to
+      operationId: summarizeByURLPOST
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              format: uri
+              type: string
+        description: URL of website to be scraped.
+        required: true
+      responses:
+        "200":
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Summary'
+          description: Summarized text
+      summary: Summarize webpage given URL.
+      tags:
+      - summarize
+      x-eov-operation-handler: controllers/SummarizeController
 components:
   responses:
     Summary:
@@ -201,15 +210,15 @@ components:
       example:
         name: name
         summaries:
-        - summary: summary
-          createdAt: 2000-01-23T04:56:07.000+00:00
+        - createdAt: 2000-01-23T04:56:07.000+00:00
           plaintext: plaintext
+          summarizedText: summarizedText
           id: 0
           userID: userID
           url: url
-        - summary: summary
-          createdAt: 2000-01-23T04:56:07.000+00:00
+        - createdAt: 2000-01-23T04:56:07.000+00:00
           plaintext: plaintext
+          summarizedText: summarizedText
           id: 0
           userID: userID
           url: url
@@ -225,9 +234,9 @@ components:
       type: object
     Summary:
       example:
-        summary: summary
         createdAt: 2000-01-23T04:56:07.000+00:00
         plaintext: plaintext
+        summarizedText: summarizedText
         id: 0
         userID: userID
         url: url
@@ -237,12 +246,12 @@ components:
         userID:
           type: string
         plaintext:
-          description: Text to be summarized.
+          description: Original text that was summarized.
           type: string
         url:
-          description: URL of webpage to be summarized.
+          description: URL of webpage that was summarized.
           type: string
-        summary:
+        summarizedText:
           type: string
         createdAt:
           description: Time summary was first requested.

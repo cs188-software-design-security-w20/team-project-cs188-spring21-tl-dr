@@ -1,9 +1,9 @@
 const AuthController = require('./AuthController');
-const SummaryController = require('./SummaryController');
+const SummarizeController = require('./SummarizeController');
 const UserController = require('./UserController');
 
 module.exports = {
   AuthController,
-  SummaryController,
+  SummarizeController,
   UserController,
 };

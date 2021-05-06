@@ -2,24 +2,6 @@
 const Service = require('./Service');
 
 /**
-* Sign up new user given credentials.
-*
-* returns Error
-* */
-const signupPOST = () => new Promise(
-  async (resolve, reject) => {
-    try {
-      resolve(Service.successResponse({
-      }));
-    } catch (e) {
-      reject(Service.rejectResponse(
-        e.message || 'Invalid input',
-        e.status || 405,
-      ));
-    }
-  },
-);
-/**
 * Returns information and stored summaries for current user.
 *
 * id String User ID to retreive information for.
@@ -79,7 +61,6 @@ const userSummariesIdGET = ({ id }) => new Promise(
 );
 
 module.exports = {
-  signupPOST,
   userGET,
   userSummariesGET,
   userSummariesIdGET,
