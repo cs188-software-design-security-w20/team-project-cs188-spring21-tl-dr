@@ -79,8 +79,12 @@ const Summary = sequelize.define('Summary', { // Table will be autonamed 'Summar
 }, {})
 
 // Synchronize models with database. This will create the tables if they do not exist.
-// To hard reset tables, add { force: true }, i.e. sync({ force: true })
-sequelize.sync().then(() => console.log("Table models synchronized."));
+// To hard reset tables (drop and recreate), set { force: true }
+sequelize.sync({ force: false }).then(() => console.log("Table models synchronized."));
 
-module.exports = sequelize;
-module.exports._Sequelize = Sequelize;
+module.exports = {
+  _Sequelize: Sequelize,
+  db: sequelize,
+  User,
+  Summary
+};
