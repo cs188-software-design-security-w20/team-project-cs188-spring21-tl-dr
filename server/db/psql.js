@@ -68,7 +68,7 @@ const Summary = sequelize.define('Summary', { // Table will be autonamed 'Summar
     type: Sequelize.TEXT
   },
   url: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
     validate: {
       isUrl: true // validation is skipped on null values
     }
@@ -80,7 +80,7 @@ const Summary = sequelize.define('Summary', { // Table will be autonamed 'Summar
 
 // Synchronize models with database. This will create the tables if they do not exist.
 // To hard reset tables (drop and recreate), set { force: true }
-sequelize.sync({ force: false }).then(() => console.log("Table models synchronized."));
+sequelize.sync({ force: true }).then(() => console.log("Table models synchronized."));
 
 module.exports = {
   _Sequelize: Sequelize,
