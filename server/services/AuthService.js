@@ -8,9 +8,13 @@ const Service = require('./Service');
 * loginRequest LoginRequest User ID to retreive information for
 * returns Error
 * */
-const loginGET = ({ loginRequest }) => new Promise(
+const loginPOST = ({ loginRequest }) => new Promise(
   async (resolve, reject) => {
     try {
+      const id_token = loginRequest.id_token;
+      console.log(id_token);
+      // TODO: verify id_token. See https://developers.google.com/identity/sign-in/web/backend-auth#create-an-account-or-session
+      // TODO: establish JWT session.
       resolve(Service.successResponse({
         loginRequest,
       }));
@@ -60,7 +64,7 @@ const signupPOST = () => new Promise(
 );
 
 module.exports = {
-  loginGET,
+  loginPOST,
   logoutGET,
   signupPOST,
 };

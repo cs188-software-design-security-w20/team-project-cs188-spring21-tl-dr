@@ -98,10 +98,10 @@ paths:
       - user
       x-eov-operation-handler: controllers/UserController
   /login:
-    get:
+    post:
       description: Given `id_token` from Google Sign In, verify token and authenticate
         user. If authentication is successful, set a JWT to establish user session.
-      operationId: loginGET
+      operationId: loginPOST
       requestBody:
         content:
           application/json:

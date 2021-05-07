@@ -8,8 +8,8 @@
 
 const Controller = require('./Controller');
 const service = require('../services/AuthService');
-const loginGET = async (request, response) => {
-  await Controller.handleRequest(request, response, service.loginGET);
+const loginPOST = async (request, response) => {
+  await Controller.handleRequest(request, response, service.loginPOST);
 };
 
 const logoutGET = async (request, response) => {
@@ -22,7 +22,7 @@ const signupPOST = async (request, response) => {
 
 
 module.exports = {
-  loginGET,
+  loginPOST,
   logoutGET,
   signupPOST,
 };

@@ -67,7 +67,7 @@ paths:
         default:
           $ref: '#/components/responses/Error'
   /login:
-    get:
+    post:
       tags:
       - auth
       summary: Log in user. New users will be signed up then logged in.
