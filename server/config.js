@@ -11,5 +11,20 @@ const config = {
 config.OPENAPI_YAML = path.join(config.ROOT_DIR, 'api', 'openapi.yaml');
 config.FULL_PATH = `${config.URL_PATH}:${config.URL_PORT}/${config.BASE_VERSION}`;
 config.FILE_UPLOAD_PATH = path.join(config.PROJECT_DIR, 'uploaded_files');
+config.DATABASE = 'postgres';
+config.DATABASE_USERNAME = process.env.DB_USERNAME;
+config.DATABASE_PASSWORD = process.env.DB_PASSWORD;
+config.DATABASE_OPTIONS = {
+  host: 'localhost',
+  port: 5432,
+  dialect: 'postgres',
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
+  },
+  timezone: 'America/Los_Angeles'
+}
 
 module.exports = config;

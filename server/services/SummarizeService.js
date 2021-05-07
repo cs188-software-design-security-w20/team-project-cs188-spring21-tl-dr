@@ -3,7 +3,9 @@ const Service = require('./Service');
 const fetch = require('node-fetch');
 const deepai = require('deepai');
 const { htmlToText } = require('html-to-text');
-deepai.setApiKey(process.env.deepaikey);
+const db = require('../db/psql.js');
+
+deepai.setApiKey(process.env.DEEPAI_KEY);
 
 /**
 * Call DeepAI to summarize raw text or a webpage. Summary is saved under user's profile.
@@ -11,7 +13,26 @@ deepai.setApiKey(process.env.deepaikey);
 * summarizeRequest SummarizeRequest Input text or the URL of webpage to be summarized.
 * NOTE: openAPI Validator will reject all requests with 1. no plaintext or url property 2. both plaintext and url properties
 *
-* returns Summary
+* returns Summary:
+*           id:
+*             type: integer
+*           userID:
+*             # username (i.e. alphanumeric) or IDs (i.e. numeric)?
+*             type: string
+*           # if /summarize is called
+*           plaintext:
+*             description: Original text that was summarized.
+*             type: string
+*           # if /summarizeByURL is called
+*           url:
+*             description: URL of webpage that was summarized.
+*             type: string
+*           summarizedText:
+*             type: string
+*           createdAt:
+*             description: Time summary was first requested.
+*             type: string
+*             format: date-time
 * */
 const summarizePOST = ({ summarizeRequest }) => new Promise(
   async (resolve, reject) => {
