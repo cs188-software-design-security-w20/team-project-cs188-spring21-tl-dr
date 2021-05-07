@@ -2,17 +2,17 @@
 const Service = require('./Service');
 
 /**
-* Log in user.
-* Called after Google Sign In. Given Google's Auth response, set a JWT to establish user session.
+* Log in user. New users will be signed up then logged in.
+* Given `id_token` from Google Sign In, verify token and authenticate user. If authentication is successful, set a JWT to establish user session.
 *
-* body UUID User ID to retreive information for
+* loginRequest LoginRequest User ID to retreive information for
 * returns Error
 * */
-const loginGET = ({ body }) => new Promise(
+const loginGET = ({ loginRequest }) => new Promise(
   async (resolve, reject) => {
     try {
       resolve(Service.successResponse({
-        body,
+        loginRequest,
       }));
     } catch (e) {
       reject(Service.rejectResponse(

@@ -60,7 +60,7 @@ class ExpressServer {
         this.app.use((err, req, res, next) => {
           // format errors
           res.status(err.status || 500).json({
-            message: err.message || err,
+            message: "Bad request. See http://tldr-server.us-east-2.elasticbeanstalk.com/api-docs/ for proper request formats." || err.message || err,
             errors: err.errors || '',
           });
         });

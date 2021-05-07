@@ -37,7 +37,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-          description: Unexpected error
+          description: Wrapper for generic error response that displays the error
+            code and error message.
       summary: Returns information and stored summaries for current user.
       tags:
       - user
@@ -59,7 +60,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-          description: Unexpected error
+          description: Wrapper for generic error response that displays the error
+            code and error message.
       summary: Returns list of summaries for current user.
       tags:
       - user
@@ -89,32 +91,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-          description: Unexpected error
+          description: Wrapper for generic error response that displays the error
+            code and error message.
       summary: Return summary with given id.
       tags:
       - user
       x-eov-operation-handler: controllers/UserController
   /login:
     get:
-      description: Called after Google Sign In. Given Google's Auth response, set
-        a JWT to establish user session.
+      description: Given `id_token` from Google Sign In, verify token and authenticate
+        user. If authentication is successful, set a JWT to establish user session.
       operationId: loginGET
       requestBody:
         content:
-          text:
+          application/json:
             schema:
-              format: uuid
-              type: string
+              $ref: '#/components/schemas/LoginRequest'
         description: User ID to retreive information for
         required: true
       responses:
+        "303":
+          description: Redirect to home page.
+          headers:
+            Location:
+              explode: false
+              schema:
+                description: Redirect URL
+                type: string
+              style: simple
         default:
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-          description: Unexpected error
-      summary: Log in user.
+          description: Wrapper for generic error response that displays the error
+            code and error message.
+      summary: Log in user. New users will be signed up then logged in.
       tags:
       - auth
       x-eov-operation-handler: controllers/AuthController
@@ -129,13 +141,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-          description: Unexpected error
+          description: Wrapper for generic error response that displays the error
+            code and error message.
       summary: Log out user by invalidating JWT.
       tags:
       - auth
       x-eov-operation-handler: controllers/AuthController
   /signup:
     post:
+      deprecated: true
       operationId: signupPOST
       responses:
         default:
@@ -143,7 +157,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-          description: Unexpected error
+          description: Wrapper for generic error response that displays the error
+            code and error message.
       summary: Sign up new user given credentials.
       tags:
       - auth
@@ -178,12 +193,13 @@ components:
           schema:
             $ref: '#/components/schemas/Summary'
       description: Summarized text
-    UnexpectedError:
+    Error:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-      description: Unexpected error
+      description: Wrapper for generic error response that displays the error code
+        and error message.
   schemas:
     User:
       example:
@@ -211,25 +227,22 @@ components:
       required:
       - name
       type: object
+    LoginRequest:
+      example:
+        id_token: id_token
+      properties:
+        id_token:
+          description: id_token, as returned by `googleUser.getAuthResponse().id_token`
+          type: string
+      required:
+      - id_token
+      type: object
     SummarizeRequest:
+      description: Request can contain either plaintext or a webpage URL, but not
+        both.
       oneOf:
-      - $ref: '#/components/schemas/SummarizeByText'
-      - $ref: '#/components/schemas/SummarizeByURL'
-    SummarizeByText:
-      properties:
-        plaintext:
-          type: string
-      required:
-      - plaintext
-      type: object
-    SummarizeByURL:
-      properties:
-        url:
-          format: uri
-          type: string
-      required:
-      - url
-      type: object
+      - $ref: '#/components/schemas/SummarizeRequest_oneOf'
+      - $ref: '#/components/schemas/SummarizeRequest_oneOf_1'
     Summary:
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
@@ -278,4 +291,19 @@ components:
       required:
       - code
       - message
+      type: object
+    SummarizeRequest_oneOf:
+      properties:
+        url:
+          format: uri
+          type: string
+      required:
+      - url
+      type: object
+    SummarizeRequest_oneOf_1:
+      properties:
+        plaintext:
+          type: string
+      required:
+      - plaintext
       type: object
