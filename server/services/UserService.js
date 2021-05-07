@@ -4,7 +4,7 @@ const Service = require('./Service');
 /**
 * Returns information and stored summaries for current user.
 *
-* id String User ID to retreive information for.
+* id UUID User ID to retreive information for.
 * returns User
 * */
 const userGET = ({ id }) => new Promise(
@@ -42,7 +42,7 @@ const userSummariesGET = () => new Promise(
 /**
 * Return summary with given id.
 *
-* id Integer Summary ID for current user
+* id UUID Summary ID for current user
 * returns Summary
 * */
 const userSummariesIdGET = ({ id }) => new Promise(

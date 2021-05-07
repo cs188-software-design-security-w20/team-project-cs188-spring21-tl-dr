@@ -5,7 +5,7 @@ const Service = require('./Service');
 * Log in user.
 * Called after Google Sign In. Given Google's Auth response, set a JWT to establish user session.
 *
-* body String User ID to retreive information for
+* body UUID User ID to retreive information for
 * returns Error
 * */
 const loginGET = ({ body }) => new Promise(

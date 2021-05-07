@@ -20,6 +20,7 @@ paths:
           required: true
           schema:
             type: string
+            format: uuid
       responses:
         '200': 
           description: OK
@@ -55,7 +56,8 @@ paths:
           description: Summary ID for current user
           required: true
           schema:
-            type: integer
+            type: string
+            format: uuid
       summary: Return summary with given id.
       responses:
         '200':
@@ -75,6 +77,7 @@ paths:
           'text':
             schema:
               type: string
+              format: uuid
       responses:
         default:
           $ref: '#/components/responses/UnexpectedError'
@@ -163,14 +166,16 @@ components:
       required:
         - id
         - userID
-        - summary
+        - summarizedText
         - createdAt
       properties:
         id:
-          type: integer
-        userID:
+          type: string
+          format: uuid
+        userId:
           # username (i.e. alphanumeric) or IDs (i.e. numeric)?
           type: string
+          format: uuid
         # if /summarize is called
         plaintext:
           description: Original text that was summarized.
