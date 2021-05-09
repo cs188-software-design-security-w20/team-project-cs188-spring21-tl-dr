@@ -27,7 +27,7 @@ sequelize.authenticate().then(() => {
 // TODO: populate after Google signin. See https://developers.google.com/identity/sign-in/web/reference#googleusergetbasicprofile 
 const User = sequelize.define('User', { // Table will be autonamed 'Users'
   id: {
-    type: Sequelize.UUID,
+    type: Sequelize.STRING,
     primaryKey: true
   },
   firstName: {
@@ -58,7 +58,7 @@ const Summary = sequelize.define('Summary', { // Table will be autonamed 'Summar
     primaryKey: true
   },
   userId: {
-    type: Sequelize.UUID,
+    type: Sequelize.STRING,
     references: {
       model: User,
       key: 'id'
