@@ -1,0 +1,281 @@
+openapi: 3.0.0
+info:
+  title: TL;DR websites
+  version: 1.0.0
+servers:
+- url: /
+tags:
+- description: 'Endpoints for summarizing input. '
+  name: summarize
+- description: Endpoints for retrieving the user's profile and stored summaries.
+  name: user
+- description: Endpoints for handling authentication and user creation.
+  name: auth
+paths:
+  /user:
+    get:
+      operationId: userGET
+      parameters:
+      - description: User ID to retreive information for.
+        explode: true
+        in: cookie
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: OK
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Returns information and stored summaries for current user.
+      tags:
+      - user
+      x-eov-operation-handler: controllers/UserController
+  /user/summaries:
+    get:
+      operationId: userSummariesGET
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Summary'
+                type: array
+          description: OK
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Returns list of summaries for current user.
+      tags:
+      - user
+      x-eov-operation-handler: controllers/UserController
+  /user/summaries/{id}:
+    get:
+      operationId: userSummariesIdGET
+      parameters:
+      - description: Summary ID for current user
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Summary'
+          description: Summarized text
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Return summary with given id.
+      tags:
+      - user
+      x-eov-operation-handler: controllers/UserController
+  /login:
+    get:
+      description: Called after Google Sign In. Given Google's Auth response, set
+        a JWT to establish user session.
+      operationId: loginGET
+      requestBody:
+        content:
+          text:
+            schema:
+              format: uuid
+              type: string
+        description: User ID to retreive information for
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Log in user.
+      tags:
+      - auth
+      x-eov-operation-handler: controllers/AuthController
+  /logout:
+    get:
+      operationId: logoutGET
+      responses:
+        "204":
+          description: Invalidate session cookie.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Log out user by invalidating JWT.
+      tags:
+      - auth
+      x-eov-operation-handler: controllers/AuthController
+  /signup:
+    post:
+      operationId: signupPOST
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Sign up new user given credentials.
+      tags:
+      - auth
+      x-eov-operation-handler: controllers/AuthController
+  /summarize:
+    post:
+      operationId: summarizePOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SummarizeRequest'
+        description: Input text or the URL of webpage to be summarized.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Summary'
+          description: Summarized text
+      summary: Call DeepAI to summarize raw text or a webpage. Summary is saved under
+        user's profile.
+      tags:
+      - summarize
+      x-eov-operation-handler: controllers/SummarizeController
+components:
+  responses:
+    Summary:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Summary'
+      description: Summarized text
+    UnexpectedError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unexpected error
+  schemas:
+    User:
+      example:
+        name: name
+        summaries:
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          plaintext: plaintext
+          summarizedText: summarizedText
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          url: url
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          plaintext: plaintext
+          summarizedText: summarizedText
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          url: url
+      properties:
+        name:
+          type: string
+        summaries:
+          items:
+            $ref: '#/components/schemas/Summary'
+          type: array
+      required:
+      - name
+      type: object
+    SummarizeRequest:
+      oneOf:
+      - $ref: '#/components/schemas/SummarizeByText'
+      - $ref: '#/components/schemas/SummarizeByURL'
+    SummarizeByText:
+      properties:
+        plaintext:
+          type: string
+      required:
+      - plaintext
+      type: object
+    SummarizeByURL:
+      properties:
+        url:
+          format: uri
+          type: string
+      required:
+      - url
+      type: object
+    Summary:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        plaintext: plaintext
+        summarizedText: summarizedText
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        url: url
+      properties:
+        id:
+          format: uuid
+          type: string
+        userId:
+          format: uuid
+          type: string
+        plaintext:
+          description: Original text that was summarized.
+          type: string
+        url:
+          description: URL of webpage that was summarized.
+          type: string
+        summarizedText:
+          type: string
+        createdAt:
+          description: Time summary was first requested.
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - id
+      - summarizedText
+      - userID
+      type: object
+    Error:
+      example:
+        code: 0
+        message: message
+      properties:
+        code:
+          description: Error code.
+          format: int32
+          type: integer
+        message:
+          description: Error message.
+          type: string
+      required:
+      - code
+      - message
+      type: object

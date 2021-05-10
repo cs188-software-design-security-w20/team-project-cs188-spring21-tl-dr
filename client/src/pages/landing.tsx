@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Link } from "gatsby";
 import {ISignupPageProps} from './index';
+import ReactTypingEffect from 'react-typing-effect';
 
 const signupButton: React.CSSProperties = {
     backgroundColor: "#C4C4C4",
@@ -42,8 +43,9 @@ class Landing extends React.Component<ISignupPageProps> {
     render() {
         return (
             <div style={{textAlign: 'right'}}>
-                <div style ={{fontSize:100, fontFamily: "Rhodium Libre", marginTop: "30%", marginRight: 50}}>
-                    TL;DR Websites
+                <div style ={{fontSize:80, fontFamily: "Rhodium Libre", marginTop: "30%", marginRight: 50}}>
+                    <ReactTypingEffect text={["Too Long, Didn't Read", "TL;DR"]}/>
+                    Websites
                 </div>
                 <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
                     <div style={signupButton}>

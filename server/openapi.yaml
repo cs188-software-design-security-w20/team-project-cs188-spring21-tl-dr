@@ -1,0 +1,213 @@
+openapi: '3.0.0'
+info:
+  title: TL;DR websites
+  version: '1.0.0'
+#TODO: OAuth and security
+# USAGE: To regenerate boilerplate code, make sure openapi-generator-cli is installed, then from the ./server directory, 
+#        run  $openapi-generator-cli generate -g nodejs-express-server -o . -i .\openapi.yaml
+#        Note that existing files WILL be overwritten; you will need to manually revert changes to those.
+
+paths:
+  /user:
+    get:
+      tags: 
+        - user
+      summary: Returns information and stored summaries for current user.
+      parameters:
+        - name: id
+          in: cookie #placeholder until OAuth2 implemented
+          description: User ID to retreive information for.
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200': 
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+  /user/summaries:
+    get:
+      tags:
+      - user
+      summary: Returns list of summaries for current user.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Summary'
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+  /user/summaries/{id}:
+    get:
+      tags:
+      - user
+      parameters:
+        - name: id
+          in: path
+          description: Summary ID for current user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      summary: Return summary with given id.
+      responses:
+        '200':
+          $ref: '#/components/responses/Summary'
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+  /login:
+    get:
+      tags:
+      - auth
+      summary: Log in user.
+      description: Called after Google Sign In. Given Google's Auth response, set a JWT to establish user session.
+      requestBody:
+        description: User ID to retreive information for
+        required: true
+        content:
+          'text':
+            schema:
+              type: string
+              format: uuid
+      responses:
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+  /logout:
+    get:
+      tags:
+      - auth
+      summary: Log out user by invalidating JWT.
+      responses:
+        '204':
+          description: Invalidate session cookie.
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+  /signup:
+    post:
+      tags:
+      - auth
+      summary: Sign up new user given credentials.
+      responses:
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+  /summarize:
+    post:
+      tags:
+      - summarize
+      summary: Call DeepAI to summarize raw text or a webpage. Summary is saved under user's profile.
+      # TODO: get userID parameter from cookie
+      requestBody:
+        description: Input text or the URL of webpage to be summarized.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SummarizeRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/Summary'
+components:
+  responses:
+    Summary:
+      description: Summarized text
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Summary'
+    UnexpectedError:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    User:
+      type: object
+      required: 
+        - name
+        # summaries are optional, in case we need to query the current user without their summaries
+      properties:
+        name:
+          type: string
+        summaries:
+          type: array
+          items:
+            $ref: '#/components/schemas/Summary'
+    SummarizeRequest:
+      oneOf:
+        - $ref: '#/components/schemas/SummarizeByText'
+        - $ref: '#/components/schemas/SummarizeByURL'
+    SummarizeByText:
+      type: object
+      required:
+        - plaintext
+      properties:
+        plaintext:
+          type: string
+    SummarizeByURL:
+      type: object
+      required:
+        - url
+      properties:
+        url:
+          type: string
+          format: uri
+    Summary:
+      type: object
+      required:
+        - id
+        - userID
+        - summarizedText
+        - createdAt
+      properties:
+        id:
+          type: string
+          format: uuid
+        userId:
+          # username (i.e. alphanumeric) or IDs (i.e. numeric)?
+          type: string
+          format: uuid
+        # if /summarize is called
+        plaintext:
+          description: Original text that was summarized.
+          type: string
+        # if /summarizeByURL is called
+        url:
+          description: URL of webpage that was summarized.
+          type: string
+        summarizedText:
+          type: string
+        createdAt:
+          description: Time summary was first requested.
+          type: string
+          format: date-time
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          description: Error code.
+          type: integer
+          format: int32
+        message:
+          description: Error message.
+          type: string
+# security:
+tags:
+  - name: 'summarize'
+    description: "Endpoints for summarizing input. "
+  - name: 'user'
+    description: "Endpoints for retrieving the user's profile and stored summaries."
+  - name: 'auth'
+    description: "Endpoints for handling authentication and user creation."
