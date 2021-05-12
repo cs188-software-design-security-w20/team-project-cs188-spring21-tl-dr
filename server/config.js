@@ -15,7 +15,7 @@ config.DATABASE = 'postgres';
 config.DATABASE_USERNAME = process.env.DB_USERNAME;
 config.DATABASE_PASSWORD = process.env.DB_PASSWORD;
 config.DATABASE_OPTIONS = {
-  host: 'localhost',
+  host: process.env.DB_HOST,
   port: 5432,
   dialect: 'postgres',
   pool: {
