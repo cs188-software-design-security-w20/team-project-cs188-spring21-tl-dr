@@ -12,5 +12,5 @@ export async function signupOrLoginUser(id_token) {
     body: JSON.stringify({ id_token }),
   });
   console.log(res);
-  return await res.json(); // or res.text() depending on backend implementation
+  return await res.text();
 }

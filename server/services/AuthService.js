@@ -21,15 +21,15 @@ const loginPOST = ({ loginRequest }) => new Promise(
       });
       const payload = ticket.getPayload();
       const authUser = {
-        id: payload['sub'], // reuse Google OAuth uuid for user id
+        id: payload['sub'], // reuse unique Google ID for user id.
         firstName: payload['given_name'],
         lastName: payload['family_name'],
         email: payload['email'],
         image: payload['picture']
       }
       await User.findOrCreate({ where: authUser }); 
-      var token = jwt.sign({ userId: payload['sub'] }, process.env.JWT_SECRET, { expiresIn: '1h' });
-      
+      // TODO: Add CSRF protection. See https://www.npmjs.com/package/csurf
+      let token = jwt.sign({ userId: payload['sub'] }, process.env.JWT_SECRET, { expiresIn: '1h' });
       resolve(Service.successResponse(
         token,
         200,
@@ -42,6 +42,7 @@ const loginPOST = ({ loginRequest }) => new Promise(
         }
       ));
     } catch (e) {
+      console.log("/login:", e);
       reject(Service.rejectResponse(
         e.message || 'Invalid input',
         e.status || 405,
