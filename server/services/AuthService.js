@@ -35,7 +35,7 @@ const loginPOST = ({ loginRequest }) => new Promise(
         200,
         cookie={
           name: 'token',
-          token,
+          value: token,
           options: {
             httpOnly: true
           }

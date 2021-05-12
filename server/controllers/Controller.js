@@ -13,10 +13,24 @@ class Controller {
     */
     response.status(payload.code || 200);
     const responsePayload = payload.payload !== undefined ? payload.payload : payload;
+    
+    /** To send a cookie, set it as the third argument to SuccessResponse as follows:
+    * resolve(Service.successResponse(
+    *    payload,
+    *    statusCode,
+    *    cookie={
+    *      name: 'cookiename',
+    *      value: cookieValue,
+    *      options: {...}
+    *    }
+    *  ));
+    * 
+    * This currently supports setting one cookie at a time, but if needed can be modified
+    * to take an array and set cookies via .forEach().
+    */
     if (payload.cookie !== undefined && payload.cookie !== null) { 
-      console.log(payload);
       try {
-        response.cookie(payload.cookie.name, payload.cookie.token, payload.cookie.options);
+        response.cookie(payload.cookie.name, payload.cookie.value, payload.cookie.options);
       } catch (e) {
         console.log(e);
       }
@@ -78,6 +92,10 @@ class Controller {
 
   static collectRequestParams(request) {
     const requestParams = {};
+    // To access cookies, add 'cookies' parameter to Service argument, e.g. summarizePOST = ({ cookies, summarizeRequest }) => {...}
+    if (request.cookies !== undefined) {
+      requestParams['cookies'] = request.cookies;
+    }
     if (request.openapi.schema.requestBody !== undefined) {
       const { content } = request.openapi.schema.requestBody;
       if (content['application/json'] !== undefined) {

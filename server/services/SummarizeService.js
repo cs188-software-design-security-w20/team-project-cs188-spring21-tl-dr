@@ -36,14 +36,15 @@ deepai.setApiKey(process.env.DEEPAI_KEY);
 *             type: string
 *             format: date-time
 * */
-const summarizePOST = ({ summarizeRequest }) => new Promise(
+const summarizePOST = ({ cookies, summarizeRequest }) => new Promise(
   async (resolve, reject) => {
     try {
       // placeholder user to satisfy foreign key constraint of Summaries
       await User.findOrCreate({ where: { id: "e2b7df6e-df62-4d7d-9cdf-80c3f6058748", firstName: "Testy", lastName: "McTestFace", email: "tester@test.com" }}); 
       let row = {};
       let response = {};
-      // console.log(summarizeRequest);
+      console.log(cookies);
+      console.log(summarizeRequest);
       let text = '';
       if (summarizeRequest.hasOwnProperty('url')) {
         row.url = summarizeRequest.url;
