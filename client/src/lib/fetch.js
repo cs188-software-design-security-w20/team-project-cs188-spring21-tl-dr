@@ -9,9 +9,8 @@ export async function signupOrLoginUser(id_token) {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: { 
-      id_token
-    },
+    body: JSON.stringify({ id_token }),
   });
+  console.log(res);
   return await res.json(); // or res.text() depending on backend implementation
 }

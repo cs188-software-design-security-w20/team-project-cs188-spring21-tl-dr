@@ -2,7 +2,7 @@
 const Service = require('./Service');
 const { db, Summary, User } = require('../db/psql.js');
 const jwt = require('jsonwebtoken');
-
+const { OAuth2Client } = require('google-auth-library');
 /**
 * Log in user. New users will be signed up then logged in.
 * Given `id_token` from Google Sign In, verify token and authenticate user. If authentication is successful, set a JWT to establish user session.
@@ -10,46 +10,37 @@ const jwt = require('jsonwebtoken');
 * loginRequest LoginRequest User ID to retreive information for
 * returns Error
 * */
-
-const CLIENT_ID = '944387746626-hvgrqhj7ua1vlqsv6u0scddv0ac2djq0.apps.googleusercontent.com'; //TODO move to env file
-const SECRET = '343A58E25EA3F43698FE4BAE5ECA2'; // TODO generate + move to env file
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 const loginPOST = ({ loginRequest }) => new Promise(
   async (resolve, reject) => {
     try {
-      const id_token = loginRequest.id_token;
-      console.log(id_token);
-      
-      const {OAuth2Client} = require('google-auth-library');
-      const client = new OAuth2Client(CLIENT_ID);
-      async function verify() {
-        const ticket = await client.verifyIdToken({
-            idToken: id_token,
-            audience: CLIENT_ID,  
-        });
-        const payload = ticket.getPayload();
-        console.log(payload);
-        
-        const userid = payload['sub'];
-        const firstName = payload['given_name'];
-        const lastName = payload['family_name'];
-        const email = payload['email'];
-        const picture = payload['picture'];
-        await User.findOrCreate({ where: { id: userid, firstName: firstName, lastName: lastName, email: email, image: picture }}); 
-        
-        var token = jwt.sign({user: userid}, SECRET, {expiresIn: '1h'});
-        resolve(Service.successResponse(
-          token,
-          200
-        ));
+      const ticket = await client.verifyIdToken({
+          idToken: loginRequest.id_token,
+          audience: process.env.GOOGLE_CLIENT_ID,  
+      });
+      const payload = ticket.getPayload();
+      const authUser = {
+        id: payload['sub'], // reuse Google OAuth uuid for user id
+        firstName: payload['given_name'],
+        lastName: payload['family_name'],
+        email: payload['email'],
+        image: payload['picture']
       }
-      var token_error = (e) => reject(Service.rejectResponse(
-       'An error occurred while validating the token',
-       401
+      await User.findOrCreate({ where: authUser }); 
+      var token = jwt.sign({ userId: payload['sub'] }, process.env.JWT_SECRET, { expiresIn: '1h' });
+      
+      resolve(Service.successResponse(
+        token,
+        200,
+        cookie={
+          name: 'token',
+          token,
+          options: {
+            httpOnly: true
+          }
+        }
       ));
-
-      verify().catch(token_error)
-
     } catch (e) {
       reject(Service.rejectResponse(
         e.message || 'Invalid input',

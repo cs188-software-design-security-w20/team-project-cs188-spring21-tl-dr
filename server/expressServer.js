@@ -28,7 +28,7 @@ class ExpressServer {
   setupMiddleware() {
     // this.setupAllowedMedia();
     this.app.use(cors());
-    this.app.use(bodyParser.json({ limit: '14MB' }));
+    // this.app.use(bodyParser.json({ limit: '14MB' })); // deprecated
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(cookieParser());
@@ -60,7 +60,7 @@ class ExpressServer {
         this.app.use((err, req, res, next) => {
           // format errors
           res.status(err.status || 500).json({
-            message: "Bad request. See http://tldr-server.us-east-2.elasticbeanstalk.com/api-docs/ for proper request formats." || err.message || err,
+            message: err.message || err,
             errors: err.errors || '',
           });
         });

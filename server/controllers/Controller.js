@@ -13,6 +13,14 @@ class Controller {
     */
     response.status(payload.code || 200);
     const responsePayload = payload.payload !== undefined ? payload.payload : payload;
+    if (payload.cookie !== undefined && payload.cookie !== null) { 
+      console.log(payload);
+      try {
+        response.cookie(payload.cookie.name, payload.cookie.token, payload.cookie.options);
+      } catch (e) {
+        console.log(e);
+      }
+    }
     if (responsePayload instanceof Object) {
       response.json(responsePayload);
     } else {
