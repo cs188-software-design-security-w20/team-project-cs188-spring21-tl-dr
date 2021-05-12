@@ -1,7 +1,8 @@
 import { Link } from "gatsby";
 import * as React from "react";
-import {ISignupPageProps} from './index';
-
+import { ISignupPageProps } from './index';
+import { GoogleLogin } from 'react-google-login';
+import { signupOrLoginUser } from "../lib/fetch";
 
 const button: React.CSSProperties = {
     backgroundColor: "black",
@@ -27,6 +28,13 @@ const parseURLParams = function (params?: string): string[] | null {
 class Auth extends React.Component<ISignupPageProps> {
     constructor(props) {
         super(props);
+    }
+
+    responseGoogle = async (googleUser) => {
+        // console.log(googleUser);
+        // console.log(googleUser.getAuthResponse().id_token);
+        const res = await signupOrLoginUser(googleUser.getAuthResponse().id_token);
+        console.log(res);
     }
 
     render()
@@ -89,6 +97,16 @@ class Auth extends React.Component<ISignupPageProps> {
                                 width: 400,
                                 outline: 'none' }}
                                 />
+                                {/* TODO: styling */}
+                                <div>
+                                    Sign up with Google:
+                                    <GoogleLogin 
+                                    clientId="944387746626-hvgrqhj7ua1vlqsv6u0scddv0ac2djq0.apps.googleusercontent.com"
+                                    onSuccess={this.responseGoogle}
+                                    onFailure={this.responseGoogle}
+                                    cookiePolicy={'single_host_origin'}
+                                    />
+                                </div>
                                 <div style={{display: "flex", alignItems:"center", marginTop: 50}}>
                                     <div style={{textDecoration: "underline", color: "black", marginRight: 180, cursor: "pointer", fontFamily: "Open Sans" }}>
                                         <Link to ="/auth?signup=false" style={{color: "black"}}>Already Have an Account?</Link>
@@ -132,6 +150,16 @@ class Auth extends React.Component<ISignupPageProps> {
                                 width: 400,
                                 outline: 'none' }}
                                 />
+                                {/* TODO: styling */}
+                                <div>
+                                    Log in with Google: 
+                                    <GoogleLogin 
+                                    clientId="944387746626-hvgrqhj7ua1vlqsv6u0scddv0ac2djq0.apps.googleusercontent.com"
+                                    onSuccess={this.responseGoogle}
+                                    onFailure={this.responseGoogle}
+                                    cookiePolicy={'single_host_origin'}
+                                    />
+                                </div>
                                 <div style={{display: "flex", alignItems:"center", marginTop: 50}}>
                                     <div style={{textDecoration: "underline", color: "black", marginRight: 180, cursor: "pointer", fontFamily: "Open Sans" }}>
                                         <Link to ="/auth?signup=true" style={{color: "black"}}>Don't Have an Account?</Link>

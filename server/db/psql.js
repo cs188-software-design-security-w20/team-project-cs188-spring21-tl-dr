@@ -27,7 +27,7 @@ sequelize.authenticate().then(() => {
 // TODO: populate after Google signin. See https://developers.google.com/identity/sign-in/web/reference#googleusergetbasicprofile 
 const User = sequelize.define('User', { // Table will be autonamed 'Users'
   id: {
-    type: Sequelize.UUID,
+    type: Sequelize.STRING,
     primaryKey: true
   },
   firstName: {
@@ -58,7 +58,7 @@ const Summary = sequelize.define('Summary', { // Table will be autonamed 'Summar
     primaryKey: true
   },
   userId: {
-    type: Sequelize.UUID,
+    type: Sequelize.STRING,
     references: {
       model: User,
       key: 'id'
@@ -80,7 +80,13 @@ const Summary = sequelize.define('Summary', { // Table will be autonamed 'Summar
 
 // Synchronize models with database. This will create the tables if they do not exist.
 // To hard reset tables (drop and recreate), set { force: true }
-sequelize.sync({ force: true }).then(() => console.log("Table models synchronized."));
+const dropTables = false;
+sequelize.sync({ force: dropTables }).then(() => {
+  if (dropTables) {
+    console.log("PSQL:", "All tables dropped.")
+  }
+  console.log("PSQL:", "Table models synchronized.") 
+});
 
 module.exports = {
   _Sequelize: Sequelize,

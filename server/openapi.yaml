@@ -2,7 +2,9 @@ openapi: '3.0.0'
 info:
   title: TL;DR websites
   version: '1.0.0'
-#TODO: OAuth and security
+# WIP: OAuth and security
+# TODO: Finalize information returned by /user endpoints
+# TODO: Examples
 # USAGE: To regenerate boilerplate code, make sure openapi-generator-cli is installed, then from the ./server directory, 
 #        run  $openapi-generator-cli generate -g nodejs-express-server -o . -i .\openapi.yaml
 #        Note that existing files WILL be overwritten; you will need to manually revert changes to those.
@@ -29,7 +31,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
         default:
-          $ref: '#/components/responses/UnexpectedError'
+          $ref: '#/components/responses/Error'
   /user/summaries:
     get:
       tags:
@@ -45,7 +47,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Summary'
         default:
-          $ref: '#/components/responses/UnexpectedError'
+          $ref: '#/components/responses/Error'
   /user/summaries/{id}:
     get:
       tags:
@@ -63,24 +65,40 @@ paths:
         '200':
           $ref: '#/components/responses/Summary'
         default:
-          $ref: '#/components/responses/UnexpectedError'
+          $ref: '#/components/responses/Error'
   /login:
-    get:
+    post:
       tags:
       - auth
-      summary: Log in user.
-      description: Called after Google Sign In. Given Google's Auth response, set a JWT to establish user session.
+      summary: Log in user. New users will be signed up then logged in.
+      description: Given `id_token` from Google Sign In, verify token and authenticate user. If authentication is successful, set a JWT to establish user session.
       requestBody:
         description: User ID to retreive information for
         required: true
         content:
-          'text':
+          application/json:
             schema:
-              type: string
-              format: uuid
+              $ref: '#/components/schemas/LoginRequest'
       responses:
+        '303':
+          description: Redirect to home page. Sends the JWT in both the payload and Set-Cookie header.
+          headers:
+            Location:
+              schema:
+                description: Redirect URL
+                type: string
+            Set-Cookie:
+              schema:
+                type: string
+                example: token=some.jwt.token; Path=/; HttpOnly; 
+          content:
+            application/jwt:
+              schema:
+                type: string
+                format: jwt
         default:
-          $ref: '#/components/responses/UnexpectedError'
+          $ref: '#/components/responses/Error'
+      security: []
   /logout:
     get:
       tags:
@@ -90,15 +108,8 @@ paths:
         '204':
           description: Invalidate session cookie.
         default:
-          $ref: '#/components/responses/UnexpectedError'
-  /signup:
-    post:
-      tags:
-      - auth
-      summary: Sign up new user given credentials.
-      responses:
-        default:
-          $ref: '#/components/responses/UnexpectedError'
+          $ref: '#/components/responses/Error'
+      security: []
   /summarize:
     post:
       tags:
@@ -116,6 +127,12 @@ paths:
         '200':
           $ref: '#/components/responses/Summary'
 components:
+  securitySchemes:
+    JWTSessionCookie:
+      type: apiKey
+      description: JWT session cookie. Set after user logs in with Google Sign in and is verified by the /login endpoint.
+      name: token
+      in: cookie
   responses:
     Summary:
       description: Summarized text
@@ -123,8 +140,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Summary'
-    UnexpectedError:
-      description: Unexpected error
+    Error:
+      description: Wrapper for generic error response that displays the error code and error message.
       content:
         application/json:
           schema:
@@ -142,30 +159,42 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Summary'
+    LoginRequest:
+      type: object
+      required:
+      - id_token
+      - clientType
+      properties:
+        id_token:
+          description: id_token, as returned by `googleUser.getAuthResponse().id_token`
+          type: string
+        clientType:
+          description: client type, either 'web' OR 'ios'.
+          type: string
+          enum:
+            - web
+            - ios
     SummarizeRequest:
+      description: Request can contain either plaintext or a webpage URL, but not both.
       oneOf:
-        - $ref: '#/components/schemas/SummarizeByText'
-        - $ref: '#/components/schemas/SummarizeByURL'
-    SummarizeByText:
-      type: object
-      required:
-        - plaintext
-      properties:
-        plaintext:
-          type: string
-    SummarizeByURL:
-      type: object
-      required:
-        - url
-      properties:
-        url:
-          type: string
-          format: uri
+        - type: object
+          required:
+            - url
+          properties:
+            url:
+              type: string
+              format: uri
+        - type: object
+          required:
+            - plaintext
+          properties:
+            plaintext:
+              type: string
     Summary:
       type: object
       required:
         - id
-        - userID
+        - userId
         - summarizedText
         - createdAt
       properties:
@@ -173,9 +202,8 @@ components:
           type: string
           format: uuid
         userId:
-          # username (i.e. alphanumeric) or IDs (i.e. numeric)?
+          # unique Google user ID returned by Google Sign In. subject to change.
           type: string
-          format: uuid
         # if /summarize is called
         plaintext:
           description: Original text that was summarized.
@@ -203,7 +231,8 @@ components:
         message:
           description: Error message.
           type: string
-# security:
+security:
+  - JWTSessionCookie: []
 tags:
   - name: 'summarize'
     description: "Endpoints for summarizing input. "
