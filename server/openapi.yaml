@@ -81,14 +81,24 @@ paths:
               $ref: '#/components/schemas/LoginRequest'
       responses:
         '303':
-          description: Redirect to home page.
+          description: Redirect to home page. Sends the JWT in both the payload and Set-Cookie header.
           headers:
             Location:
               schema:
                 description: Redirect URL
                 type: string
+            Set-Cookie:
+              schema:
+                type: string
+                example: token=some.jwt.token; Path=/; HttpOnly; 
+          content:
+            application/jwt:
+              schema:
+                type: string
+                format: jwt
         default:
           $ref: '#/components/responses/Error'
+      security: []
   /logout:
     get:
       tags:
@@ -99,15 +109,7 @@ paths:
           description: Invalidate session cookie.
         default:
           $ref: '#/components/responses/Error'
-  /signup:
-    post:
-      tags:
-      - auth
-      summary: Sign up new user given credentials.
-      responses:
-        default:
-          $ref: '#/components/responses/Error'
-      deprecated: true
+      security: []
   /summarize:
     post:
       tags:
@@ -125,6 +127,12 @@ paths:
         '200':
           $ref: '#/components/responses/Summary'
 components:
+  securitySchemes:
+    JWTSessionCookie:
+      type: apiKey
+      description: JWT session cookie. Set after user logs in with Google Sign in and is verified by the /login endpoint.
+      name: token
+      in: cookie
   responses:
     Summary:
       description: Summarized text
@@ -155,10 +163,17 @@ components:
       type: object
       required:
       - id_token
+      - clientType
       properties:
         id_token:
           description: id_token, as returned by `googleUser.getAuthResponse().id_token`
           type: string
+        clientType:
+          description: client type, either 'web' OR 'ios'.
+          type: string
+          enum:
+            - web
+            - ios
     SummarizeRequest:
       description: Request can contain either plaintext or a webpage URL, but not both.
       oneOf:
@@ -179,7 +194,7 @@ components:
       type: object
       required:
         - id
-        - userID
+        - userId
         - summarizedText
         - createdAt
       properties:
@@ -187,9 +202,8 @@ components:
           type: string
           format: uuid
         userId:
-          # username (i.e. alphanumeric) or IDs (i.e. numeric)?
+          # unique Google user ID returned by Google Sign In. subject to change.
           type: string
-          format: uuid
         # if /summarize is called
         plaintext:
           description: Original text that was summarized.
@@ -217,7 +231,8 @@ components:
         message:
           description: Error message.
           type: string
-# security:
+security:
+  - JWTSessionCookie: []
 tags:
   - name: 'summarize'
     description: "Endpoints for summarizing input. "

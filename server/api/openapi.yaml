@@ -4,6 +4,8 @@ info:
   version: 1.0.0
 servers:
 - url: /
+security:
+- JWTSessionCookie: []
 tags:
 - description: 'Endpoints for summarizing input. '
   name: summarize
@@ -111,12 +113,24 @@ paths:
         required: true
       responses:
         "303":
-          description: Redirect to home page.
+          content:
+            application/jwt:
+              schema:
+                format: jwt
+                type: string
+          description: Redirect to home page. Sends the JWT in both the payload and
+            Set-Cookie header.
           headers:
             Location:
               explode: false
               schema:
                 description: Redirect URL
+                type: string
+              style: simple
+            Set-Cookie:
+              explode: false
+              schema:
+                example: token=some.jwt.token; Path=/; HttpOnly;
                 type: string
               style: simple
         default:
@@ -126,6 +140,7 @@ paths:
                 $ref: '#/components/schemas/Error'
           description: Wrapper for generic error response that displays the error
             code and error message.
+      security: []
       summary: Log in user. New users will be signed up then logged in.
       tags:
       - auth
@@ -143,23 +158,8 @@ paths:
                 $ref: '#/components/schemas/Error'
           description: Wrapper for generic error response that displays the error
             code and error message.
+      security: []
       summary: Log out user by invalidating JWT.
-      tags:
-      - auth
-      x-eov-operation-handler: controllers/AuthController
-  /signup:
-    post:
-      deprecated: true
-      operationId: signupPOST
-      responses:
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-          description: Wrapper for generic error response that displays the error
-            code and error message.
-      summary: Sign up new user given credentials.
       tags:
       - auth
       x-eov-operation-handler: controllers/AuthController
@@ -209,13 +209,13 @@ components:
           plaintext: plaintext
           summarizedText: summarizedText
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          userId: userId
           url: url
         - createdAt: 2000-01-23T04:56:07.000+00:00
           plaintext: plaintext
           summarizedText: summarizedText
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          userId: userId
           url: url
       properties:
         name:
@@ -229,12 +229,20 @@ components:
       type: object
     LoginRequest:
       example:
+        clientType: web
         id_token: id_token
       properties:
         id_token:
           description: id_token, as returned by `googleUser.getAuthResponse().id_token`
           type: string
+        clientType:
+          description: client type, either 'web' OR 'ios'.
+          enum:
+          - web
+          - ios
+          type: string
       required:
+      - clientType
       - id_token
       type: object
     SummarizeRequest:
@@ -249,14 +257,13 @@ components:
         plaintext: plaintext
         summarizedText: summarizedText
         id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        userId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        userId: userId
         url: url
       properties:
         id:
           format: uuid
           type: string
         userId:
-          format: uuid
           type: string
         plaintext:
           description: Original text that was summarized.
@@ -274,7 +281,7 @@ components:
       - createdAt
       - id
       - summarizedText
-      - userID
+      - userId
       type: object
     Error:
       example:
@@ -307,3 +314,10 @@ components:
       required:
       - plaintext
       type: object
+  securitySchemes:
+    JWTSessionCookie:
+      description: JWT session cookie. Set after user logs in with Google Sign in
+        and is verified by the /login endpoint.
+      in: cookie
+      name: token
+      type: apiKey

@@ -15,6 +15,14 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 const loginPOST = ({ loginRequest }) => new Promise(
   async (resolve, reject) => {
     try {
+      let audience;
+      if (loginRequest.clientType === 'web') {
+        audience = process.env.GOOGLE_CLIENT_ID_WEB;
+      } else if (loginRequest.clientType === 'ios') {
+        audience = process.env.GOOGLE_CLIENT_ID_IOS;
+      } else {
+        throw new Error("Invalid client type."); // should be caught by openAPI validator
+      }
       const ticket = await client.verifyIdToken({
           idToken: loginRequest.id_token,
           audience: process.env.GOOGLE_CLIENT_ID,  
@@ -68,27 +76,8 @@ const logoutGET = () => new Promise(
     }
   },
 );
-/**
-* Sign up new user given credentials.
-*
-* returns Error
-* */
-const signupPOST = () => new Promise(
-  async (resolve, reject) => {
-    try {
-      resolve(Service.successResponse({
-      }));
-    } catch (e) {
-      reject(Service.rejectResponse(
-        e.message || 'Invalid input',
-        e.status || 405,
-      ));
-    }
-  },
-);
 
 module.exports = {
   loginPOST,
   logoutGET,
-  signupPOST,
 };

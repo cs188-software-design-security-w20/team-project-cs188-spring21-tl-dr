@@ -16,13 +16,8 @@ const logoutGET = async (request, response) => {
   await Controller.handleRequest(request, response, service.logoutGET);
 };
 
-const signupPOST = async (request, response) => {
-  await Controller.handleRequest(request, response, service.signupPOST);
-};
-
 
 module.exports = {
   loginPOST,
   logoutGET,
-  signupPOST,
 };
