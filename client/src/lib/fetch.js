@@ -2,8 +2,6 @@ import { SERVER_URL } from '../constants';
 
 export async function signupOrLoginUser(id_token) {
   const loginEndpoint = `${SERVER_URL}/login`;
-  // Check if user exists at /user endpoint
-  console.log(id_token);
   const res = await fetch(loginEndpoint, {
     method: 'POST',
     headers: {

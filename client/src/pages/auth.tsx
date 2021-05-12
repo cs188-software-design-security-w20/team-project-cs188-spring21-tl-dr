@@ -34,11 +34,7 @@ class Auth extends React.Component<ISignupPageProps> {
         // console.log(googleUser);
         // console.log(googleUser.getAuthResponse().id_token);
         const res = await signupOrLoginUser(googleUser.getAuthResponse().id_token);
-        if (res.ok) {
-            //...redirect to main page
-        } else {
-            // throw some error or create an Alert?
-        }
+        console.log(res);
     }
 
     render()
