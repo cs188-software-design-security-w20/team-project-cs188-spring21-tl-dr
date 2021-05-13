@@ -21,6 +21,37 @@ const button: React.CSSProperties = {
   marginLeft: "25%",
 };
 
+const textArea: React.CSSProperties = {
+  fontSize: "16px",
+  width: "500px",
+  border: "5px solid #808080",
+  backgroundColor: "#C4C4C4",
+  outline: "none",
+  borderRadius: "20px",
+  padding: "5px",
+  paddingLeft: "10px",
+  paddingRight: "10px",
+  margin: "5px",
+  minWidth: "50%",
+  maxWidth: "75%",
+  minHeight: "200px"
+};
+
+const inputArea: React.CSSProperties = {
+  fontSize: "36px",
+  border: "5px solid #808080",
+  backgroundColor: "#C4C4C4",
+  display: "flex",
+  borderRadius: "30px",
+  padding: "5px",
+  paddingLeft: "10px",
+  paddingRight: "10px",
+  margin: "5px",
+  minHeight: "13px",
+  minWidth: "50%",
+  outline: "none",
+};
+
 const greyButton: React.CSSProperties = {
   backgroundColor: "#C4C4C4",
   color: "white",
@@ -42,24 +73,46 @@ const greyButton: React.CSSProperties = {
 const host = "http://localhost:3000"; //change to production server later
 class Home extends React.Component<
   ISignupPageProps,
-  { showInputField: boolean; input: string; summarized: string }
+  {
+    showInputField: boolean; // whether to show input view or summarized view
+    input: string;
+    summarized: string;
+    isInputText: boolean; // whether to show URL or text area input
+  }
 > {
   constructor(props) {
     super(props);
-    this.state = { showInputField: true, input: "", summarized: "" };
+    this.state = { showInputField: true, input: "", summarized: "", isInputText: false };
   }
   handleSummary = () => {
     console.log(this.state.input);
-    axios
-      .post(host + "/summarize", {
-        url: this.state.input,
-      })
-      .then((data) =>
-        this.setState({
-          summarized: data.data.summarizedText,
-          showInputField: false,
-        })
-      );
+
+    if (this.state.input.trim() !== "") {
+      if (!this.state.isInputText) {
+        axios
+          .post(host + "/summarize", {
+            url: this.state.input,
+          })
+          .then((data) =>
+            this.setState({
+              summarized: data.data.summarizedText,
+              showInputField: false,
+            })
+          );
+      }
+      else {
+        axios
+          .post(host + "/summarize", {
+            text: this.state.input,
+          })
+          .then((data) =>
+            this.setState({
+              summarized: data.data.summarizedText,
+              showInputField: false,
+            })
+          );
+      }
+    }
   };
   render() {
     return (
@@ -83,25 +136,18 @@ class Home extends React.Component<
               >
                 Summarize Me:
               </div>
-              <input
-                type="text"
-                style={{
-                  fontSize: "36px",
-                  border: "5px solid #808080",
-                  backgroundColor: "#C4C4C4",
-                  display: "flex",
-                  borderRadius: "30px",
-                  padding: "5px",
-                  paddingLeft: "10px",
-                  paddingRight: "10px",
-                  margin: "5px",
-                  minHeight: "13px",
-                  minWidth: "50%",
-                  outline: "none",
-                }}
-                onChange={(e) => this.setState({ input: e.target.value })}
-                value={this.state.input}
-              />
+              {this.state.isInputText ?
+                <textarea
+                  style={textArea}
+                  onChange={(e) => this.setState({ input: e.target.value })}
+                  value={this.state.input}
+                />
+                : <input
+                  type="text"
+                  style={inputArea}
+                  onChange={(e) => this.setState({ input: e.target.value })}
+                  value={this.state.input}
+                />}
               <div style={button} onClick={this.handleSummary}>
                 Go!
               </div>
@@ -115,7 +161,12 @@ class Home extends React.Component<
                 marginTop: 50,
               }}
             >
-              Enter a website URL or any chunk of text to summarize it!
+              Enter a website URL to summarize it!
+              <div
+                onClick={() => { this.setState({ isInputText: !this.state.isInputText }) }}
+                style={{ cursor: "pointer", textDecoration: "underline" }}
+              >
+                Or click here to enter a {this.state.isInputText ? "URL" : "chunk of text"}.</div>
             </div>
           </div>
         ) : (
