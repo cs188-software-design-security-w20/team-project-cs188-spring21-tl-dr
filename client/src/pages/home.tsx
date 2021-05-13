@@ -234,14 +234,6 @@ class Home extends React.Component<
               >
                 Back
               </div>
-              <div
-                style={button}
-                onClick={() => {
-                  this.setState({ showInputField: true });
-                }}
-              >
-                Save
-              </div>
             </div>
           </div>
         )}
