@@ -1,1 +1,1 @@
-export const SERVER_URL = "http://localhost:3000"
+export const SERVER_URL = process.env.GATSBY_SERVER_URL || "http://localhost:3000";
