@@ -72,8 +72,15 @@ const loginPOST = ({ loginRequest }) => new Promise(
 const logoutGET = () =>
   new Promise(async (resolve, reject) => {
     try {
-      resolve(Service.successResponse({
-      }));
+      resolve(Service.successResponse(
+        {},
+        204,
+        // To clear a cookie, provide its name and value=null
+        cookie = {
+          name: "token",
+          value: null,
+        }
+      ));
     } catch (e) {
       reject(Service.rejectResponse(
         e.message || 'Invalid input',

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 const Service = require('./Service');
-const { db, Summary, User, _Sequelize } = require('../db/psql.js');
+const { Summary, User, _Sequelize } = require('../db/psql.js');
 const jwt = require('jsonwebtoken');
 const createError = require('http-errors');
 /**
