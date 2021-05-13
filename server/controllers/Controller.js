@@ -30,7 +30,11 @@ class Controller {
     */
     if (payload.cookie !== undefined && payload.cookie !== null) { 
       try {
-        response.cookie(payload.cookie.name, payload.cookie.value, payload.cookie.options);
+        if (payload.cookie.value === null) {
+          response.clearCookie(payload.cookie.name);
+        } else {
+          response.cookie(payload.cookie.name, payload.cookie.value, payload.cookie.options);
+        }
       } catch (e) {
         console.log(e);
       }

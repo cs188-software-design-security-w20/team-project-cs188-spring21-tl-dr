@@ -1,8 +1,10 @@
 /* eslint-disable no-unused-vars */
 const Service = require('./Service');
-const { db, Summary, User } = require('../db/psql.js');
+const { User } = require('../db/psql.js');
 const jwt = require('jsonwebtoken');
 const { OAuth2Client } = require('google-auth-library');
+const createError = require('http-errors');
+
 /**
 * Log in user. New users will be signed up then logged in.
 * Given `id_token` from Google Sign In, verify token and authenticate user. If authentication is successful, set a JWT to establish user session.
@@ -10,23 +12,26 @@ const { OAuth2Client } = require('google-auth-library');
 * loginRequest LoginRequest User ID to retreive information for
 * returns Error
 * */
-const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+const webAuthClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID_WEB);
+const iosAuthClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID_IOS)
 
 const loginPOST = ({ loginRequest }) => new Promise(
   async (resolve, reject) => {
     try {
-      let audience;
+      let ticket;
       if (loginRequest.clientType === 'web') {
-        audience = process.env.GOOGLE_CLIENT_ID_WEB;
-      } else if (loginRequest.clientType === 'ios') {
-        audience = process.env.GOOGLE_CLIENT_ID_IOS;
-      } else {
-        throw new Error("Invalid client type."); // should be caught by openAPI validator
-      }
-      const ticket = await client.verifyIdToken({
+        ticket = await webAuthClient.verifyIdToken({
           idToken: loginRequest.id_token,
-          audience: process.env.GOOGLE_CLIENT_ID,  
-      });
+          audience: process.env.GOOGLE_CLIENT_ID_WEB
+        })
+      } else if (loginRequest.clientType === 'ios') {
+        ticket = await iosAuthClient.verifyIdToken({
+          idToken: loginRequest.id_token,
+          audience: process.env.GOOGLE_CLIENT_ID_IOS
+        })
+      } else {
+        throw createError(400, "Invalid client type."); // should be caught by openAPI validator
+      }
       const payload = ticket.getPayload();
       const authUser = {
         id: payload['sub'], // reuse unique Google ID for user id.
@@ -41,12 +46,12 @@ const loginPOST = ({ loginRequest }) => new Promise(
       resolve(Service.successResponse(
         token,
         200,
-        cookie={
-          name: 'token',
+        cookie = {
+          name: "token",
           value: token,
           options: {
-            httpOnly: true
-          }
+            httpOnly: true,
+          },
         }
       ));
     } catch (e) {
@@ -58,16 +63,24 @@ const loginPOST = ({ loginRequest }) => new Promise(
     }
   },
 );
+
 /**
-* Log out user by invalidating JWT.
-*
-* no response value expected for this operation
-* */
-const logoutGET = () => new Promise(
-  async (resolve, reject) => {
+ * Log out user by invalidating JWT.
+ *
+ * no response value expected for this operation
+ * */
+const logoutGET = () =>
+  new Promise(async (resolve, reject) => {
     try {
-      resolve(Service.successResponse({
-      }));
+      resolve(Service.successResponse(
+        {},
+        204,
+        // To clear a cookie, provide its name and value=null
+        cookie = {
+          name: "token",
+          value: null,
+        }
+      ));
     } catch (e) {
       reject(Service.rejectResponse(
         e.message || 'Invalid input',
