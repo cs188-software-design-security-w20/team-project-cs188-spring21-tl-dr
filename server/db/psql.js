@@ -5,16 +5,22 @@ const Sequelize = require('sequelize');
 /** Set up Sequelize instance and connect to Postgres.
  * For development, ensure you have a .env file in the \server directory that defines DB_USERNAME='' and DB_PASSWORD=''.
  */
-let options = config.DATABASE_OPTIONS;
-options.logging = () => {
-  (process.env.NODE_ENV === 'production') ? false : console.log;
-};
-let sequelize = new Sequelize(config.DATABASE, config.DATABASE_USERNAME, config.DATABASE_PASSWORD, options);
-sequelize.authenticate().then(() => {
-  console.log(`Connected to database ${config.DATABASE} (${config.DATABASE_OPTIONS.host}:${config.DATABASE_OPTIONS.port}) as user ${config.DATABASE_USERNAME}.`);
-}).catch((error) => {
-  console.error('Unable to connect to the database:', error);
-});
+let sequelize;
+try {
+  let options = config.DATABASE_OPTIONS;
+  console.log(options);
+  options.logging = () => {
+    (process.env.NODE_ENV === 'production') ? false : console.log;
+  };
+  sequelize = new Sequelize(config.DATABASE, config.DATABASE_USERNAME, config.DATABASE_PASSWORD, options);
+  sequelize.authenticate().then(() => {
+    console.log(`Connected to database ${config.DATABASE} (${config.DATABASE_OPTIONS.host}:${config.DATABASE_OPTIONS.port}) as user ${config.DATABASE_USERNAME}.`);
+  }).catch((error) => {
+    console.error('Unable to connect to the database:', error);
+  });
+} catch (e) {
+  console.log(e);
+}
 
 /** Define data models.
  * All models have createdAt and updatedAt fields automatically inserted. https://sequelize.org/master/manual/model-basics.html#timestamps

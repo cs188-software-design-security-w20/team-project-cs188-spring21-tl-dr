@@ -7,7 +7,7 @@ export async function signupOrLoginUser(id_token) {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ id_token }),
+    body: JSON.stringify({ id_token, clientType: "web" }),
   });
   console.log(res);
   return await res.text();
