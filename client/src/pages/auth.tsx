@@ -107,8 +107,8 @@ class Auth extends React.Component<ISignupPageProps> {
                                     Sign up with Google:
                                     <GoogleLogin 
                                     clientId="944387746626-hvgrqhj7ua1vlqsv6u0scddv0ac2djq0.apps.googleusercontent.com"
-                                    onSuccess={this.responseGoogle}
-                                    onFailure={this.responseGoogle}
+                                    onSuccess={this.handleLoginSuccess}
+                                    onFailure={this.handleLoginFailure}
                                     cookiePolicy={'single_host_origin'}
                                     />
                                 </div>
