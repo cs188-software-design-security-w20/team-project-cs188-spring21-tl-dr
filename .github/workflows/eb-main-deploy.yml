@@ -4,6 +4,7 @@ on:
       - main
     paths:
       - 'server/**'
+  workflow_dispatch:
 
 name: Deploy server to EB 'main' environment
 
