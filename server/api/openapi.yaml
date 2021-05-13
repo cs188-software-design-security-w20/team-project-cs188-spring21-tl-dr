@@ -17,16 +17,6 @@ paths:
   /user:
     get:
       operationId: userGET
-      parameters:
-      - description: User ID to retreive information for.
-        explode: true
-        in: cookie
-        name: id
-        required: true
-        schema:
-          format: uuid
-          type: string
-        style: form
       responses:
         "200":
           content:

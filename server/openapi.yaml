@@ -2,8 +2,6 @@ openapi: '3.0.0'
 info:
   title: TL;DR websites
   version: '1.0.0'
-# WIP: OAuth and security
-# TODO: Finalize information returned by /user endpoints
 # TODO: Examples
 # USAGE: To regenerate boilerplate code, make sure openapi-generator-cli is installed, then from the ./server directory, 
 #        run  $openapi-generator-cli generate -g nodejs-express-server -o . -i .\openapi.yaml
@@ -15,14 +13,14 @@ paths:
       tags: 
         - user
       summary: Returns information and stored summaries for current user.
-      parameters:
-        - name: id
-          in: cookie #placeholder until OAuth2 implemented
-          description: User ID to retreive information for.
-          required: true
-          schema:
-            type: string
-            format: uuid
+      # parameters:
+      #   - name: token
+      #     in: cookie #placeholder until OAuth2 implemented
+      #     description: User ID to retreive information for.
+      #     required: true
+      #     schema:
+      #       type: string
+      #       format: uuid
       responses:
         '200': 
           description: OK
@@ -55,7 +53,7 @@ paths:
       parameters:
         - name: id
           in: path
-          description: Summary ID for current user
+          description: UUID for saved Summary
           required: true
           schema:
             type: string
@@ -115,7 +113,6 @@ paths:
       tags:
       - summarize
       summary: Call DeepAI to summarize raw text or a webpage. Summary is saved under user's profile.
-      # TODO: get userID parameter from cookie
       requestBody:
         description: Input text or the URL of webpage to be summarized.
         required: true
