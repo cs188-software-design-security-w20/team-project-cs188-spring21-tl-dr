@@ -25,6 +25,7 @@
     "express-openapi-validator": "^3.9.1",
     "google-auth-library": "^7.0.4",
     "html-to-text": "^7.1.1",
+    "http-errors": "^1.7.2",
     "js-yaml": "^3.3.0",
     "jsonwebtoken": "^8.5.1",
     "node-fetch": "^2.6.1",
