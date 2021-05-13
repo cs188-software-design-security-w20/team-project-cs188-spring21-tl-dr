@@ -30,11 +30,16 @@ class Auth extends React.Component<ISignupPageProps> {
         super(props);
     }
 
-    responseGoogle = async (googleUser) => {
-        // console.log(googleUser);
-        // console.log(googleUser.getAuthResponse().id_token);
+    handleLoginSuccess = async (googleUser) => {
+        console.log(googleUser);
+        console.log(googleUser.getAuthResponse().id_token);
         const res = await signupOrLoginUser(googleUser.getAuthResponse().id_token);
         console.log(res);
+    };
+
+    handleLoginFailure = async (error) => {
+        console.log(error);
+        alert("login failed.");
     }
 
     render()
