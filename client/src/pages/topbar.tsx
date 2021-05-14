@@ -60,7 +60,7 @@ const TopBar = () => {
                 <GoogleLogout
                     clientId="944387746626-hvgrqhj7ua1vlqsv6u0scddv0ac2djq0.apps.googleusercontent.com"
                     buttonText="Logout"
-                    onLogoutSuccess={() => { navigate("/"); sessionStorage.clear()}}
+                    onLogoutSuccess={() => { navigate("/"); sessionStorage.clear() }}
                     render={(renderProps) =>
                         <div style={button}
                             onClick={renderProps.onClick}>
@@ -70,7 +70,7 @@ const TopBar = () => {
                 />
 
                 <div style={{ float: 'right', marginRight: '2%', marginTop: '0.25%', cursor: 'pointer' }}>
-                    <Link to="/profile"><img src={imgURL} style={profPic} /></Link>
+                    <Link to="/profile"><img src={imgURL ?? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"} style={profPic} /></Link>
                 </div>
                 <div style={{ float: 'right', marginRight: '2%', marginTop: '1.25%', fontFamily: "Open Sans" }}>Hi, {user}!</div>
             </div>
