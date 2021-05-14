@@ -114,12 +114,13 @@ class Home extends React.Component<
             },
             { withCredentials: true }
           )
-          .then((data) =>
+          .then((data) => {
+            console.log(data);
             this.setState({
               summarized: data.data.summarizedText,
               showInputField: false,
-            })
-          )
+            });
+          })
           .catch((err) => {
             alert(err);
           });
