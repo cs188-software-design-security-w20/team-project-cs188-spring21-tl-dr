@@ -1,5 +1,7 @@
 import * as React from "react";
 import { Link } from "gatsby";
+import { GoogleLogout } from 'react-google-login';
+import { navigate } from "gatsby";
 
 const topbar: React.CSSProperties = {
     height: 60,
@@ -50,19 +52,28 @@ const TopBar = () => {
     const [imgURL, setImgURL] = React.useState('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png');
     return (
         <div style={topbar}>
-            <div className="flex" style={{display: "flex-row"}}>
-                <div style={{fontFamily:"Rhodium Libre", fontSize: 36, marginLeft: 10, float: "left", cursor: "pointer"}}>
-                    <Link to="/home" style={{textDecoration: "none", color: "white"}}>TL;DR Websites</Link>
-                    </div>
-                <div style={button}>
-                    <Link to="/auth?signup=false" style={{textDecoration:'none', color: 'black'}}> Log Out</Link>
-                    </div>
-                <div style={{float: 'right', marginRight: '2%', marginTop: '0.25%', cursor: 'pointer'}}>
-                    <Link to="/profile"><img src={imgURL} style={profPic}/></Link>
+            <div className="flex" style={{ display: "flex-row" }}>
+                <div style={{ fontFamily: "Rhodium Libre", fontSize: 36, marginLeft: 10, float: "left", cursor: "pointer" }}>
+                    <Link to="/home" style={{ textDecoration: "none", color: "white" }}>TL;DR Websites</Link>
                 </div>
-                <div style={{float: 'right', marginRight: '2%', marginTop: '1.25%', fontFamily: "Open Sans"}}>Hi, {user}!</div>
+                <GoogleLogout
+                    clientId="944387746626-hvgrqhj7ua1vlqsv6u0scddv0ac2djq0.apps.googleusercontent.com"
+                    buttonText="Logout"
+                    onLogoutSuccess={() => { navigate("/") }}
+                    render={(renderProps) =>
+                        <div style={button}
+                            onClick={renderProps.onClick}>
+                            Log Out
+                        </div>
+                    }
+                />
+
+                <div style={{ float: 'right', marginRight: '2%', marginTop: '0.25%', cursor: 'pointer' }}>
+                    <Link to="/profile"><img src={imgURL} style={profPic} /></Link>
+                </div>
+                <div style={{ float: 'right', marginRight: '2%', marginTop: '1.25%', fontFamily: "Open Sans" }}>Hi, {user}!</div>
             </div>
-        </div>
+        </div >
     );
 };
 
