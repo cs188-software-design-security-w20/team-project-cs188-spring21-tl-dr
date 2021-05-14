@@ -116,9 +116,9 @@ class Profile extends React.Component<
   constructor(props) {
     super(props);
     this.state = {
-      username: sessionStorage.getItem('userInfo'),
-      imgURL: sessionStorage.getItem('imgUrl'),
-      email: sessionStorage.getItem('email'),
+      username: sessionStorage.getItem("userInfo"),
+      imgURL: sessionStorage.getItem("imgUrl"),
+      email: sessionStorage.getItem("email"),
       isEditing: false,
       saved: [
         { plaintext: "test1", summarizedText: "test" },
@@ -226,10 +226,22 @@ class Profile extends React.Component<
                   boxShadow: "2px 2px 2px 2px #6b6d70",
                 }}
               >
-                plaintext:{search.plaintext}
+                <div
+                  style={{ color: "black", fontWeight: "bold", fontSize: 20 }}
+                >
+                  Original Text
+                  <hr />
+                </div>
+                {search.plaintext}
                 <br></br>
                 <br></br>
-                SummarizedText:{search.summarizedText}
+                <div
+                  style={{ color: "black", fontWeight: "bold", fontSize: 20 }}
+                >
+                  Summarized Text
+                  <hr />
+                </div>
+                {search.summarizedText}
               </div>
             );
           })}

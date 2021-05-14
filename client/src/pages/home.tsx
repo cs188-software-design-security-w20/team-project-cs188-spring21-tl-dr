@@ -95,10 +95,15 @@ class Home extends React.Component<
     if (this.state.input.trim() !== "") {
       if (!this.state.isInputText) {
         axios
-          .post(host + "/summarize", {
-            url: this.state.input,
-            withCredentials: true,
-          })
+          .post(
+            host + "/summarize",
+            {
+              url: this.state.input,
+            },
+            {
+              withCredentials: true,
+            }
+          )
           .then((data) =>
             this.setState({
               summarized: data.data.summarizedText,
