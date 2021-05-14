@@ -9,6 +9,7 @@ target 'TLDR-Websites' do
 pod 'GoogleSignIn'
 pod 'Alamofire', '~> 5.2'
 pod 'SCLAlertView'
+pod 'NVActivityIndicatorView'
 
   target 'TLDR-WebsitesTests' do
     inherit! :search_paths

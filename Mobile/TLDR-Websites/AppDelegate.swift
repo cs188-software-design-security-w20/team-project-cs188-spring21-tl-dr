@@ -27,15 +27,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
          let email = user.profile.email
         let picture = user.profile.imageURL(withDimension: 100)
          // ...
-        
-        let userTotal = User(fullName: user.profile.name,lastName: user.profile.givenName, email: user.profile.email, picture: user.profile.imageURL(withDimension: 100))
+
+        let userTotal = User(fullName: user.profile.name,lastName: user.profile.givenName, email: user.profile.email, picture: user.profile.imageURL(withDimension: 200))
         
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(userTotal) {
             let defaults = UserDefaults.standard
             defaults.set(encoded, forKey: "userData")
         }
-        print(userId)
+        
     }
     
 

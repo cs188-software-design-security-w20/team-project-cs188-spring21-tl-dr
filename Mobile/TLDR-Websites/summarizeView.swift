@@ -8,11 +8,23 @@
 import UIKit
 import Alamofire
 import SCLAlertView
+import NVActivityIndicatorView
+import GoogleSignIn
 class summarizeView: UIViewController {
     @IBOutlet weak var choiceControl: UISegmentedControl!
     
+    @IBOutlet weak var buttonReference: UIButton!
+    @IBOutlet weak var stack: UIStackView!
+    @IBOutlet weak var animationPlay: NVActivityIndicatorView!
     @IBOutlet weak var sumText: UITextField!
     @IBAction func summarizeHit(_ sender: Any) {
+        animationPlay.startAnimating()
+        animationPlay.isHidden = false
+        
+        sumText.isHidden = true
+        buttonReference.isHidden = true
+        choiceControl.isHidden = true
+        stack.isHidden = true
         let requestUrl: URL = URL(string: "http://tldr-server.us-east-2.elasticbeanstalk.com/user")!
 
         
@@ -29,9 +41,15 @@ class summarizeView: UIViewController {
                        parameters: parameters , encoder:JSONParameterEncoder.default).responseJSON { response in
                         debugPrint(response)
                         SCLAlertView().showInfo("Congratulations", subTitle: "Your summary has been saved")
-
+                        self.sumText.isHidden = false
+                        self.stack.isHidden = false
+                        self.buttonReference.isHidden = false
+                        self.choiceControl.isHidden = false
+                        self.animationPlay.isHidden = true
 
                     }
+            
+            
         }
         else{
             let parameters: [String: String?] = [
@@ -44,8 +62,13 @@ class summarizeView: UIViewController {
                        parameters: parameters , encoder:JSONParameterEncoder.default).responseJSON { response in
                         debugPrint(response)
                         SCLAlertView().showInfo("Congratulations", subTitle: "Your summary has been saved")
+                        self.sumText.isHidden = false
+                        self.buttonReference.isHidden = false
+                        self.choiceControl.isHidden = false
+                        self.stack.isHidden = false
+                        self.animationPlay.isHidden = true
                     }
-            
+         
             
         }
 
@@ -57,8 +80,31 @@ class summarizeView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(HTTPCookieStorage.cookies)
-       
+        
+        struct data: Codable{
+            let clientType: String
+            let id_token: String
+            
+        }
+        
+        struct urlPar: Codable{
+            let url: String
+        }
+        let param = data(clientType: "ios", id_token: GIDSignIn.sharedInstance().currentUser.authentication.idToken)
+        print("Good!")
+        AF.request( "http://tldr-server.us-east-2.elasticbeanstalk.com/login",
+                   method: .post,
+                   parameters: param , encoder:JSONParameterEncoder.default).response { response in
+                    print(response)
+                    if let headerFields = response.response?.allHeaderFields as? [String: String], let URL = response.request?.url
+                            {
+                                 let cookies = HTTPCookie.cookies(withResponseHeaderFields: headerFields, for: URL)
+                                    
+                                 print(cookies)
+                        
+                            }
+                   }
+        
     }
         
     }

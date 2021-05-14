@@ -8,8 +8,10 @@
 import UIKit
 import Alamofire
 import SCLAlertView
+import NVActivityIndicatorView
 class summarizedTable: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var animationsLoading: NVActivityIndicatorView!
     @IBOutlet weak var table: UITableView!
     var summaries: [Summary] = []
     
@@ -30,7 +32,7 @@ class summarizedTable: UIViewController, UITableViewDelegate, UITableViewDataSou
         else
         {
             cell.textLabel?.text = (summaries[indexPath.row].url ?? summaries[indexPath.row].plaintext) ?? "No Name data available"
-            cell.textLabel?.font = cell.textLabel?.font.withSize(5)
+            cell.textLabel?.font = cell.textLabel?.font.withSize(15)
             cell.detailTextLabel?.text = (summaries[indexPath.row].createdAt ?? "No Date Provided")
         }
         
@@ -40,7 +42,13 @@ class summarizedTable: UIViewController, UITableViewDelegate, UITableViewDataSou
 
     override func viewDidLoad() {
         super.viewDidLoad()
+    
+        
+        
+    }
+    override func viewDidAppear(_ animated: Bool) {
         print("here")
+        animationsLoading.startAnimating()
         let decoder =  JSONDecoder()
         
         AF.request( "http://tldr-server.us-east-2.elasticbeanstalk.com/user/summaries",
@@ -53,15 +61,17 @@ class summarizedTable: UIViewController, UITableViewDelegate, UITableViewDataSou
                     
                         summaries = sums.summaries
                         summaries.reverse()
+                        let defaults = UserDefaults.standard
+                        defaults.setValue(summaries.count, forKey: "sumCount")
                         table.reloadData()
+                        animationsLoading.isHidden = true
+                        table.isHidden = false
                        }
                     catch let error {
                                         print(error)
                     }
 
                 }
-        
-        
     }
     
 

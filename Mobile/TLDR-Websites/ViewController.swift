@@ -21,6 +21,8 @@ class ViewController: UIViewController {
       
         if(GIDSignIn.sharedInstance()?.currentUser != nil)
         {
+            GIDSignIn.sharedInstance().restorePreviousSignIn()
+
             struct data: Codable{
                 let clientType: String
                 let id_token: String

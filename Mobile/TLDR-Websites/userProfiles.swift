@@ -6,9 +6,16 @@
 //
 
 import UIKit
-
+import GoogleSignIn
 class userProfiles: UIViewController {
 
+    @IBAction func signOut(_ sender: Any) {
+        GIDSignIn.sharedInstance().signOut()
+        performSegue(withIdentifier: "logOut", sender: self)
+        UserDefaults.resetStandardUserDefaults()
+
+    }
+    @IBOutlet weak var numSummaries: UILabel!
     @IBOutlet weak var profilePic: UIImageView!
     
     @IBOutlet weak var Name: UILabel!
@@ -20,6 +27,11 @@ class userProfiles: UIViewController {
             if let loadedPerson = try? decoder.decode(User.self, from: savedPerson) {
                 Name.text = loadedPerson.fullName
                 profilePic.load(url: loadedPerson.picture)
+                let defaults = UserDefaults.standard
+                if(defaults.integer(forKey: "sumCount") != nil){
+                    numSummaries.text = String(defaults.integer(forKey: "sumCount")) + " summaries saved"
+                    
+                }
             }
         }
     }

@@ -6,12 +6,12 @@
 //
 
 import UIKit
-
+import GoogleSignIn
 class loginView: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        GIDSignIn.sharedInstance()?.presentingViewController = self
         // Do any additional setup after loading the view.
     }
    

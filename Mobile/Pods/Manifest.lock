@@ -13,11 +13,15 @@ PODS:
     - AppAuth/Core (~> 1.4)
     - GTMSessionFetcher/Core (~> 1.5)
   - GTMSessionFetcher/Core (1.5.0)
+  - NVActivityIndicatorView (5.1.1):
+    - NVActivityIndicatorView/Base (= 5.1.1)
+  - NVActivityIndicatorView/Base (5.1.1)
   - SCLAlertView (0.8)
 
 DEPENDENCIES:
   - Alamofire (~> 5.2)
   - GoogleSignIn
+  - NVActivityIndicatorView
   - SCLAlertView
 
 SPEC REPOS:
@@ -27,6 +31,7 @@ SPEC REPOS:
     - GoogleSignIn
     - GTMAppAuth
     - GTMSessionFetcher
+    - NVActivityIndicatorView
     - SCLAlertView
 
 SPEC CHECKSUMS:
@@ -35,8 +40,9 @@ SPEC CHECKSUMS:
   GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
   GTMAppAuth: ad5c2b70b9a8689e1a04033c9369c4915bfcbe89
   GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
+  NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
   SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
 
-PODFILE CHECKSUM: 2863807539f83050ecccb3a41a9c8890694e295b
+PODFILE CHECKSUM: 09c90ec349f74bc90e8458278bc7e249a9ca69dd
 
 COCOAPODS: 1.10.1
