@@ -47,9 +47,10 @@ const profPic: React.CSSProperties = {
     MozBorderRadius: 100,
 };
 
+
 const TopBar = () => {
-    const [user, setUser] = React.useState("User");
-    const [imgURL, setImgURL] = React.useState('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png');
+    const [user, setUser] = React.useState(sessionStorage.getItem('userInfo'));
+    const [imgURL, setImgURL] = React.useState(sessionStorage.getItem('imgUrl'));
     return (
         <div style={topbar}>
             <div className="flex" style={{ display: "flex-row" }}>
@@ -59,7 +60,7 @@ const TopBar = () => {
                 <GoogleLogout
                     clientId="944387746626-hvgrqhj7ua1vlqsv6u0scddv0ac2djq0.apps.googleusercontent.com"
                     buttonText="Logout"
-                    onLogoutSuccess={() => { navigate("/") }}
+                    onLogoutSuccess={() => { navigate("/"); sessionStorage.clear()}}
                     render={(renderProps) =>
                         <div style={button}
                             onClick={renderProps.onClick}>
