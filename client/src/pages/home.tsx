@@ -34,7 +34,7 @@ const textArea: React.CSSProperties = {
   margin: "5px",
   minWidth: "50%",
   maxWidth: "75%",
-  minHeight: "200px"
+  minHeight: "200px",
 };
 
 const inputArea: React.CSSProperties = {
@@ -82,7 +82,12 @@ class Home extends React.Component<
 > {
   constructor(props) {
     super(props);
-    this.state = { showInputField: true, input: "", summarized: "", isInputText: false };
+    this.state = {
+      showInputField: true,
+      input: "",
+      summarized: "",
+      isInputText: false,
+    };
   }
   handleSummary = () => {
     console.log(this.state.input);
@@ -92,6 +97,7 @@ class Home extends React.Component<
         axios
           .post(host + "/summarize", {
             url: this.state.input,
+            withCredentials: true,
           })
           .then((data) =>
             this.setState({
@@ -99,18 +105,24 @@ class Home extends React.Component<
               showInputField: false,
             })
           );
-      }
-      else {
+      } else {
         axios
-          .post(host + "/summarize", {
-            text: this.state.input,
-          })
+          .post(
+            host + "/summarize",
+            {
+              plaintext: this.state.input,
+            },
+            { withCredentials: true }
+          )
           .then((data) =>
             this.setState({
               summarized: data.data.summarizedText,
               showInputField: false,
             })
-          );
+          )
+          .catch((err) => {
+            alert(err);
+          });
       }
     }
   };
@@ -136,18 +148,20 @@ class Home extends React.Component<
               >
                 Summarize Me:
               </div>
-              {this.state.isInputText ?
+              {this.state.isInputText ? (
                 <textarea
                   style={textArea}
                   onChange={(e) => this.setState({ input: e.target.value })}
                   value={this.state.input}
                 />
-                : <input
+              ) : (
+                <input
                   type="text"
                   style={inputArea}
                   onChange={(e) => this.setState({ input: e.target.value })}
                   value={this.state.input}
-                />}
+                />
+              )}
               <div style={button} onClick={this.handleSummary}>
                 Go!
               </div>
@@ -163,10 +177,14 @@ class Home extends React.Component<
             >
               Enter a website URL to summarize it!
               <div
-                onClick={() => { this.setState({ isInputText: !this.state.isInputText }) }}
+                onClick={() => {
+                  this.setState({ isInputText: !this.state.isInputText });
+                }}
                 style={{ cursor: "pointer", textDecoration: "underline" }}
               >
-                Or click here to enter a {this.state.isInputText ? "URL" : "chunk of text"}.</div>
+                Or click here to enter a{" "}
+                {this.state.isInputText ? "URL" : "chunk of text"}.
+              </div>
             </div>
           </div>
         ) : (

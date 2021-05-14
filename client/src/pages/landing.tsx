@@ -3,7 +3,7 @@ import { Link } from "gatsby";
 import { ISignupPageProps } from "./index";
 import ReactTypingEffect from "react-typing-effect";
 import GoogleLogin from "react-google-login";
-import { navigate } from "@reach/router";
+import { navigate } from "gatsby";
 import { signupOrLoginUser } from "../lib/fetch";
 
 const signupButton: React.CSSProperties = {
@@ -53,14 +53,13 @@ class Landing extends React.Component<ISignupPageProps, { hovered: boolean }> {
     console.log(googleUser);
     console.log(googleUser.getAuthResponse().id_token);
     const res = await signupOrLoginUser(googleUser.getAuthResponse().id_token);
-    navigate("/home");
-
+    navigate("/home/");
     console.log(res);
   };
 
   handleLoginFailure = async (error) => {
     console.log(error);
-    alert("login failed.");
+    // alert("login failed.");
   };
   render() {
     return (
