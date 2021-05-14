@@ -1,0 +1,6 @@
+framework module Pods_TLDR_Websites_TLDR_WebsitesUITests {
+  umbrella header "Pods-TLDR-Websites-TLDR-WebsitesUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

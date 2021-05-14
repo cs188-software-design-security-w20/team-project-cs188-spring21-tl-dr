@@ -3,10 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E4EF12A378335019C909F3F /* Pods_TLDR_Websites_TLDR_WebsitesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1F8DF81E621B836656A8F4E /* Pods_TLDR_Websites_TLDR_WebsitesUITests.framework */; };
+		64071485A489016966C631AB /* Pods_TLDR_Websites.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61CDA037FFBE3713B582B580 /* Pods_TLDR_Websites.framework */; };
+		AE75E893D02E75C35AEE1D82 /* Pods_TLDR_WebsitesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BD2C409A56E33AAB8E96180 /* Pods_TLDR_WebsitesTests.framework */; };
+		BE2B6351264CA58A005E68C5 /* summarizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2B6350264CA58A005E68C5 /* summarizeView.swift */; };
+		BE2B6353264DB5C7005E68C5 /* summarizedTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2B6352264DB5C7005E68C5 /* summarizedTable.swift */; };
 		BE9408A926312F0E0020F59F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9408A826312F0E0020F59F /* AppDelegate.swift */; };
 		BE9408AB26312F0E0020F59F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9408AA26312F0E0020F59F /* SceneDelegate.swift */; };
 		BE9408AD26312F0E0020F59F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9408AC26312F0E0020F59F /* ViewController.swift */; };
@@ -15,6 +20,10 @@
 		BE9408B526312F0F0020F59F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE9408B326312F0F0020F59F /* LaunchScreen.storyboard */; };
 		BE9408C026312F0F0020F59F /* TLDR_WebsitesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9408BF26312F0F0020F59F /* TLDR_WebsitesTests.swift */; };
 		BE9408CB26312F0F0020F59F /* TLDR_WebsitesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9408CA26312F0F0020F59F /* TLDR_WebsitesUITests.swift */; };
+		BEA3A05C26494CF5003F3A42 /* loginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA3A05B26494CF5003F3A42 /* loginView.swift */; };
+		BEA3A05E26494D0E003F3A42 /* signupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA3A05D26494D0E003F3A42 /* signupView.swift */; };
+		BEEBB40F264E296D00E1AF9D /* dataStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEBB40E264E296D00E1AF9D /* dataStructure.swift */; };
+		BEEBB413264E5C2C00E1AF9D /* userProfiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEBB412264E5C2C00E1AF9D /* userProfiles.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +44,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		39C0BD192E8158087B0274FB /* Pods-TLDR-WebsitesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TLDR-WebsitesTests.debug.xcconfig"; path = "Target Support Files/Pods-TLDR-WebsitesTests/Pods-TLDR-WebsitesTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4BD2C409A56E33AAB8E96180 /* Pods_TLDR_WebsitesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TLDR_WebsitesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		61CDA037FFBE3713B582B580 /* Pods_TLDR_Websites.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TLDR_Websites.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		69119A226A1150EDCD1A6FB3 /* Pods-TLDR-Websites-TLDR-WebsitesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TLDR-Websites-TLDR-WebsitesUITests.release.xcconfig"; path = "Target Support Files/Pods-TLDR-Websites-TLDR-WebsitesUITests/Pods-TLDR-Websites-TLDR-WebsitesUITests.release.xcconfig"; sourceTree = "<group>"; };
+		82FC1D093CFF5460F9484EE6 /* Pods-TLDR-Websites.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TLDR-Websites.debug.xcconfig"; path = "Target Support Files/Pods-TLDR-Websites/Pods-TLDR-Websites.debug.xcconfig"; sourceTree = "<group>"; };
+		96BAF12A756F27744FE82D67 /* Pods-TLDR-Websites.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TLDR-Websites.release.xcconfig"; path = "Target Support Files/Pods-TLDR-Websites/Pods-TLDR-Websites.release.xcconfig"; sourceTree = "<group>"; };
+		A9F7BFC93D2B889F6D913A2A /* Pods-TLDR-WebsitesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TLDR-WebsitesTests.release.xcconfig"; path = "Target Support Files/Pods-TLDR-WebsitesTests/Pods-TLDR-WebsitesTests.release.xcconfig"; sourceTree = "<group>"; };
+		AFE03C130BB9CB81C7BEB5A7 /* Pods-TLDR-Websites-TLDR-WebsitesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TLDR-Websites-TLDR-WebsitesUITests.debug.xcconfig"; path = "Target Support Files/Pods-TLDR-Websites-TLDR-WebsitesUITests/Pods-TLDR-Websites-TLDR-WebsitesUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		BE2B6350264CA58A005E68C5 /* summarizeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = summarizeView.swift; sourceTree = "<group>"; };
+		BE2B6352264DB5C7005E68C5 /* summarizedTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = summarizedTable.swift; sourceTree = "<group>"; };
 		BE9408A526312F0E0020F59F /* TLDR-Websites.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TLDR-Websites.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE9408A826312F0E0020F59F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BE9408AA26312F0E0020F59F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +68,11 @@
 		BE9408C626312F0F0020F59F /* TLDR-WebsitesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TLDR-WebsitesUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE9408CA26312F0F0020F59F /* TLDR_WebsitesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TLDR_WebsitesUITests.swift; sourceTree = "<group>"; };
 		BE9408CC26312F0F0020F59F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BEA3A05B26494CF5003F3A42 /* loginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginView.swift; sourceTree = "<group>"; };
+		BEA3A05D26494D0E003F3A42 /* signupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = signupView.swift; sourceTree = "<group>"; };
+		BEEBB40E264E296D00E1AF9D /* dataStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dataStructure.swift; sourceTree = "<group>"; };
+		BEEBB412264E5C2C00E1AF9D /* userProfiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userProfiles.swift; sourceTree = "<group>"; };
+		E1F8DF81E621B836656A8F4E /* Pods_TLDR_Websites_TLDR_WebsitesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TLDR_Websites_TLDR_WebsitesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64071485A489016966C631AB /* Pods_TLDR_Websites.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE75E893D02E75C35AEE1D82 /* Pods_TLDR_WebsitesTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,12 +96,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E4EF12A378335019C909F3F /* Pods_TLDR_Websites_TLDR_WebsitesUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		44762CAAEEC5774A22342889 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				61CDA037FFBE3713B582B580 /* Pods_TLDR_Websites.framework */,
+				E1F8DF81E621B836656A8F4E /* Pods_TLDR_Websites_TLDR_WebsitesUITests.framework */,
+				4BD2C409A56E33AAB8E96180 /* Pods_TLDR_WebsitesTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		BE94089C26312F0E0020F59F = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +120,8 @@
 				BE9408BE26312F0F0020F59F /* TLDR-WebsitesTests */,
 				BE9408C926312F0F0020F59F /* TLDR-WebsitesUITests */,
 				BE9408A626312F0E0020F59F /* Products */,
+				D77E2B8C0B4BA86AB9423298 /* Pods */,
+				44762CAAEEC5774A22342889 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -101,11 +140,17 @@
 			children = (
 				BE9408A826312F0E0020F59F /* AppDelegate.swift */,
 				BE9408AA26312F0E0020F59F /* SceneDelegate.swift */,
+				BEA3A05B26494CF5003F3A42 /* loginView.swift */,
+				BEA3A05D26494D0E003F3A42 /* signupView.swift */,
 				BE9408AC26312F0E0020F59F /* ViewController.swift */,
+				BEEBB40E264E296D00E1AF9D /* dataStructure.swift */,
+				BE2B6350264CA58A005E68C5 /* summarizeView.swift */,
 				BE9408AE26312F0E0020F59F /* Main.storyboard */,
+				BEEBB412264E5C2C00E1AF9D /* userProfiles.swift */,
 				BE9408B126312F0F0020F59F /* Assets.xcassets */,
 				BE9408B326312F0F0020F59F /* LaunchScreen.storyboard */,
 				BE9408B626312F0F0020F59F /* Info.plist */,
+				BE2B6352264DB5C7005E68C5 /* summarizedTable.swift */,
 			);
 			path = "TLDR-Websites";
 			sourceTree = "<group>";
@@ -128,6 +173,19 @@
 			path = "TLDR-WebsitesUITests";
 			sourceTree = "<group>";
 		};
+		D77E2B8C0B4BA86AB9423298 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				82FC1D093CFF5460F9484EE6 /* Pods-TLDR-Websites.debug.xcconfig */,
+				96BAF12A756F27744FE82D67 /* Pods-TLDR-Websites.release.xcconfig */,
+				AFE03C130BB9CB81C7BEB5A7 /* Pods-TLDR-Websites-TLDR-WebsitesUITests.debug.xcconfig */,
+				69119A226A1150EDCD1A6FB3 /* Pods-TLDR-Websites-TLDR-WebsitesUITests.release.xcconfig */,
+				39C0BD192E8158087B0274FB /* Pods-TLDR-WebsitesTests.debug.xcconfig */,
+				A9F7BFC93D2B889F6D913A2A /* Pods-TLDR-WebsitesTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,9 +193,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BE9408CF26312F0F0020F59F /* Build configuration list for PBXNativeTarget "TLDR-Websites" */;
 			buildPhases = (
+				D02D056809A0EC88DCEDD9DA /* [CP] Check Pods Manifest.lock */,
 				BE9408A126312F0E0020F59F /* Sources */,
 				BE9408A226312F0E0020F59F /* Frameworks */,
 				BE9408A326312F0E0020F59F /* Resources */,
+				3C6D8D4BEB4CF51D4A82356E /* [CP] Embed Pods Frameworks */,
+				F110AEE47843EDB5C189D394 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -152,6 +213,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BE9408D226312F0F0020F59F /* Build configuration list for PBXNativeTarget "TLDR-WebsitesTests" */;
 			buildPhases = (
+				9A51E0A768F54A2E962B2587 /* [CP] Check Pods Manifest.lock */,
 				BE9408B726312F0F0020F59F /* Sources */,
 				BE9408B826312F0F0020F59F /* Frameworks */,
 				BE9408B926312F0F0020F59F /* Resources */,
@@ -170,9 +232,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BE9408D526312F0F0020F59F /* Build configuration list for PBXNativeTarget "TLDR-WebsitesUITests" */;
 			buildPhases = (
+				1076600696A3A55F29D77DC4 /* [CP] Check Pods Manifest.lock */,
 				BE9408C226312F0F0020F59F /* Sources */,
 				BE9408C326312F0F0020F59F /* Frameworks */,
 				BE9408C426312F0F0020F59F /* Resources */,
+				A61FABD420E6B1BBE1F4DF8E /* [CP] Embed Pods Frameworks */,
+				5DCF5A89672ADA26E51B79FD /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -253,13 +318,156 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1076600696A3A55F29D77DC4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TLDR-Websites-TLDR-WebsitesUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3C6D8D4BEB4CF51D4A82356E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TLDR-Websites/Pods-TLDR-Websites-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TLDR-Websites/Pods-TLDR-Websites-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TLDR-Websites/Pods-TLDR-Websites-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5DCF5A89672ADA26E51B79FD /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TLDR-Websites-TLDR-WebsitesUITests/Pods-TLDR-Websites-TLDR-WebsitesUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TLDR-Websites-TLDR-WebsitesUITests/Pods-TLDR-Websites-TLDR-WebsitesUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TLDR-Websites-TLDR-WebsitesUITests/Pods-TLDR-Websites-TLDR-WebsitesUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9A51E0A768F54A2E962B2587 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TLDR-WebsitesTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A61FABD420E6B1BBE1F4DF8E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TLDR-Websites-TLDR-WebsitesUITests/Pods-TLDR-Websites-TLDR-WebsitesUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TLDR-Websites-TLDR-WebsitesUITests/Pods-TLDR-Websites-TLDR-WebsitesUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TLDR-Websites-TLDR-WebsitesUITests/Pods-TLDR-Websites-TLDR-WebsitesUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D02D056809A0EC88DCEDD9DA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TLDR-Websites-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F110AEE47843EDB5C189D394 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TLDR-Websites/Pods-TLDR-Websites-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TLDR-Websites/Pods-TLDR-Websites-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TLDR-Websites/Pods-TLDR-Websites-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		BE9408A126312F0E0020F59F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEEBB413264E5C2C00E1AF9D /* userProfiles.swift in Sources */,
+				BEA3A05E26494D0E003F3A42 /* signupView.swift in Sources */,
+				BEEBB40F264E296D00E1AF9D /* dataStructure.swift in Sources */,
 				BE9408AD26312F0E0020F59F /* ViewController.swift in Sources */,
 				BE9408A926312F0E0020F59F /* AppDelegate.swift in Sources */,
+				BEA3A05C26494CF5003F3A42 /* loginView.swift in Sources */,
+				BE2B6353264DB5C7005E68C5 /* summarizedTable.swift in Sources */,
+				BE2B6351264CA58A005E68C5 /* summarizeView.swift in Sources */,
 				BE9408AB26312F0E0020F59F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -433,6 +641,7 @@
 		};
 		BE9408D026312F0F0020F59F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 82FC1D093CFF5460F9484EE6 /* Pods-TLDR-Websites.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -446,11 +655,13 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				sdf = "";
 			};
 			name = Debug;
 		};
 		BE9408D126312F0F0020F59F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 96BAF12A756F27744FE82D67 /* Pods-TLDR-Websites.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -464,11 +675,13 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				sdf = "";
 			};
 			name = Release;
 		};
 		BE9408D326312F0F0020F59F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 39C0BD192E8158087B0274FB /* Pods-TLDR-WebsitesTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -490,6 +703,7 @@
 		};
 		BE9408D426312F0F0020F59F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A9F7BFC93D2B889F6D913A2A /* Pods-TLDR-WebsitesTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -511,6 +725,7 @@
 		};
 		BE9408D626312F0F0020F59F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AFE03C130BB9CB81C7BEB5A7 /* Pods-TLDR-Websites-TLDR-WebsitesUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -530,6 +745,7 @@
 		};
 		BE9408D726312F0F0020F59F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 69119A226A1150EDCD1A6FB3 /* Pods-TLDR-Websites-TLDR-WebsitesUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
