@@ -1,0 +1,22 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'TLDR-Websites' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for TLDR-Websites
+pod 'GoogleSignIn'
+pod 'Alamofire', '~> 5.2'
+pod 'SCLAlertView'
+
+  target 'TLDR-WebsitesTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+  target 'TLDR-WebsitesUITests' do
+    # Pods for testing
+  end
+
+end

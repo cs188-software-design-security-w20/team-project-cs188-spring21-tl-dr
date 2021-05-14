@@ -1,0 +1,6 @@
+framework module Pods_TLDR_Websites {
+  umbrella header "Pods-TLDR-Websites-umbrella.h"
+
+  export *
+  module * { export * }
+}
