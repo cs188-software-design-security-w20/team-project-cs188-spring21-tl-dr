@@ -73,6 +73,9 @@ const TopBar = () => {
                     <Link to="/profile"><img src={imgURL ?? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"} style={profPic} /></Link>
                 </div>
                 <div style={{ float: 'right', marginRight: '2%', marginTop: '1.25%', fontFamily: "Open Sans" }}>Hi, {user}!</div>
+                <div style={{ float: 'right', marginRight: '2%', marginTop: '1%', fontFamily: "Open Sans", fontWeight: "bold" }}>
+                    <Link to="/global"><img style={{ width: "35px" }} src={"https://icon-library.com/images/white-globe-icon/white-globe-icon-24.jpg"} /></Link>
+                </div>
             </div>
         </div >
     );
