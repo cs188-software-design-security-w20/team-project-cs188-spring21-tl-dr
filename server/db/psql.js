@@ -81,12 +81,15 @@ const Summary = sequelize.define('Summary', { // Table will be autonamed 'Summar
   },
   summarizedText: {
     type: Sequelize.TEXT
+  },
+  isPublic: {
+    type: Sequelize.BOOLEAN
   }
 }, {})
 
 // Synchronize models with database. This will create the tables if they do not exist.
-// To hard reset tables (drop and recreate), set { force: true }
-const dropTables = false;
+// To hard reset tables (drop and recreate), set dropTables = true
+const dropTables = true;
 sequelize.sync({ force: dropTables }).then(() => {
   if (dropTables) {
     console.log("PSQL:", "All tables dropped.")

@@ -62,7 +62,7 @@ paths:
     get:
       operationId: userSummariesIdGET
       parameters:
-      - description: Summary ID for current user
+      - description: UUID for saved Summary
         explode: false
         in: path
         name: id
@@ -175,6 +175,23 @@ paths:
       tags:
       - summarize
       x-eov-operation-handler: controllers/SummarizeController
+  /feed:
+    get:
+      operationId: feedGET
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Summary'
+                type: array
+          description: OK
+      security: []
+      summary: Returns list of all publicly viewable summaries.
+      tags:
+      - feed
+      x-eov-operation-handler: controllers/FeedController
 components:
   responses:
     Summary:
@@ -196,12 +213,14 @@ components:
         name: name
         summaries:
         - createdAt: 2000-01-23T04:56:07.000+00:00
+          isPublic: true
           plaintext: plaintext
           summarizedText: summarizedText
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           userId: userId
           url: url
         - createdAt: 2000-01-23T04:56:07.000+00:00
+          isPublic: true
           plaintext: plaintext
           summarizedText: summarizedText
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -220,16 +239,18 @@ components:
     LoginRequest:
       example:
         clientType: web
-        id_token: id_token
+        id_token: xxxxx.yyyyy.zzzzz
       properties:
         id_token:
           description: id_token, as returned by `googleUser.getAuthResponse().id_token`
+          example: xxxxx.yyyyy.zzzzz
           type: string
         clientType:
           description: client type, either 'web' OR 'ios'.
           enum:
           - web
           - ios
+          example: web
           type: string
       required:
       - clientType
@@ -244,6 +265,7 @@ components:
     Summary:
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
+        isPublic: true
         plaintext: plaintext
         summarizedText: summarizedText
         id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -267,6 +289,9 @@ components:
           description: Time summary was first requested.
           format: date-time
           type: string
+        isPublic:
+          description: Whether the summary appears on the global summaries feed.
+          type: boolean
       required:
       - createdAt
       - id
@@ -290,18 +315,33 @@ components:
       - message
       type: object
     SummarizeRequest_oneOf:
+      example:
+        url: https://en.wikipedia.org/wiki/Mars_Climate_Orbiter
+        isPublic: true
       properties:
         url:
           format: uri
           type: string
+        isPublic:
+          description: Whether the summary appears on the global summaries feed.
+          type: boolean
       required:
+      - isPublic
       - url
       type: object
     SummarizeRequest_oneOf_1:
+      example:
+        plaintext: |
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In quis nulla malesuada, vulputate ex in, vestibulum ligula. Sed consequat erat tincidunt urna consequat euismod. Praesent vel leo faucibus, ullamcorper augue quis, eleifend mi. Phasellus vitae mauris fermentum, dapibus augue a, rutrum libero. Nulla vitae malesuada ante. Ut euismod tellus auctor massa congue, et feugiat enim ornare. Nulla mi felis, tristique eu enim et, condimentum porttitor urna. Aliquam erat volutpat. Aliquam erat volutpat. Etiam vitae elit ac lectus feugiat tempus. Nunc porttitor sit amet nisi eget tristique. Donec sit amet tortor erat. Fusce eu metus ex. Mauris sit amet justo sit amet dui fringilla eleifend. Duis accumsan velit eros, non imperdiet nibh viverra nec. Etiam congue iaculis massa eleifend condimentum. Suspendisse potenti. Morbi hendrerit vestibulum leo quis ornare. Proin vel vehicula est. Aliquam non vehicula arcu. Etiam eleifend pharetra justo, et dignissim dui pharetra nec. Pellentesque gravida tincidunt feugiat. Nunc sodales id arcu a dapibus. Nunc eget libero consectetur, dignissim dolorullamcorper, tempor ipsum. Nunc blandit justo eu eros porttitor tempor. Quisque sed leo venenatis, posuere leo sit amet, commodo tortor."
+        isPublic: false
       properties:
         plaintext:
           type: string
+        isPublic:
+          description: Whether the summary appears on the global summaries feed.
+          type: boolean
       required:
+      - isPublic
       - plaintext
       type: object
   securitySchemes:
