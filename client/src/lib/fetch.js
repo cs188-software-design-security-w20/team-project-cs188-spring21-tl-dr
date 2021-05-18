@@ -11,4 +11,5 @@ export async function signupOrLoginUser(id_token) {
     },
     { withCredentials: true }
   );
+  return res;
 }
