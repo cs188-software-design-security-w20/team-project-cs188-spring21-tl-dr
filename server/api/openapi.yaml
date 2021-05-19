@@ -153,6 +153,24 @@ paths:
       tags:
       - auth
       x-eov-operation-handler: controllers/AuthController
+  /csrf-token:
+    get:
+      operationId: csrf_tokenGET
+      responses:
+        "200":
+          description: Set anti-CSRF cookie.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Wrapper for generic error response that displays the error
+            code and error message.
+      security: []
+      summary: Get anti-CSRF token. Use on app startup.
+      tags:
+      - auth
+      x-eov-operation-handler: controllers/AuthController
   /summarize:
     post:
       operationId: summarizePOST

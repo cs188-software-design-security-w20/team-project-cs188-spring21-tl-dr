@@ -91,6 +91,7 @@ const logoutGET = () =>
 );
 
 module.exports = {
+  csrf_tokenGET,
   loginPOST,
   logoutGET,
 };

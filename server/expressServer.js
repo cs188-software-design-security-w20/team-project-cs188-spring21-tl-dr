@@ -11,6 +11,7 @@ const bodyParser = require("body-parser");
 const { OpenApiValidator } = require("express-openapi-validator");
 const logger = require("./logger");
 const config = require("./config");
+const csurf = require("csurf");
 
 class ExpressServer {
   constructor(port, openApiYaml) {
@@ -42,13 +43,9 @@ class ExpressServer {
     );
     //View the openapi document in a visual interface. Should be able to test from this page
     this.app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(this.schema));
-    this.app.get("/login-redirect", (req, res) => {
-      res.status(200);
-      res.json(req.query);
-    });
-    this.app.get("/oauth2-redirect.html", (req, res) => {
-      res.status(200);
-      res.json(req.query);
+    this.app.use(csurf({ cookie: true }));
+    this.app.get('/csrf-token', (req, res) => {
+      res.json({ csrfToken: req.csrfToken() });
     });
   }
 
