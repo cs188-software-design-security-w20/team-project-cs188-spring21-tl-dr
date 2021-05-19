@@ -1,7 +1,7 @@
 /*
     Just displays ALL user summaries ever requested? (in summarized form)
 */
-
+import date from "date-and-time";
 import axios from "axios";
 import * as React from "react";
 import { SERVER_URL } from "../constants";
@@ -12,8 +12,24 @@ interface Summary {
   plaintext?: String;
   url?: String;
   summarizedText: String;
+  name: String;
+  pic: String;
+  time: String;
 }
-class Global extends React.Component<ISignupPageProps> {
+const profPic: React.CSSProperties = {
+  padding: 2,
+  height: 45,
+  backgroundSize: "cover",
+  display: "block",
+  borderRadius: 100,
+
+  WebkitBorderRadius: 100,
+  MozBorderRadius: 100,
+};
+class Global extends React.Component<
+  ISignupPageProps,
+  { summaries: Summary[] }
+> {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,18 +43,22 @@ class Global extends React.Component<ISignupPageProps> {
     console.log(res);
     this.setState({
       summaries: res.data.map((s) => {
+        let created = date.parse(s.summary.createdAt, "YYYY-MM-DD[T]hh:mm...");
+        console.log(s.summary.createdAt);
         return {
-          plaintext: s.plaintext,
-          summarizedText: s.summarizedText,
-          url: s.url,
+          plaintext: s.summary.plaintext,
+          summarizedText: s.summary.summarizedText,
+          time: date.format(created, "hh:mm A, MMM DD YYYY"),
+          url: s.summary.url,
+          name: (s.user[0].firstName ?? "") + (s.user[0].lastname ?? ""),
+          pic: s.user[0].image,
         };
       }),
     });
-    return res;
   };
   componentDidMount() {
     this.getUserSummaries();
-    setInterval(() => this.getUserSummaries(), 50000);
+    // setInterval(() => this.getUserSummaries(), 50000);
   }
 
   render() {
@@ -46,40 +66,86 @@ class Global extends React.Component<ISignupPageProps> {
     const summaries: string[] = ["test1", "test2"];
 
     return (
-      <div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         <TopBar />
         <div
           style={{
             textAlign: "center",
             fontFamily: "Rhodium Libre",
             fontSize: 36,
-            marginTop: 150,
+            marginTop: 100,
           }}
         >
           See what others are summarizing 👀
         </div>
-        {summaries.map((s) => {
+        {this.state.summaries.map((s, ind) => {
           return (
             <div
               style={{
-                width: 500,
-                marginLeft: "31%",
+                width: "50%",
                 marginTop: 20,
                 marginBottom: 20,
-                borderRadius: 15,
+                borderRadius: 10,
+                border: "solid",
+                borderColor: "#CCC",
+                borderWidth: "0.5px",
                 minHeight: 50,
-                backgroundColor: "#C4C4C4",
-                color: "white",
-                padding: 10,
+                backgroundColor: "#FFF",
+                color: "black",
+                padding: 30,
                 fontFamily: "Open Sans",
-                boxShadow: "2px 2px 2px 2px #6b6d70",
+                boxShadow: "4px 4px 20px #DDD",
               }}
+              key={ind}
             >
-              <div style={{ color: "black", fontWeight: "bold", fontSize: 20 }}>
-                User: koolkat238
-                <hr />
-                {s}
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <img src={String(s.pic)} style={profPic} />
+                <div
+                  style={{
+                    padding: "0 10px",
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontWeight: "bold",
+                      fontSize: 20,
+                    }}
+                  >
+                    {s.name ?? "Anonymous"}
+                  </div>
+                  <div style={{ color: "#999" }}>{s.time} </div>
+                </div>
               </div>
+              <hr />
+              {s.url ? (
+                <span style={{ fontWeight: 800 }}>
+                  Summarized from{" "}
+                  <a
+                    style={{ textDecoration: "none" }}
+                    target="blank"
+                    href={String(s.url)}
+                  >
+                    {" "}
+                    here{" "}
+                  </a>{" "}
+                  :
+                  <br />
+                </span>
+              ) : (
+                <span style={{ fontWeight: 800 }}>
+                  {s.url ? `Summarized from ${s.url}:` : "Summarized: "}
+                  <br />
+                </span>
+              )}
+              {s.summarizedText}
             </div>
           );
         })}
