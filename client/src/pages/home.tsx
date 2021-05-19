@@ -78,6 +78,7 @@ class Home extends React.Component<
     input: string;
     summarized: string;
     isInputText: boolean; // whether to show URL or text area input
+    makePublic: boolean; // whether to make a summary public
   }
 > {
   constructor(props) {
@@ -87,6 +88,7 @@ class Home extends React.Component<
       input: "",
       summarized: "",
       isInputText: false,
+      makePublic: false
     };
   }
   handleSummary = () => {
@@ -99,6 +101,7 @@ class Home extends React.Component<
             host + "/summarize",
             {
               url: this.state.input,
+              isPublic: this.state.makePublic
             },
             {
               withCredentials: true,
@@ -116,6 +119,7 @@ class Home extends React.Component<
             host + "/summarize",
             {
               plaintext: this.state.input,
+              isPublic: this.state.makePublic
             },
             { withCredentials: true }
           )
@@ -133,6 +137,7 @@ class Home extends React.Component<
     }
   };
   render() {
+    console.log(this.state.makePublic)
     return (
       <div>
         <TopBar />
@@ -150,9 +155,17 @@ class Home extends React.Component<
                   fontSize: 36,
                   fontFamily: "Rhodium Libre",
                   marginLeft: 10,
+                  display: "flex",
+                  flexDirection: "row",
                 }}
               >
                 Summarize Me:
+                <input type="checkbox"
+                  name="isPublic"
+                  value="Public"
+                  style={{ marginTop: "30px", marginLeft: "75px" }}
+                  onClick={() => { this.setState({ makePublic: !this.state.makePublic }) }} />
+                <div style={{ fontSize: "16px", marginTop: "25px" }}>Make Public?</div>
               </div>
               {this.state.isInputText ? (
                 <textarea
