@@ -1,6 +1,8 @@
 import * as React from "react";
 import { Link } from "gatsby";
 import { GoogleLogout } from "react-google-login";
+import logoutIcon from "../images/logout.png";
+import globeIcon from "../images/globe.jpeg";
 import { navigate } from "gatsby";
 
 const topbar: React.CSSProperties = {
@@ -19,10 +21,10 @@ const topbar: React.CSSProperties = {
 };
 
 const button: React.CSSProperties = {
-  backgroundColor: "white",
-  borderRadius: 15,
-  marginLeft: 5,
+  backgroundImage: `url(${logoutIcon})`,
+  backgroundSize: "cover",
   fontFamily: "Open Sans",
+  width: 15,
   fontSize: 18,
   zIndex: 2,
   color: "black",
@@ -31,7 +33,7 @@ const button: React.CSSProperties = {
   paddingRight: 10,
   paddingTop: 5,
   float: "right",
-  marginRight: 10,
+  marginRight: 30,
   marginTop: 12,
   cursor: "pointer",
 };
@@ -57,7 +59,8 @@ const TopBar = () => {
           style={{
             fontFamily: "Rhodium Libre",
             fontSize: 36,
-            marginLeft: 10,
+            marginTop: 3,
+            marginLeft: 20,
             float: "left",
             cursor: "pointer",
           }}
@@ -74,16 +77,14 @@ const TopBar = () => {
             sessionStorage.clear();
           }}
           render={(renderProps) => (
-            <div style={button} onClick={renderProps.onClick}>
-              Log Out
-            </div>
+            <div style={button} onClick={renderProps.onClick} />
           )}
         />
 
         <div
           style={{
             float: "right",
-            marginRight: "2%",
+            marginRight: "25px",
             marginTop: "0.25%",
             cursor: "pointer",
           }}
@@ -98,32 +99,27 @@ const TopBar = () => {
             />
           </Link>
         </div>
-        <div
+        {/*<div
           style={{
             float: "right",
-            marginRight: "2%",
+            marginRight: "10px",
             marginTop: "1.25%",
             fontFamily: "Open Sans",
           }}
         >
           Hi, {user}!
-        </div>
+        </div>*/}
         <div
           style={{
             float: "right",
-            marginRight: "2%",
-            marginTop: "1%",
+            marginRight: "25px",
+            marginTop: "0.25%",
             fontFamily: "Open Sans",
             fontWeight: "bold",
           }}
         >
           <Link to="/global">
-            <img
-              style={{ width: "35px" }}
-              src={
-                "https://icon-library.com/images/white-globe-icon/white-globe-icon-24.jpg"
-              }
-            />
+            <img style={profPic} src={globeIcon} />
           </Link>
         </div>
       </div>
