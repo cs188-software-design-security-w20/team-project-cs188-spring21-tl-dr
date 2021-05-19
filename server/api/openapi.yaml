@@ -3,16 +3,16 @@ info:
   title: TL;DR websites
   version: 1.0.0
 servers:
-  - url: /
+- url: /
 security:
-  - JWTSessionCookie: []
+- JWTSessionCookie: []
 tags:
-  - description: "Endpoints for summarizing input. "
-    name: summarize
-  - description: Endpoints for retrieving the user's profile and stored summaries.
-    name: user
-  - description: Endpoints for handling authentication and user creation.
-    name: auth
+- description: 'Endpoints for summarizing input. '
+  name: summarize
+- description: Endpoints for retrieving the user's profile and stored summaries.
+  name: user
+- description: Endpoints for handling authentication and user creation.
+  name: auth
 paths:
   /user:
     get:
@@ -22,19 +22,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
+                $ref: '#/components/schemas/User'
           description: OK
         default:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
-          description:
-            Wrapper for generic error response that displays the error
+                $ref: '#/components/schemas/Error'
+          description: Wrapper for generic error response that displays the error
             code and error message.
       summary: Returns information and stored summaries for current user.
       tags:
-        - user
+      - user
       x-eov-operation-handler: controllers/UserController
   /user/summaries:
     get:
@@ -45,64 +44,61 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: "#/components/schemas/Summary"
+                  $ref: '#/components/schemas/Summary'
                 type: array
           description: OK
         default:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
-          description:
-            Wrapper for generic error response that displays the error
+                $ref: '#/components/schemas/Error'
+          description: Wrapper for generic error response that displays the error
             code and error message.
       summary: Returns list of summaries for current user.
       tags:
-        - user
+      - user
       x-eov-operation-handler: controllers/UserController
   /user/summaries/{id}:
     get:
       operationId: userSummariesIdGET
       parameters:
-        - description: UUID for saved Summary
-          explode: false
-          in: path
-          name: id
-          required: true
-          schema:
-            format: uuid
-            type: string
-          style: simple
+      - description: UUID for saved Summary
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Summary"
+                $ref: '#/components/schemas/Summary'
           description: Summarized text
         default:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
-          description:
-            Wrapper for generic error response that displays the error
+                $ref: '#/components/schemas/Error'
+          description: Wrapper for generic error response that displays the error
             code and error message.
       summary: Return summary with given id.
       tags:
-        - user
+      - user
       x-eov-operation-handler: controllers/UserController
   /login:
     post:
-      description:
-        Given `id_token` from Google Sign In, verify token and authenticate
+      description: Given `id_token` from Google Sign In, verify token and authenticate
         user. If authentication is successful, set a JWT to establish user session.
       operationId: loginPOST
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/LoginRequest"
+              $ref: '#/components/schemas/LoginRequest'
         description: User ID to retreive information for
         required: true
       responses:
@@ -112,8 +108,7 @@ paths:
               schema:
                 format: jwt
                 type: string
-          description:
-            Redirect to home page. Sends the JWT in both the payload and
+          description: Redirect to home page. Sends the JWT in both the payload and
             Set-Cookie header.
           headers:
             Location:
@@ -132,14 +127,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
-          description:
-            Wrapper for generic error response that displays the error
+                $ref: '#/components/schemas/Error'
+          description: Wrapper for generic error response that displays the error
             code and error message.
       security: []
       summary: Log in user. New users will be signed up then logged in.
       tags:
-        - auth
+      - auth
       x-eov-operation-handler: controllers/AuthController
   /logout:
     get:
@@ -151,14 +145,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
-          description:
-            Wrapper for generic error response that displays the error
+                $ref: '#/components/schemas/Error'
+          description: Wrapper for generic error response that displays the error
             code and error message.
       security: []
       summary: Log out user by invalidating JWT.
       tags:
-        - auth
+      - auth
       x-eov-operation-handler: controllers/AuthController
   /summarize:
     post:
@@ -167,7 +160,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SummarizeRequest"
+              $ref: '#/components/schemas/SummarizeRequest'
         description: Input text or the URL of webpage to be summarized.
         required: true
       responses:
@@ -175,13 +168,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Summary"
+                $ref: '#/components/schemas/Summary'
           description: Summarized text
-      summary:
-        Call DeepAI to summarize raw text or a webpage. Summary is saved under
+      summary: Call DeepAI to summarize raw text or a webpage. Summary is saved under
         user's profile.
       tags:
-        - summarize
+      - summarize
       x-eov-operation-handler: controllers/SummarizeController
   /feed:
     get:
@@ -192,13 +184,13 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: "#/components/schemas/Feed"
+                  $ref: '#/components/schemas/Feed'
                 type: array
           description: OK
       security: []
       summary: Returns list of all publicly viewable summaries.
       tags:
-        - feed
+      - feed
       x-eov-operation-handler: controllers/FeedController
 components:
   responses:
@@ -206,44 +198,43 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Summary"
+            $ref: '#/components/schemas/Summary'
       description: Summarized text
     Error:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Error"
-      description:
-        Wrapper for generic error response that displays the error code
+            $ref: '#/components/schemas/Error'
+      description: Wrapper for generic error response that displays the error code
         and error message.
   schemas:
     User:
       example:
         name: name
         summaries:
-          - createdAt: 2000-01-23T04:56:07.000+00:00
-            isPublic: true
-            plaintext: plaintext
-            summarizedText: summarizedText
-            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-            userId: userId
-            url: url
-          - createdAt: 2000-01-23T04:56:07.000+00:00
-            isPublic: true
-            plaintext: plaintext
-            summarizedText: summarizedText
-            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-            userId: userId
-            url: url
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          isPublic: true
+          plaintext: plaintext
+          summarizedText: summarizedText
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          userId: userId
+          url: url
+        - createdAt: 2000-01-23T04:56:07.000+00:00
+          isPublic: true
+          plaintext: plaintext
+          summarizedText: summarizedText
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          userId: userId
+          url: url
       properties:
         name:
           type: string
         summaries:
           items:
-            $ref: "#/components/schemas/Summary"
+            $ref: '#/components/schemas/Summary'
           type: array
       required:
-        - name
+      - name
       type: object
     LoginRequest:
       example:
@@ -257,31 +248,20 @@ components:
         clientType:
           description: client type, either 'web' OR 'ios'.
           enum:
-            - web
-            - ios
+          - web
+          - ios
           example: web
           type: string
       required:
-        - clientType
-        - id_token
+      - clientType
+      - id_token
       type: object
     SummarizeRequest:
-      description:
-        Request can contain either plaintext or a webpage URL, but not
+      description: Request can contain either plaintext or a webpage URL, but not
         both.
       oneOf:
-        - $ref: "#/components/schemas/SummarizeRequest_oneOf"
-        - $ref: "#/components/schemas/SummarizeRequest_oneOf_1"
-    Feed:
-      properties:
-        summary:
-          $ref: "#/components/schemas/Summary"
-        user:
-          $ref: "#/components/schemas/User"
-      required:
-        - summary
-        - user
-      type: object
+      - $ref: '#/components/schemas/SummarizeRequest_oneOf'
+      - $ref: '#/components/schemas/SummarizeRequest_oneOf_1'
     Summary:
       example:
         createdAt: 2000-01-23T04:56:07.000+00:00
@@ -313,10 +293,46 @@ components:
           description: Whether the summary appears on the global summaries feed.
           type: boolean
       required:
-        - createdAt
-        - id
-        - summarizedText
-        - userId
+      - createdAt
+      - id
+      - summarizedText
+      - userId
+      type: object
+    Feed:
+      example:
+        summary:
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          isPublic: true
+          plaintext: plaintext
+          summarizedText: summarizedText
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          userId: userId
+          url: url
+        user:
+          name: name
+          summaries:
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            isPublic: true
+            plaintext: plaintext
+            summarizedText: summarizedText
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            userId: userId
+            url: url
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            isPublic: true
+            plaintext: plaintext
+            summarizedText: summarizedText
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            userId: userId
+            url: url
+      properties:
+        summary:
+          $ref: '#/components/schemas/Summary'
+        user:
+          $ref: '#/components/schemas/User'
+      required:
+      - summary
+      - user
       type: object
     Error:
       example:
@@ -331,8 +347,8 @@ components:
           description: Error message.
           type: string
       required:
-        - code
-        - message
+      - code
+      - message
       type: object
     SummarizeRequest_oneOf:
       example:
@@ -346,8 +362,8 @@ components:
           description: Whether the summary appears on the global summaries feed.
           type: boolean
       required:
-        - isPublic
-        - url
+      - isPublic
+      - url
       type: object
     SummarizeRequest_oneOf_1:
       example:
@@ -361,13 +377,12 @@ components:
           description: Whether the summary appears on the global summaries feed.
           type: boolean
       required:
-        - isPublic
-        - plaintext
+      - isPublic
+      - plaintext
       type: object
   securitySchemes:
     JWTSessionCookie:
-      description:
-        JWT session cookie. Set after user logs in with Google Sign in
+      description: JWT session cookie. Set after user logs in with Google Sign in
         and is verified by the /login endpoint.
       in: cookie
       name: token
