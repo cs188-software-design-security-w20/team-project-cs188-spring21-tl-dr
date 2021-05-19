@@ -143,7 +143,7 @@ class Profile extends React.Component<
   };
   componentDidMount() {
     this.getUserSummaries();
-    setInterval(() => this.getUserSummaries(), 5000);
+    setInterval(() => this.getUserSummaries(), 50000);
   }
   render() {
     return (
