@@ -20,7 +20,7 @@ const feedGET = () =>
       let users = await Promise.all(
         publicSummaries.map(
           async (summary) =>
-            await User.findAll({ where: { authorId: summary.userId } })
+            await User.findAll({ where: { id: summary.userId } })
         )
       );
       let res = publicSummaries.map((summary, ind) => {
