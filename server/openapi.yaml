@@ -2,7 +2,6 @@ openapi: '3.0.0'
 info:
   title: TL;DR websites
   version: '1.0.0'
-# TODO: Examples
 # USAGE: To regenerate boilerplate code, make sure openapi-generator-cli is installed, then from the ./server directory, 
 #        run  $openapi-generator-cli generate -g nodejs-express-server -o . -i .\openapi.yaml
 #        Note that existing files WILL be overwritten; you will need to manually revert changes to those.
@@ -13,14 +12,6 @@ paths:
       tags: 
         - user
       summary: Returns information and stored summaries for current user.
-      # parameters:
-      #   - name: token
-      #     in: cookie #placeholder until OAuth2 implemented
-      #     description: User ID to retreive information for.
-      #     required: true
-      #     schema:
-      #       type: string
-      #       format: uuid
       responses:
         '200': 
           description: OK
@@ -123,6 +114,21 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/Summary'
+  /feed:
+    get:
+      tags:
+      - feed
+      summary: Returns list of all publicly viewable summaries.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Feed'
+      security: []
 components:
   securitySchemes:
     JWTSessionCookie:
@@ -165,9 +171,11 @@ components:
         id_token:
           description: id_token, as returned by `googleUser.getAuthResponse().id_token`
           type: string
+          example: 'xxxxx.yyyyy.zzzzz'
         clientType:
           description: client type, either 'web' OR 'ios'.
           type: string
+          example: 'web'
           enum:
             - web
             - ios
@@ -177,16 +185,33 @@ components:
         - type: object
           required:
             - url
+            - isPublic
           properties:
             url:
               type: string
               format: uri
+            isPublic:
+              type: boolean
+              description: Whether the summary appears on the global summaries feed.
+          example:
+            url: 'https://en.wikipedia.org/wiki/Mars_Climate_Orbiter'
+            isPublic: true
         - type: object
           required:
             - plaintext
+            - isPublic
           properties:
             plaintext:
               type: string
+            isPublic:
+              type: boolean
+              description: Whether the summary appears on the global summaries feed.
+          example:
+            plaintext: >
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In quis nulla malesuada, vulputate ex in, vestibulum ligula. Sed consequat erat tincidunt urna consequat euismod. Praesent vel leo faucibus, ullamcorper augue quis, eleifend mi. Phasellus vitae mauris fermentum, dapibus augue a, rutrum libero. Nulla vitae malesuada ante. Ut euismod tellus auctor massa congue, et feugiat enim ornare. Nulla mi felis, tristique eu enim et, condimentum porttitor urna. Aliquam erat volutpat. Aliquam erat volutpat. Etiam vitae elit ac lectus feugiat tempus.
+              Nunc porttitor sit amet nisi eget tristique. Donec sit amet tortor erat. Fusce eu metus ex. Mauris sit amet justo sit amet dui fringilla eleifend. Duis accumsan velit eros, non imperdiet nibh viverra nec. Etiam congue iaculis massa eleifend condimentum. Suspendisse potenti.
+              Morbi hendrerit vestibulum leo quis ornare. Proin vel vehicula est. Aliquam non vehicula arcu. Etiam eleifend pharetra justo, et dignissim dui pharetra nec. Pellentesque gravida tincidunt feugiat. Nunc sodales id arcu a dapibus. Nunc eget libero consectetur, dignissim dolorullamcorper, tempor ipsum. Nunc blandit justo eu eros porttitor tempor. Quisque sed leo venenatis, posuere leo sit amet, commodo tortor."
+            isPublic: false
     Summary:
       type: object
       required:
@@ -215,6 +240,19 @@ components:
           description: Time summary was first requested.
           type: string
           format: date-time
+        isPublic:
+          description: Whether the summary appears on the global summaries feed.
+          type: boolean
+    Feed:
+      type: object
+      required:
+        - summary
+        - user
+      properties:
+        summary:
+          $ref: '#/components/schemas/Summary'
+        user:
+          $ref: '#/components/schemas/User'
     Error:
       type: object
       required:

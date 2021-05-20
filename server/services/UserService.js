@@ -76,8 +76,13 @@ const userSummariesGET = ({ cookies }) => new Promise(
 const userSummariesIdGET = ({ cookies, id }) => new Promise(
   async (resolve, reject) => {
     try {
-      let token = jwt.verify(cookies.token, process.env.JWT_SECRET);
       let summary = await(await Summary.findByPk(id)).get();
+      if (summary.isPublic) {
+        resolve(Service.successResponse(summary, 200));
+        return;
+      }
+      let token = jwt.verify(cookies.token, process.env.JWT_SECRET);
+      
       if (summary.userId !== token.userId) {
         throw createError(401, "User is not authorized to view this summary.");
       }

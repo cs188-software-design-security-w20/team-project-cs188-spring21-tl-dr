@@ -5,6 +5,7 @@ import ReactTypingEffect from "react-typing-effect";
 import GoogleLogin from "react-google-login";
 import { navigate } from "gatsby";
 import { signupOrLoginUser } from "../lib/fetch";
+import TopBar from "./topbar";
 
 const signupButton: React.CSSProperties = {
   borderRadius: 10,
@@ -53,8 +54,15 @@ class Landing extends React.Component<ISignupPageProps, { hovered: boolean }> {
     console.log(googleUser);
     console.log(googleUser.getAuthResponse().id_token);
     const res = await signupOrLoginUser(googleUser.getAuthResponse().id_token);
+    const userInfo = googleUser.profileObj;
+    sessionStorage.setItem("userInfo", userInfo.givenName);
+    sessionStorage.setItem("imgUrl", userInfo.imageUrl);
+    sessionStorage.setItem("email", userInfo.email);
+    //window.imgUrl = userInfo.imageUrl;
+    //window.email = userInfo.email;
     navigate("/home/");
     console.log(res);
+    //console.log(googleUser.profileObj.email);
   };
 
   handleLoginFailure = async (error) => {

@@ -4,6 +4,7 @@ api/openapi.yaml
 config.js
 controllers/AuthController.js
 controllers/Controller.js
+controllers/FeedController.js
 controllers/SummarizeController.js
 controllers/UserController.js
 controllers/index.js
@@ -12,6 +13,7 @@ index.js
 logger.js
 package.json
 services/AuthService.js
+services/FeedService.js
 services/Service.js
 services/SummarizeService.js
 services/UserService.js

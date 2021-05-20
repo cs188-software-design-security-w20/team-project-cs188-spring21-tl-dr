@@ -116,10 +116,9 @@ class Profile extends React.Component<
   constructor(props) {
     super(props);
     this.state = {
-      username: "User",
-      imgURL:
-        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-      email: "user@tldr.com",
+      username: sessionStorage.getItem("userInfo"),
+      imgURL: sessionStorage.getItem("imgUrl"),
+      email: sessionStorage.getItem("email"),
       isEditing: false,
       saved: [
         { plaintext: "test1", summarizedText: "test" },
@@ -144,7 +143,7 @@ class Profile extends React.Component<
   };
   componentDidMount() {
     this.getUserSummaries();
-    setInterval(() => this.getUserSummaries(), 5000);
+    setInterval(() => this.getUserSummaries(), 50000);
   }
   render() {
     return (
@@ -198,35 +197,6 @@ class Profile extends React.Component<
             />
           </div>
         </div>
-        {this.state.isEditing ? (
-          <div style={{ display: "flex" }}>
-            <div
-              style={button}
-              onClick={() => {
-                this.setState({ isEditing: !this.state.isEditing });
-              }}
-            >
-              Cancel
-            </div>
-            <div
-              style={saveButton}
-              onClick={() => {
-                this.setState({ isEditing: !this.state.isEditing });
-              }}
-            >
-              Save
-            </div>
-          </div>
-        ) : (
-          <div
-            style={editButton}
-            onClick={() => {
-              this.setState({ isEditing: !this.state.isEditing });
-            }}
-          >
-            Edit
-          </div>
-        )}
         <div
           style={{
             textAlign: "center",
@@ -256,8 +226,22 @@ class Profile extends React.Component<
                   boxShadow: "2px 2px 2px 2px #6b6d70",
                 }}
               >
-                plaintext:{search.plaintext}
-                SummarizedText:{search.summarizedText}
+                <div
+                  style={{ color: "black", fontWeight: "bold", fontSize: 20 }}
+                >
+                  Original Text
+                  <hr />
+                </div>
+                {search.plaintext}
+                <br></br>
+                <br></br>
+                <div
+                  style={{ color: "black", fontWeight: "bold", fontSize: 20 }}
+                >
+                  Summarized Text
+                  <hr />
+                </div>
+                {search.summarizedText}
               </div>
             );
           })}
