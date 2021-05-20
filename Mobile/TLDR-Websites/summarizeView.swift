@@ -12,6 +12,7 @@ import NVActivityIndicatorView
 import GoogleSignIn
 class summarizeView: UIViewController {
     @IBOutlet weak var choiceControl: UISegmentedControl!
+    @IBOutlet weak var privPub: UISegmentedControl!
     
     @IBOutlet weak var buttonReference: UIButton!
     @IBOutlet weak var stack: UIStackView!
@@ -33,6 +34,8 @@ class summarizeView: UIViewController {
             
             let parameters: [String: String?] = [
                 "url" : sumText.text,
+                "isPublic": (privPub.selectedSegmentIndex == 0) ? "false" : "true"
+
             ]
 
 
@@ -54,6 +57,7 @@ class summarizeView: UIViewController {
         else{
             let parameters: [String: String?] = [
                 "plaintext" : sumText.text,
+                "isPublic": (privPub.selectedSegmentIndex == 0) ? "false" : "true"
             ]
 
 

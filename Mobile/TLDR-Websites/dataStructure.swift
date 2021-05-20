@@ -10,6 +10,7 @@ struct Summary: Codable {
     var createdAt: String??
     var id: String??
     var plaintext: String??
+    var isPublic: Bool??
     var summarizedText: String??
     var updatedAt: String??
     var url: String??
@@ -25,3 +26,24 @@ struct User: Codable{
     var email: String
     var picture: URL
 }
+struct UserSums: Codable{
+    var id: String??
+    var firstname: String??
+    var lastName: String??
+    var email: String??
+    var image: String??
+    var createdAt: String??
+    var updatedAt: String??
+}
+struct userGroup: Codable{
+    var user: UserSums
+    var summary: Summary
+}
+
+struct WelcomeElement: Codable {
+    let summary: Summary
+    let user: [UserSums]
+}
+
+typealias Welcome = [WelcomeElement]
+

@@ -245,7 +245,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" alignment="center" spacing="58" translatesAutoresizingMaskIntoConstraints="NO" id="va4-Sl-ATq">
-                                <rect key="frame" x="35" y="220" width="250" height="430"/>
+                                <rect key="frame" x="35" y="55" width="250" height="458"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Summarize Me_" translatesAutoresizingMaskIntoConstraints="NO" id="YWn-qh-GmR">
                                         <rect key="frame" x="32" y="0.0" width="186" height="19"/>
@@ -258,17 +258,29 @@
                                         </constraints>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="pVX-V7-V4U">
-                                        <rect key="frame" x="1" y="175" width="248" height="34"/>
+                                        <rect key="frame" x="1" y="175" width="248" height="62"/>
                                         <subviews>
-                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="fVi-i6-1QS">
-                                                <rect key="frame" x="0.0" y="0.0" width="100" height="35"/>
-                                                <segments>
-                                                    <segment title="URL"/>
-                                                    <segment title="Text"/>
-                                                </segments>
-                                            </segmentedControl>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="PcW-tD-t7w">
+                                                <rect key="frame" x="0.0" y="0.0" width="100" height="62"/>
+                                                <subviews>
+                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="iqA-3S-nMr">
+                                                        <rect key="frame" x="0.0" y="0.0" width="100" height="32"/>
+                                                        <segments>
+                                                            <segment title="Private"/>
+                                                            <segment title="Public"/>
+                                                        </segments>
+                                                    </segmentedControl>
+                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="fVi-i6-1QS">
+                                                        <rect key="frame" x="0.0" y="31" width="100" height="32"/>
+                                                        <segments>
+                                                            <segment title="URL"/>
+                                                            <segment title="Text"/>
+                                                        </segments>
+                                                    </segmentedControl>
+                                                </subviews>
+                                            </stackView>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hFM-jr-PuU">
-                                                <rect key="frame" x="120" y="0.0" width="128" height="34"/>
+                                                <rect key="frame" x="120" y="0.0" width="128" height="62"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="128" id="ttw-JR-Scw"/>
                                                 </constraints>
@@ -281,7 +293,7 @@
                                         </constraints>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wsu-hW-C7B">
-                                        <rect key="frame" x="64.5" y="267" width="121" height="29"/>
+                                        <rect key="frame" x="64.5" y="295" width="121" height="29"/>
                                         <size key="titleShadowOffset" width="2" height="0.0"/>
                                         <state key="normal" title="Button" image="Group 3"/>
                                         <connections>
@@ -289,7 +301,7 @@
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wjx-pd-CDk" customClass="NVActivityIndicatorView" customModule="NVActivityIndicatorView">
-                                        <rect key="frame" x="44.5" y="354" width="161" height="76"/>
+                                        <rect key="frame" x="44.5" y="382" width="161" height="76"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="typeName" value="circleStrokeSpin"/>
@@ -304,6 +316,8 @@
                         <viewLayoutGuide key="safeArea" id="zAM-aZ-Bco"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="va4-Sl-ATq" firstAttribute="centerX" secondItem="bdO-x9-ECx" secondAttribute="centerX" id="IgX-M1-30o"/>
+                            <constraint firstItem="va4-Sl-ATq" firstAttribute="centerY" secondItem="bdO-x9-ECx" secondAttribute="centerY" id="JeU-AU-n7V"/>
                             <constraint firstItem="va4-Sl-ATq" firstAttribute="centerY" secondItem="bdO-x9-ECx" secondAttribute="centerY" id="OT8-JO-ZAf"/>
                             <constraint firstItem="va4-Sl-ATq" firstAttribute="centerX" secondItem="bdO-x9-ECx" secondAttribute="centerX" id="c1T-Vw-B4v"/>
                         </constraints>
@@ -313,6 +327,7 @@
                         <outlet property="animationPlay" destination="wjx-pd-CDk" id="ZcC-kM-1xJ"/>
                         <outlet property="buttonReference" destination="Wsu-hW-C7B" id="YPZ-sO-tgs"/>
                         <outlet property="choiceControl" destination="fVi-i6-1QS" id="A8P-sk-HPH"/>
+                        <outlet property="privPub" destination="iqA-3S-nMr" id="FsN-wi-ijC"/>
                         <outlet property="stack" destination="pVX-V7-V4U" id="c7C-3W-pzA"/>
                         <outlet property="sumText" destination="hFM-jr-PuU" id="Yy9-ej-fnF"/>
                     </connections>
@@ -333,12 +348,82 @@
                     <connections>
                         <segue destination="JYb-F1-Oht" kind="relationship" relationship="viewControllers" id="BYG-EQ-gtd"/>
                         <segue destination="sy7-j7-xtg" kind="relationship" relationship="viewControllers" id="W7e-1D-giH"/>
-                        <segue destination="aw9-84-U5k" kind="relationship" relationship="viewControllers" id="Ipg-FX-Ezb"/>
+                        <segue destination="vOT-go-ORK" kind="relationship" relationship="viewControllers" id="DKq-2H-ZM9"/>
+                        <segue destination="aw9-84-U5k" kind="relationship" relationship="viewControllers" id="25h-f4-EX2"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-M6-PdN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1955" y="-12"/>
+        </scene>
+        <!--public-->
+        <scene sceneID="OOH-w1-Oo1">
+            <objects>
+                <viewController title="public" id="vOT-go-ORK" customClass="publicSummaries" customModule="TLDR_Websites" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="QyK-46-wkU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Abc-YO-mql">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="iWQ-aI-FiR">
+                                        <rect key="frame" x="0.0" y="24.5" width="320" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="iWQ-aI-FiR" id="raz-XI-oix">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="vOT-go-ORK" id="kqe-pe-EEo"/>
+                                    <outlet property="delegate" destination="vOT-go-ORK" id="wcC-xS-RX2"/>
+                                </connections>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1aA-Rd-ckw" customClass="NVActivityIndicatorView" customModule="NVActivityIndicatorView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="typeName" value="ballRotateChase"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="color">
+                                        <color key="value" systemColor="labelColor"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="VvO-Ul-4KO"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="1aA-Rd-ckw" firstAttribute="top" secondItem="VvO-Ul-4KO" secondAttribute="top" id="0C7-pj-3bj"/>
+                            <constraint firstItem="VvO-Ul-4KO" firstAttribute="bottom" secondItem="1aA-Rd-ckw" secondAttribute="bottom" id="EhM-7k-Jvy"/>
+                            <constraint firstItem="VvO-Ul-4KO" firstAttribute="trailing" secondItem="Abc-YO-mql" secondAttribute="trailing" id="MD0-Oh-GxV"/>
+                            <constraint firstItem="VvO-Ul-4KO" firstAttribute="bottom" secondItem="Abc-YO-mql" secondAttribute="bottom" id="R8B-xp-cF6"/>
+                            <constraint firstItem="Abc-YO-mql" firstAttribute="centerX" secondItem="QyK-46-wkU" secondAttribute="centerX" id="UGp-he-8My"/>
+                            <constraint firstItem="Abc-YO-mql" firstAttribute="centerX" secondItem="QyK-46-wkU" secondAttribute="centerX" id="ZgF-1J-FMk"/>
+                            <constraint firstItem="Abc-YO-mql" firstAttribute="centerY" secondItem="QyK-46-wkU" secondAttribute="centerY" id="bKX-D5-pts"/>
+                            <constraint firstItem="Abc-YO-mql" firstAttribute="centerY" secondItem="QyK-46-wkU" secondAttribute="centerY" id="cO6-g0-piJ"/>
+                            <constraint firstItem="Abc-YO-mql" firstAttribute="leading" secondItem="VvO-Ul-4KO" secondAttribute="leading" id="d3e-MY-rE6"/>
+                            <constraint firstItem="1aA-Rd-ckw" firstAttribute="centerX" secondItem="QyK-46-wkU" secondAttribute="centerX" id="ddP-q8-ule"/>
+                            <constraint firstItem="1aA-Rd-ckw" firstAttribute="leading" secondItem="VvO-Ul-4KO" secondAttribute="leading" id="hm6-rb-5Tj"/>
+                            <constraint firstItem="VvO-Ul-4KO" firstAttribute="trailing" secondItem="1aA-Rd-ckw" secondAttribute="trailing" id="m29-RT-j7W"/>
+                            <constraint firstItem="1aA-Rd-ckw" firstAttribute="centerX" secondItem="QyK-46-wkU" secondAttribute="centerX" id="mXl-om-sd9"/>
+                            <constraint firstItem="Abc-YO-mql" firstAttribute="top" secondItem="VvO-Ul-4KO" secondAttribute="top" id="pua-O3-UBv"/>
+                            <constraint firstItem="1aA-Rd-ckw" firstAttribute="centerY" secondItem="QyK-46-wkU" secondAttribute="centerY" id="tdT-Is-ghq"/>
+                            <constraint firstItem="1aA-Rd-ckw" firstAttribute="centerY" secondItem="QyK-46-wkU" secondAttribute="centerY" id="xfD-7J-oN9"/>
+                            <constraint firstItem="Abc-YO-mql" firstAttribute="centerX" secondItem="QyK-46-wkU" secondAttribute="centerX" id="yBA-dd-83Q"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Feed" id="EHW-EJ-FdR"/>
+                    <connections>
+                        <outlet property="animationsLoading" destination="1aA-Rd-ckw" id="kXE-N2-Ruc"/>
+                        <outlet property="table" destination="Abc-YO-mql" id="2dk-el-49V"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xx5-V2-Acg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3668" y="348"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
