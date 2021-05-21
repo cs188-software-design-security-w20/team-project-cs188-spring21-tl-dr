@@ -70,7 +70,7 @@ const greyButton: React.CSSProperties = {
   marginLeft: "225px",
 };
 
-const host = "http://localhost:3000"; //change to production server later
+const host = "https://tldr-server.paramshah.net"; //change to production server later
 class Home extends React.Component<
   ISignupPageProps,
   {
