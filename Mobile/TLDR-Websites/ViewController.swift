@@ -26,15 +26,12 @@ class ViewController: UIViewController {
 
             if success {
 
-                // Move to the main thread because a state update triggers UI changes.
+
                 DispatchQueue.main.async { [unowned self] in
                 }
 
             } else {
                 print(error?.localizedDescription ?? "Failed to authenticate")
-
-                // Fall back to a asking for username and password.
-                // ...
             }
         }
     }
@@ -56,7 +53,6 @@ class ViewController: UIViewController {
             struct urlPar: Codable{
                 let url: String
             }
-            let paramUrl = urlPar(url: "http://en.wikipedia.org/wiki/Die_Hard")
             let param = data(clientType: "ios", id_token: GIDSignIn.sharedInstance().currentUser.authentication.idToken)
             print("Good!")
             AF.request( "https://tldr-server.paramshah.net/login",
