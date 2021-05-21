@@ -51,7 +51,7 @@ const loginPOST = ({ loginRequest }) => new Promise(
           value: token,
           options: {
             httpOnly: true,
-            sameSite: false,
+            sameSite: 'none',
             secure: true,
           },
         }
