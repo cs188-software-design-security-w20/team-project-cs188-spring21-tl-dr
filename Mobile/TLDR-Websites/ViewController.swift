@@ -59,7 +59,7 @@ class ViewController: UIViewController {
             let paramUrl = urlPar(url: "http://en.wikipedia.org/wiki/Die_Hard")
             let param = data(clientType: "ios", id_token: GIDSignIn.sharedInstance().currentUser.authentication.idToken)
             print("Good!")
-            AF.request( "http://tldr-server.us-east-2.elasticbeanstalk.com/login",
+            AF.request( "https://tldr-server.paramshah.net/login",
                        method: .post,
                        parameters: param , encoder:JSONParameterEncoder.default).response { response in
                         print(response)

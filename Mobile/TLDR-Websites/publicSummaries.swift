@@ -60,7 +60,7 @@ class publicSummaries: UIViewController, UITableViewDelegate, UITableViewDataSou
         animationsLoading.startAnimating()
         let decoder =  JSONDecoder()
         
-        AF.request( "http://tldr-server.us-east-2.elasticbeanstalk.com/feed",
+        AF.request( "https://tldr-server.paramshah.net/feed",
                     method: .get).responseJSON { [self] response in
                     
                     debugPrint(response)

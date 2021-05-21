@@ -26,7 +26,7 @@ class summarizeView: UIViewController {
         buttonReference.isHidden = true
         choiceControl.isHidden = true
         stack.isHidden = true
-        let requestUrl: URL = URL(string: "http://tldr-server.us-east-2.elasticbeanstalk.com/user")!
+        let requestUrl: URL = URL(string: "https://tldr-server.paramshah.net/user")!
 
         
         
@@ -39,7 +39,7 @@ class summarizeView: UIViewController {
             ]
 
 
-            AF.request( "http://tldr-server.us-east-2.elasticbeanstalk.com/summarize",
+            AF.request( "https://tldr-server.paramshah.net/summarize",
                        method: .post,
                        parameters: parameters , encoder:JSONParameterEncoder.default).responseJSON { response in
                         debugPrint(response)
@@ -61,7 +61,7 @@ class summarizeView: UIViewController {
             ]
 
 
-            AF.request( "http://tldr-server.us-east-2.elasticbeanstalk.com/summarize",
+            AF.request( "https://tldr-server.paramshah.net/summarize",
                        method: .post,
                        parameters: parameters , encoder:JSONParameterEncoder.default).responseJSON { response in
                         debugPrint(response)
@@ -96,7 +96,7 @@ class summarizeView: UIViewController {
         }
         let param = data(clientType: "ios", id_token: GIDSignIn.sharedInstance().currentUser.authentication.idToken)
         print("Good!")
-        AF.request( "http://tldr-server.us-east-2.elasticbeanstalk.com/login",
+        AF.request( "https://tldr-server.paramshah.net/login",
                    method: .post,
                    parameters: param , encoder:JSONParameterEncoder.default).response { response in
                     print(response)

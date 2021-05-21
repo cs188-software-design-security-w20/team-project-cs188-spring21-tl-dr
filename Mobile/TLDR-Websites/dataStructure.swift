@@ -8,11 +8,6 @@
 import Foundation
 import RNCryptor
 
-func encryptMessage(message: String, encryptionKey: String) throws -> String {
-      let messageData = message.data(using: .utf8)!
-      let cipherData = RNCryptor.encrypt(data: messageData, withPassword: encryptionKey)
-      return cipherData.base64EncodedString()
-  }
 
   func decryptMessage(encryptedMessage: String, encryptionKey: String) throws -> String {
 
