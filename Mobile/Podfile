@@ -10,6 +10,7 @@ pod 'GoogleSignIn'
 pod 'Alamofire', '~> 5.2'
 pod 'SCLAlertView'
 pod 'NVActivityIndicatorView'
+pod 'RNCryptor', '~> 5.0'
 
   target 'TLDR-WebsitesTests' do
     inherit! :search_paths

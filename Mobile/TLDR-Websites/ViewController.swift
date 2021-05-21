@@ -9,6 +9,7 @@ import UIKit
 import GoogleSignIn
 import Alamofire
 import LocalAuthentication
+import RNCryptor
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
@@ -55,7 +56,7 @@ class ViewController: UIViewController {
             struct urlPar: Codable{
                 let url: String
             }
-            let paramUrl = urlPar(url: "https://en.wikipedia.org/wiki/Die_Hard")
+            let paramUrl = urlPar(url: "http://en.wikipedia.org/wiki/Die_Hard")
             let param = data(clientType: "ios", id_token: GIDSignIn.sharedInstance().currentUser.authentication.idToken)
             print("Good!")
             AF.request( "http://tldr-server.us-east-2.elasticbeanstalk.com/login",
