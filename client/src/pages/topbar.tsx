@@ -50,8 +50,8 @@ const profPic: React.CSSProperties = {
 };
 
 const TopBar = () => {
-  const [user] = React.useState(sessionStorage.getItem("userInfo"));
-  const [imgURL] = React.useState(sessionStorage.getItem("imgUrl"));
+  const [user] = React.useState((typeof window !== 'undefined') ? sessionStorage.getItem("userInfo") : null);
+  const [imgURL] = React.useState((typeof window !== 'undefined') ? sessionStorage.getItem("imgUrl"): null);
   return (
     <div style={topbar}>
       <div className="flex" style={{ display: "flex-row" }}>
