@@ -125,26 +125,10 @@ class Global extends React.Component<
                 </div>
               </div>
               <hr />
-              {s.url ? (
-                <span style={{ fontWeight: 800 }}>
-                  Summarized from{" "}
-                  <a
-                    style={{ textDecoration: "none" }}
-                    target="blank"
-                    href={String(s.url)}
-                  >
-                    {" "}
-                    here{" "}
-                  </a>{" "}
-                  :
-                  <br />
-                </span>
-              ) : (
-                <span style={{ fontWeight: 800 }}>
-                  {s.url ? `Summarized from ${s.url}:` : "Summarized: "}
-                  <br />
-                </span>
-              )}
+              <span style={{ fontWeight: 800 }}>
+                {"Summarized: "}
+                <br />
+              </span>
               {s.summarizedText}
             </div>
           );
