@@ -8,13 +8,34 @@
 import UIKit
 import GoogleSignIn
 import Alamofire
+import LocalAuthentication
+import RNCryptor
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        var context = LAContext()
+        context.localizedCancelTitle = "Enter Username/Password"
+        var error: NSError?
+        if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
+
     }
-    
+        
+        let reason = "Log in to your account"
+        context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason ) { success, error in
+
+            if success {
+
+
+                DispatchQueue.main.async { [unowned self] in
+                }
+
+            } else {
+                print(error?.localizedDescription ?? "Failed to authenticate")
+            }
+        }
+    }
+
     override func viewDidAppear(_ animated: Bool) {
 
         
@@ -32,10 +53,9 @@ class ViewController: UIViewController {
             struct urlPar: Codable{
                 let url: String
             }
-            let paramUrl = urlPar(url: "https://en.wikipedia.org/wiki/Die_Hard")
             let param = data(clientType: "ios", id_token: GIDSignIn.sharedInstance().currentUser.authentication.idToken)
             print("Good!")
-            AF.request( "http://tldr-server.us-east-2.elasticbeanstalk.com/login",
+            AF.request( "https://tldr-server.paramshah.net/login",
                        method: .post,
                        parameters: param , encoder:JSONParameterEncoder.default).response { response in
                         print(response)

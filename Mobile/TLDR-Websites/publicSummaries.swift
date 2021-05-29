@@ -9,19 +9,28 @@ import UIKit
 import Alamofire
 import SCLAlertView
 import NVActivityIndicatorView
-class summarizedTable: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class publicSummaries: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var animationsLoading: NVActivityIndicatorView!
     @IBOutlet weak var table: UITableView!
-    var summaries: [Summary] = []
+    var summaries: [WelcomeElement] = []
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return summaries.count
     }
-    
+  
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        SCLAlertView().showInfo((summaries[indexPath.row].url ?? "") ?? "", subTitle: ((summaries[indexPath.row].summarizedText ?? "") ?? ""))
+        let url = URL(string: ((summaries[indexPath.row].user[0].image ?? "")!))
+        
+        let data = try? Data(contentsOf: url!)
+
+        if let imageData = data {
+            let finalImage = UIImage(data: imageData)
+            
+            SCLAlertView().showInfo((summaries[indexPath.row].summary.url ?? "") ?? "", subTitle: ((summaries[indexPath.row].summary.summarizedText ?? "") ?? ""), circleIconImage: finalImage)
+        }
+       
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -31,9 +40,9 @@ class summarizedTable: UIViewController, UITableViewDelegate, UITableViewDataSou
         }
         else
         {
-            cell.textLabel?.text = (summaries[indexPath.row].url ?? summaries[indexPath.row].plaintext) ?? "No Name data available"
+            cell.textLabel?.text = (summaries[indexPath.row].summary.url ?? summaries[indexPath.row].summary.plaintext) ?? "No Name data available"
             cell.textLabel?.font = cell.textLabel?.font.withSize(15)
-            cell.detailTextLabel?.text = (summaries[indexPath.row].createdAt ?? "No Date Provided")
+            cell.detailTextLabel?.text = (summaries[indexPath.row].summary.createdAt ?? "No Date Provided")
         }
         
         return  cell
@@ -47,19 +56,19 @@ class summarizedTable: UIViewController, UITableViewDelegate, UITableViewDataSou
         
     }
     override func viewDidAppear(_ animated: Bool) {
-        print("here")
+        print("There")
         animationsLoading.startAnimating()
         let decoder =  JSONDecoder()
         
-        AF.request( "https://tldr-server.paramshah.net/user/summaries",
+        AF.request( "https://tldr-server.paramshah.net/feed",
                     method: .get).responseJSON { [self] response in
                     
                     debugPrint(response)
                     
                     do{
-                        let sums = try decoder.decode(summaryGroup.self, from: response.data!)
+                        let sums = try decoder.decode(Welcome.self, from: response.data!)
                     
-                        summaries = sums.summaries
+                        summaries = sums
                         summaries.reverse()
                         let defaults = UserDefaults.standard
                         defaults.setValue(summaries.count, forKey: "sumCount")

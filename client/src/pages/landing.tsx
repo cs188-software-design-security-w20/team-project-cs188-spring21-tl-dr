@@ -55,15 +55,17 @@ class Landing extends React.Component<ISignupPageProps, { hovered: boolean }> {
     console.log(googleUser.getAuthResponse().id_token);
     const res = await signupOrLoginUser(googleUser.getAuthResponse().id_token);
     const userInfo = googleUser.profileObj;
-    sessionStorage.setItem('userInfo',userInfo.givenName);
-    sessionStorage.setItem('imgUrl', userInfo.imageUrl);
-    sessionStorage.setItem('email', userInfo.email);
+
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem("userInfo", userInfo.givenName);
+      sessionStorage.setItem("imgUrl", userInfo.imageUrl);
+      sessionStorage.setItem("email", userInfo.email);
+    }
     //window.imgUrl = userInfo.imageUrl;
     //window.email = userInfo.email;
     navigate("/home/");
     console.log(res);
     //console.log(googleUser.profileObj.email);
-
   };
 
   handleLoginFailure = async (error) => {

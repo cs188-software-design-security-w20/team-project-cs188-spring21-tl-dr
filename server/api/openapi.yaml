@@ -202,7 +202,7 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: '#/components/schemas/Summary'
+                  $ref: '#/components/schemas/Feed'
                 type: array
           description: OK
       security: []
@@ -315,6 +315,42 @@ components:
       - id
       - summarizedText
       - userId
+      type: object
+    Feed:
+      example:
+        summary:
+          createdAt: 2000-01-23T04:56:07.000+00:00
+          isPublic: true
+          plaintext: plaintext
+          summarizedText: summarizedText
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          userId: userId
+          url: url
+        user:
+          name: name
+          summaries:
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            isPublic: true
+            plaintext: plaintext
+            summarizedText: summarizedText
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            userId: userId
+            url: url
+          - createdAt: 2000-01-23T04:56:07.000+00:00
+            isPublic: true
+            plaintext: plaintext
+            summarizedText: summarizedText
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            userId: userId
+            url: url
+      properties:
+        summary:
+          $ref: '#/components/schemas/Summary'
+        user:
+          $ref: '#/components/schemas/User'
+      required:
+      - summary
+      - user
       type: object
     Error:
       example:

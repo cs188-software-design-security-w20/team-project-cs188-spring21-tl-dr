@@ -7,6 +7,7 @@
 
 import UIKit
 import GoogleSignIn
+import RNCryptor
 class userProfiles: UIViewController {
 
     @IBAction func signOut(_ sender: Any) {
@@ -22,9 +23,12 @@ class userProfiles: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let defaults = UserDefaults.standard
-        if let savedPerson = defaults.object(forKey: "userData") as? Data {
+        
+        let dataEncrypted =  defaults.object(forKey: "userData") as? Data
+        let decryptedData = try? RNCryptor.decrypt(data: dataEncrypted!, withPassword: "sahen")
+         let savedPerson = decryptedData
             let decoder = JSONDecoder()
-            if let loadedPerson = try? decoder.decode(User.self, from: savedPerson) {
+        if let loadedPerson = try? decoder.decode(User.self, from: savedPerson!) {
                 Name.text = loadedPerson.fullName
                 profilePic.load(url: loadedPerson.picture)
                 let defaults = UserDefaults.standard
@@ -32,7 +36,7 @@ class userProfiles: UIViewController {
                     numSummaries.text = String(defaults.integer(forKey: "sumCount")) + " summaries saved"
                     
                 }
-            }
+            
         }
     }
     

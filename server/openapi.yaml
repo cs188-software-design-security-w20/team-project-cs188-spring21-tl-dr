@@ -138,7 +138,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Summary'
+                  $ref: '#/components/schemas/Feed'
       security: []
 components:
   securitySchemes:
@@ -254,6 +254,16 @@ components:
         isPublic:
           description: Whether the summary appears on the global summaries feed.
           type: boolean
+    Feed:
+      type: object
+      required:
+        - summary
+        - user
+      properties:
+        summary:
+          $ref: '#/components/schemas/Summary'
+        user:
+          $ref: '#/components/schemas/User'
     Error:
       type: object
       required:

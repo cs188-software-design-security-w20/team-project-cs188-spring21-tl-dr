@@ -116,9 +116,9 @@ class Profile extends React.Component<
   constructor(props) {
     super(props);
     this.state = {
-      username: sessionStorage.getItem("userInfo"),
-      imgURL: sessionStorage.getItem("imgUrl"),
-      email: sessionStorage.getItem("email"),
+      username: (typeof window !== 'undefined') ? sessionStorage.getItem("userInfo") : "",
+      imgURL: (typeof window !== 'undefined') ? sessionStorage.getItem("imgUrl"): "",
+      email: (typeof window !== 'undefined') ? sessionStorage.getItem("email"): "",
       isEditing: false,
       saved: [
         { plaintext: "test1", summarizedText: "test" },
@@ -143,7 +143,7 @@ class Profile extends React.Component<
   };
   componentDidMount() {
     this.getUserSummaries();
-    setInterval(() => this.getUserSummaries(), 5000);
+    setInterval(() => this.getUserSummaries(), 50000);
   }
   render() {
     return (

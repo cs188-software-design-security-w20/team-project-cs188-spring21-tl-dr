@@ -20,6 +20,7 @@
 		BE9408B526312F0F0020F59F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE9408B326312F0F0020F59F /* LaunchScreen.storyboard */; };
 		BE9408C026312F0F0020F59F /* TLDR_WebsitesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9408BF26312F0F0020F59F /* TLDR_WebsitesTests.swift */; };
 		BE9408CB26312F0F0020F59F /* TLDR_WebsitesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9408CA26312F0F0020F59F /* TLDR_WebsitesUITests.swift */; };
+		BE999D062656DE0E0063DE29 /* publicSummaries.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE999D052656DE0E0063DE29 /* publicSummaries.swift */; };
 		BEA3A05C26494CF5003F3A42 /* loginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA3A05B26494CF5003F3A42 /* loginView.swift */; };
 		BEA3A05E26494D0E003F3A42 /* signupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA3A05D26494D0E003F3A42 /* signupView.swift */; };
 		BEEBB40F264E296D00E1AF9D /* dataStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEBB40E264E296D00E1AF9D /* dataStructure.swift */; };
@@ -68,6 +69,8 @@
 		BE9408C626312F0F0020F59F /* TLDR-WebsitesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TLDR-WebsitesUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE9408CA26312F0F0020F59F /* TLDR_WebsitesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TLDR_WebsitesUITests.swift; sourceTree = "<group>"; };
 		BE9408CC26312F0F0020F59F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BE999D052656DE0E0063DE29 /* publicSummaries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = publicSummaries.swift; sourceTree = "<group>"; };
+		BE999D072656FBE10063DE29 /* TLDR-Websites.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TLDR-Websites.entitlements"; sourceTree = "<group>"; };
 		BEA3A05B26494CF5003F3A42 /* loginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginView.swift; sourceTree = "<group>"; };
 		BEA3A05D26494D0E003F3A42 /* signupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = signupView.swift; sourceTree = "<group>"; };
 		BEEBB40E264E296D00E1AF9D /* dataStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dataStructure.swift; sourceTree = "<group>"; };
@@ -138,15 +141,17 @@
 		BE9408A726312F0E0020F59F /* TLDR-Websites */ = {
 			isa = PBXGroup;
 			children = (
+				BE999D072656FBE10063DE29 /* TLDR-Websites.entitlements */,
 				BE9408A826312F0E0020F59F /* AppDelegate.swift */,
 				BE9408AA26312F0E0020F59F /* SceneDelegate.swift */,
 				BEA3A05B26494CF5003F3A42 /* loginView.swift */,
 				BEA3A05D26494D0E003F3A42 /* signupView.swift */,
 				BE9408AC26312F0E0020F59F /* ViewController.swift */,
-				BEEBB40E264E296D00E1AF9D /* dataStructure.swift */,
 				BE2B6350264CA58A005E68C5 /* summarizeView.swift */,
 				BE9408AE26312F0E0020F59F /* Main.storyboard */,
+				BEEBB40E264E296D00E1AF9D /* dataStructure.swift */,
 				BEEBB412264E5C2C00E1AF9D /* userProfiles.swift */,
+				BE999D052656DE0E0063DE29 /* publicSummaries.swift */,
 				BE9408B126312F0F0020F59F /* Assets.xcassets */,
 				BE9408B326312F0F0020F59F /* LaunchScreen.storyboard */,
 				BE9408B626312F0F0020F59F /* Info.plist */,
@@ -463,6 +468,7 @@
 				BEEBB413264E5C2C00E1AF9D /* userProfiles.swift in Sources */,
 				BEA3A05E26494D0E003F3A42 /* signupView.swift in Sources */,
 				BEEBB40F264E296D00E1AF9D /* dataStructure.swift in Sources */,
+				BE999D062656DE0E0063DE29 /* publicSummaries.swift in Sources */,
 				BE9408AD26312F0E0020F59F /* ViewController.swift in Sources */,
 				BE9408A926312F0E0020F59F /* AppDelegate.swift in Sources */,
 				BEA3A05C26494CF5003F3A42 /* loginView.swift in Sources */,
@@ -645,7 +651,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "TLDR-Websites/TLDR-Websites.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A83N8ZR3F8;
 				INFOPLIST_FILE = "TLDR-Websites/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -665,7 +673,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "TLDR-Websites/TLDR-Websites.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = A83N8ZR3F8;
 				INFOPLIST_FILE = "TLDR-Websites/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -70,7 +70,7 @@ const greyButton: React.CSSProperties = {
   marginLeft: "225px",
 };
 
-const host = "http://localhost:3000"; //change to production server later
+const host = "https://tldr-server.paramshah.net"; //change to production server later
 class Home extends React.Component<
   ISignupPageProps,
   {
@@ -92,7 +92,6 @@ class Home extends React.Component<
     };
   }
   handleSummary = () => {
-    console.log(this.state.input);
 
     if (this.state.input.trim() !== "") {
       if (!this.state.isInputText) {
@@ -124,7 +123,6 @@ class Home extends React.Component<
             { withCredentials: true }
           )
           .then((data) => {
-            console.log(data);
             this.setState({
               summarized: data.data.summarizedText,
               showInputField: false,
@@ -137,7 +135,6 @@ class Home extends React.Component<
     }
   };
   render() {
-    console.log(this.state.makePublic)
     return (
       <div>
         <TopBar />

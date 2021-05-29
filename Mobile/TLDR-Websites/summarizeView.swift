@@ -12,6 +12,7 @@ import NVActivityIndicatorView
 import GoogleSignIn
 class summarizeView: UIViewController {
     @IBOutlet weak var choiceControl: UISegmentedControl!
+    @IBOutlet weak var privPub: UISegmentedControl!
     
     @IBOutlet weak var buttonReference: UIButton!
     @IBOutlet weak var stack: UIStackView!
@@ -25,7 +26,7 @@ class summarizeView: UIViewController {
         buttonReference.isHidden = true
         choiceControl.isHidden = true
         stack.isHidden = true
-        let requestUrl: URL = URL(string: "http://tldr-server.us-east-2.elasticbeanstalk.com/user")!
+        let requestUrl: URL = URL(string: "https://tldr-server.paramshah.net/user")!
 
         
         
@@ -33,10 +34,12 @@ class summarizeView: UIViewController {
             
             let parameters: [String: String?] = [
                 "url" : sumText.text,
+                "isPublic": (privPub.selectedSegmentIndex == 0) ? "false" : "true"
+
             ]
 
 
-            AF.request( "http://tldr-server.us-east-2.elasticbeanstalk.com/summarize",
+            AF.request( "https://tldr-server.paramshah.net/summarize",
                        method: .post,
                        parameters: parameters , encoder:JSONParameterEncoder.default).responseJSON { response in
                         debugPrint(response)
@@ -54,10 +57,11 @@ class summarizeView: UIViewController {
         else{
             let parameters: [String: String?] = [
                 "plaintext" : sumText.text,
+                "isPublic": (privPub.selectedSegmentIndex == 0) ? "false" : "true"
             ]
 
 
-            AF.request( "http://tldr-server.us-east-2.elasticbeanstalk.com/summarize",
+            AF.request( "https://tldr-server.paramshah.net/summarize",
                        method: .post,
                        parameters: parameters , encoder:JSONParameterEncoder.default).responseJSON { response in
                         debugPrint(response)
@@ -92,7 +96,7 @@ class summarizeView: UIViewController {
         }
         let param = data(clientType: "ios", id_token: GIDSignIn.sharedInstance().currentUser.authentication.idToken)
         print("Good!")
-        AF.request( "http://tldr-server.us-east-2.elasticbeanstalk.com/login",
+        AF.request( "https://tldr-server.paramshah.net/login",
                    method: .post,
                    parameters: param , encoder:JSONParameterEncoder.default).response { response in
                     print(response)
