@@ -6,6 +6,24 @@ const { OAuth2Client } = require('google-auth-library');
 const createError = require('http-errors');
 
 /**
+* Get anti-CSRF token. Use on app startup.
+*
+* no response value expected for this operation
+* */
+const csrf_tokenGET = () => new Promise(
+  async (resolve, reject) => {
+    try {
+      resolve(Service.successResponse({
+      }));
+    } catch (e) {
+      reject(Service.rejectResponse(
+        e.message || 'Invalid input',
+        e.status || 405,
+      ));
+    }
+  },
+);
+/**
 * Log in user. New users will be signed up then logged in.
 * Given `id_token` from Google Sign In, verify token and authenticate user. If authentication is successful, set a JWT to establish user session.
 *
