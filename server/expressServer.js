@@ -33,6 +33,13 @@ class ExpressServer {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(cookieParser());
+    // Uncomment for logging
+    // this.app.use((req, res, next) => {
+    //   console.log(req.method);
+    //   console.log(req.cookies);
+    //   console.log(req.headers);
+    //   next();
+    // });
     //Simple test to see that the server is up and responding
     this.app.get("/hello", (req, res) =>
       res.send(`Hello World. path: ${this.openApiPath}`)
@@ -44,9 +51,6 @@ class ExpressServer {
     //View the openapi document in a visual interface. Should be able to test from this page
     this.app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(this.schema));
     this.app.use(csurf({ cookie: true }));
-    this.app.get('/csrf-token', (req, res) => {
-      res.json({ csrfToken: req.csrfToken() });
-    });
   }
 
   launch() {

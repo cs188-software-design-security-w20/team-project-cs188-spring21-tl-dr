@@ -96,6 +96,7 @@ class Controller {
 
   static collectRequestParams(request) {
     const requestParams = {};
+    requestParams.csrfToken = request.csrfToken;
     // To access cookies, add 'cookies' parameter to Service argument, e.g. summarizePOST = ({ cookies, summarizeRequest }) => {...}
     if (request.cookies !== undefined) {
       requestParams['cookies'] = request.cookies;

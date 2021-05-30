@@ -10,11 +10,11 @@ const createError = require('http-errors');
 *
 * no response value expected for this operation
 * */
-const csrf_tokenGET = () => new Promise(
+
+const csrf_tokenGET = ({csrfToken}) => new Promise(
   async (resolve, reject) => {
     try {
-      resolve(Service.successResponse({
-      }));
+      resolve(Service.successResponse({ csrfToken: csrfToken() }));
     } catch (e) {
       reject(Service.rejectResponse(
         e.message || 'Invalid input',
@@ -59,7 +59,6 @@ const loginPOST = ({ loginRequest }) => new Promise(
         image: payload['picture']
       }
       await User.findOrCreate({ where: authUser }); 
-      // TODO: Add CSRF protection. See https://www.npmjs.com/package/csurf
       let token = jwt.sign({ userId: payload['sub'] }, process.env.JWT_SECRET, { expiresIn: '1h' });
       resolve(Service.successResponse(
         token,
