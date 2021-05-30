@@ -88,11 +88,10 @@ class Home extends React.Component<
       input: "",
       summarized: "",
       isInputText: false,
-      makePublic: false
+      makePublic: false,
     };
   }
   handleSummary = () => {
-
     if (this.state.input.trim() !== "") {
       if (!this.state.isInputText) {
         axios
@@ -100,7 +99,7 @@ class Home extends React.Component<
             host + "/summarize",
             {
               url: this.state.input,
-              isPublic: this.state.makePublic
+              isPublic: this.state.makePublic,
             },
             {
               withCredentials: true,
@@ -118,7 +117,7 @@ class Home extends React.Component<
             host + "/summarize",
             {
               plaintext: this.state.input,
-              isPublic: this.state.makePublic
+              isPublic: this.state.makePublic,
             },
             { withCredentials: true }
           )
@@ -157,12 +156,18 @@ class Home extends React.Component<
                 }}
               >
                 Summarize Me:
-                <input type="checkbox"
+                <input
+                  type="checkbox"
                   name="isPublic"
                   value="Public"
                   style={{ marginTop: "30px", marginLeft: "75px" }}
-                  onClick={() => { this.setState({ makePublic: !this.state.makePublic }) }} />
-                <div style={{ fontSize: "16px", marginTop: "25px" }}>Make Public?</div>
+                  onClick={() => {
+                    this.setState({ makePublic: !this.state.makePublic });
+                  }}
+                />
+                <div style={{ fontSize: "16px", marginTop: "25px" }}>
+                  Make Public?
+                </div>
               </div>
               {this.state.isInputText ? (
                 <textarea
