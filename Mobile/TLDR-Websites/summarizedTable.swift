@@ -51,8 +51,16 @@ class summarizedTable: UIViewController, UITableViewDelegate, UITableViewDataSou
         animationsLoading.startAnimating()
         let decoder =  JSONDecoder()
         
+        let defaults = UserDefaults.standard
+
+        let headers: HTTPHeaders = [
+            "X-CSRF-Token": defaults.string(forKey: "tokendata")!,
+        ]
+        
+        
         AF.request( "https://tldr-server.paramshah.net/user/summaries",
-                    method: .get).responseJSON { [self] response in
+                    method: .get, 
+                    headers: headers).responseJSON { [self] response in
                     
                     debugPrint(response)
                     

@@ -8,6 +8,7 @@
 import UIKit
 import GoogleSignIn
 import RNCryptor
+import Alamofire
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
@@ -52,6 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+       
         
         let nothing = try? decryptMessage(encryptedMessage: "AwElD+wuAh6qIlrbHdbEjjw4gItpYGHcuNOnzCyYvPz+ahDX6lP7sUBD9i/Fug7tEF5r1hbpHwGFo+k6CgGH05RWQdN3yAQpNi/Zs+wSVl0sP2F0KUY0Z7WX4U+sGUmpIJgs3Q0M1hA4zx0eUJQ7bdCN6aIKRtW6dbCuet/7ZxMeEyLfHdA6MzQwUpMDsXyG8ik=", encryptionKey: "Pn#mSqW,h;OS,h7+1+8w-k;)-k|}D-")
            

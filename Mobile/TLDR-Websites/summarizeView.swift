@@ -60,10 +60,12 @@ class summarizeView: UIViewController {
                 "isPublic": (privPub.selectedSegmentIndex == 0) ? "false" : "true"
             ]
 
+            let headers: HTTPHeaders = [
+                "X-CSRF-Token": UserDefaults.standard.string(forKey: "tokendata")!,
+            ]
 
             AF.request( "https://tldr-server.paramshah.net/summarize",
-                       method: .post,
-                       parameters: parameters , encoder:JSONParameterEncoder.default).responseJSON { response in
+                        method: .post,parameters: parameters, encoder:JSONParameterEncoder.default, headers: headers).responseJSON { response in
                         debugPrint(response)
                         SCLAlertView().showInfo("Congratulations", subTitle: "Your summary has been saved")
                         self.sumText.isHidden = false
@@ -94,19 +96,17 @@ class summarizeView: UIViewController {
         struct urlPar: Codable{
             let url: String
         }
+        
+        let headers: HTTPHeaders = [
+            "X-CSRF-Token": UserDefaults.standard.string(forKey: "tokendata")!,
+        ]
         let param = data(clientType: "ios", id_token: GIDSignIn.sharedInstance().currentUser.authentication.idToken)
         print("Good!")
         AF.request( "https://tldr-server.paramshah.net/login",
                    method: .post,
-                   parameters: param , encoder:JSONParameterEncoder.default).response { response in
-                    print(response)
-                    if let headerFields = response.response?.allHeaderFields as? [String: String], let URL = response.request?.url
-                            {
-                                 let cookies = HTTPCookie.cookies(withResponseHeaderFields: headerFields, for: URL)
-                                    
-                                 print(cookies)
-                        
-                            }
+                   parameters: param ,encoder:JSONParameterEncoder.default, headers: headers).response { response in
+                    print(response.debugDescription)
+
                    }
         
     }

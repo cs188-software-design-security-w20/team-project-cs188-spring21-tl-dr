@@ -31,6 +31,10 @@ struct summaryGroup:Codable{
     var summaries: [Summary]
 }
 
+struct Token:Codable{
+    var csrfToken: String
+}
+
 struct User: Codable{
     var fullName: String
     var lastName: String

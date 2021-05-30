@@ -14,6 +14,11 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+      
+        
+        
+        
         var context = LAContext()
         context.localizedCancelTitle = "Enter Username/Password"
         var error: NSError?
@@ -37,48 +42,93 @@ class ViewController: UIViewController {
     }
 
     override func viewDidAppear(_ animated: Bool) {
-
+        let decoder =  JSONDecoder()
         
       
-        if(GIDSignIn.sharedInstance()?.currentUser != nil)
-        {
-            GIDSignIn.sharedInstance().restorePreviousSignIn()
+        let defaults = UserDefaults.standard
+      
+             
+                    //            let param = data(clientType: "ios", id_token: GIDSignIn.sharedInstance().currentUser.authentication.idToken)
 
-            struct data: Codable{
-                let clientType: String
-                let id_token: String
-                
-            }
-            
-            struct urlPar: Codable{
-                let url: String
-            }
-            let param = data(clientType: "ios", id_token: GIDSignIn.sharedInstance().currentUser.authentication.idToken)
-            print("Good!")
-            AF.request( "https://tldr-server.paramshah.net/login",
-                       method: .post,
-                       parameters: param , encoder:JSONParameterEncoder.default).response { response in
-                        print(response)
-                        if let headerFields = response.response?.allHeaderFields as? [String: String], let URL = response.request?.url
-                                {
-                                     let cookies = HTTPCookie.cookies(withResponseHeaderFields: headerFields, for: URL)
+                   
+                    
+                    if(GIDSignIn.sharedInstance()?.currentUser != nil)
+                    {
+                        
+                        let decoder = JSONDecoder()
+                        let defaults = UserDefaults.standard
+                        AF.request( "https://tldr-server.paramshah.net/csrf-token",
+                                   method: .get).responseJSON { response in
+                                    print(response)
+                                   
+                                    do{
+                                        let tokenData = try decoder.decode(Token.self, from: response.data!)
+                                        print(tokenData.csrfToken)
+                                        print("Got here!")
                                         
-                                     print(cookies)
-                            
-                                }
-                       }
-            
-        
-            
-            
-            self.performSegue(withIdentifier: "signedInAlready", sender: self)
-        }
-        else
-        {
-        print("not!")
-        }
+                                        GIDSignIn.sharedInstance().restorePreviousSignIn()
+
+                                        struct data: Codable{
+                                            let clientType: String
+                                            let id_token: String
+                                            
+                                        }
+                                        
+                                        struct urlPar: Codable{
+                                            let url: String
+                                        }
+
+                                        let param: [String: String?] = [
+                                            "clientType" : "ios",
+                                            "id_token":GIDSignIn.sharedInstance().currentUser.authentication.idToken
+
+                                        ]
+                                        
+
+                                        let headers: HTTPHeaders = [
+                                            "X-CSRF-Token": tokenData.csrfToken,
+                                        ]
+                                        
+                                        AF.request( "https://tldr-server.paramshah.net/login",
+                                                   method: .post,
+                                                   parameters: param ,encoder:JSONParameterEncoder.default, headers: headers).responseJSON { response in
+                                                    print("sahen")
+                                                    print(response.debugDescription)
+                                                    if let headerFields = response.response?.allHeaderFields as? [String: String], let URL = response.request?.url
+                                                            {
+
+                                                                 let cookies = HTTPCookie.cookies(withResponseHeaderFields: headerFields, for: URL)
+                                                                print("cooks!")
+                                                                 print(cookies)
+
+                                                            }
+                                                    self.performSegue(withIdentifier: "signedInAlready", sender: self)
+                                                 
+
+                                                   }
+                                                    
+                                        defaults.set(tokenData.csrfToken, forKey: "tokendata")
+                                       }
+                                    catch let error {
+                                                
+                                    }
+                                    
+                                   }
+
+                        
+                       
+                        
+                        
+                    }
+                    else
+                    {
+                    print("not!")
+                    }
+                   }
+      
+  
     }
-    }
+    
 
 
 

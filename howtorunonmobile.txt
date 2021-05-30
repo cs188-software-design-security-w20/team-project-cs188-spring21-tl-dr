@@ -1,0 +1,15 @@
+Due to the locked down nature of iOS, in  order to run the project on mobile(iOS), you must either:
+
+1) a) Install Xcode: https://developer.apple.com/xcode/
+   b) Pull Mobile folder from Repo 
+   c) Install Cocapods: https://guides.cocoapods.org/using/getting-started.html
+   d) run pod install from terminal within project folder
+   e) double click TLDR-Websites.xcworkspace
+   f) Run from simulator by clicking play button on top 
+
+2) a) install the TestFlight app from the app store: https://apps.apple.com/us/app/testflight/id899247664
+   b) Send an email to sahen.rai@gmail.com from the email you use for the App Store (Will attempt to establish ahead of time), and I can add you as a tester
+   c) Go to TestFlight app, and app should appear to test
+
+
+	
