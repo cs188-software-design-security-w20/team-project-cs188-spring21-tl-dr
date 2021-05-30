@@ -50,7 +50,12 @@ class ExpressServer {
     );
     //View the openapi document in a visual interface. Should be able to test from this page
     this.app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(this.schema));
-    this.app.use(csurf({ cookie: true }));
+    this.app.use(csurf({ 
+      cookie: {
+        secure: true,
+        sameSite: 'none'
+      }
+    }));
   }
 
   launch() {
