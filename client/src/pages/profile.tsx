@@ -116,9 +116,12 @@ class Profile extends React.Component<
   constructor(props) {
     super(props);
     this.state = {
-      username: (typeof window !== 'undefined') ? sessionStorage.getItem("userInfo") : "",
-      imgURL: (typeof window !== 'undefined') ? sessionStorage.getItem("imgUrl"): "",
-      email: (typeof window !== 'undefined') ? sessionStorage.getItem("email"): "",
+      username:
+        typeof window !== "undefined" ? sessionStorage.getItem("userInfo") : "",
+      imgURL:
+        typeof window !== "undefined" ? sessionStorage.getItem("imgUrl") : "",
+      email:
+        typeof window !== "undefined" ? sessionStorage.getItem("email") : "",
       isEditing: false,
       saved: [
         { plaintext: "test1", summarizedText: "test" },
@@ -138,7 +141,7 @@ class Profile extends React.Component<
         };
       }),
     });
-    console.log(res);
+    // console.log(res);
     return res;
   };
   componentDidMount() {
@@ -208,31 +211,39 @@ class Profile extends React.Component<
           Saved
         </div>
         <hr style={{ width: 100 }} />
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
           {this.state.saved.map((search) => {
             return (
               <div
                 style={{
-                  width: 500,
-                  marginLeft: "31%",
+                  width: "50%",
                   marginTop: 20,
                   marginBottom: 20,
-                  borderRadius: 15,
+                  borderRadius: 10,
+                  border: "solid",
+                  borderColor: "#CCC",
+                  borderWidth: "0.5px",
                   minHeight: 50,
-                  backgroundColor: "#C4C4C4",
-                  color: "white",
-                  padding: 10,
+                  backgroundColor: "#FFF",
+                  color: "black",
+                  padding: 30,
                   fontFamily: "Open Sans",
-                  boxShadow: "2px 2px 2px 2px #6b6d70",
+                  boxShadow: "4px 4px 20px #DDD",
                 }}
               >
                 <div
                   style={{ color: "black", fontWeight: "bold", fontSize: 20 }}
                 >
-                  Original Text
+                  Original
                   <hr />
                 </div>
-                {search.plaintext}
+                {search.plaintext ? search.plaintext : search.url}
                 <br></br>
                 <br></br>
                 <div

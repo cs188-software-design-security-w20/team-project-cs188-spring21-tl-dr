@@ -40,11 +40,11 @@ class Global extends React.Component<
   getUserSummaries = async () => {
     const userSummaryEndpoint = `${SERVER_URL}/feed`;
     const res = await axios.get(userSummaryEndpoint, { withCredentials: true });
-    console.log(res);
+    // console.log(res);
     this.setState({
       summaries: res.data.map((s) => {
         let created = date.parse(s.summary.createdAt, "YYYY-MM-DD[T]hh:mm...");
-        console.log(s.summary.createdAt);
+        // console.log(s.summary.createdAt);
         return {
           plaintext: s.summary.plaintext,
           summarizedText: s.summary.summarizedText,
@@ -125,26 +125,10 @@ class Global extends React.Component<
                 </div>
               </div>
               <hr />
-              {s.url ? (
-                <span style={{ fontWeight: 800 }}>
-                  Summarized from{" "}
-                  <a
-                    style={{ textDecoration: "none" }}
-                    target="blank"
-                    href={String(s.url)}
-                  >
-                    {" "}
-                    here{" "}
-                  </a>{" "}
-                  :
-                  <br />
-                </span>
-              ) : (
-                <span style={{ fontWeight: 800 }}>
-                  {s.url ? `Summarized from ${s.url}:` : "Summarized: "}
-                  <br />
-                </span>
-              )}
+              <span style={{ fontWeight: 800 }}>
+                {"Summarized: "}
+                <br />
+              </span>
               {s.summarizedText}
             </div>
           );

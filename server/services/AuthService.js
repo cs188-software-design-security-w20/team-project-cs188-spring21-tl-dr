@@ -6,6 +6,24 @@ const { OAuth2Client } = require('google-auth-library');
 const createError = require('http-errors');
 
 /**
+* Get anti-CSRF token. Use on app startup.
+*
+* no response value expected for this operation
+* */
+
+const csrf_tokenGET = ({csrfToken}) => new Promise(
+  async (resolve, reject) => {
+    try {
+      resolve(Service.successResponse({ csrfToken: csrfToken() }));
+    } catch (e) {
+      reject(Service.rejectResponse(
+        e.message || 'Invalid input',
+        e.status || 405,
+      ));
+    }
+  },
+);
+/**
 * Log in user. New users will be signed up then logged in.
 * Given `id_token` from Google Sign In, verify token and authenticate user. If authentication is successful, set a JWT to establish user session.
 *
@@ -41,7 +59,6 @@ const loginPOST = ({ loginRequest }) => new Promise(
         image: payload['picture']
       }
       await User.findOrCreate({ where: authUser }); 
-      // TODO: Add CSRF protection. See https://www.npmjs.com/package/csurf
       let token = jwt.sign({ userId: payload['sub'] }, process.env.JWT_SECRET, { expiresIn: '1h' });
       resolve(Service.successResponse(
         token,
@@ -93,6 +110,7 @@ const logoutGET = () =>
 );
 
 module.exports = {
+  csrf_tokenGET,
   loginPOST,
   logoutGET,
 };

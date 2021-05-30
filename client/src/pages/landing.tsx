@@ -51,8 +51,8 @@ class Landing extends React.Component<ISignupPageProps, { hovered: boolean }> {
     };
   }
   handleLoginSuccess = async (googleUser) => {
-    console.log(googleUser);
-    console.log(googleUser.getAuthResponse().id_token);
+    // console.log(googleUser);
+    // console.log(googleUser.getAuthResponse().id_token);
     const res = await signupOrLoginUser(googleUser.getAuthResponse().id_token);
     const userInfo = googleUser.profileObj;
 
@@ -64,7 +64,7 @@ class Landing extends React.Component<ISignupPageProps, { hovered: boolean }> {
     //window.imgUrl = userInfo.imageUrl;
     //window.email = userInfo.email;
     navigate("/home/");
-    console.log(res);
+    // console.log(res);
     //console.log(googleUser.profileObj.email);
   };
 

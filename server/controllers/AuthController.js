@@ -8,6 +8,10 @@
 
 const Controller = require('./Controller');
 const service = require('../services/AuthService');
+const csrf_tokenGET = async (request, response) => {
+  await Controller.handleRequest(request, response, service.csrf_tokenGET);
+};
+
 const loginPOST = async (request, response) => {
   await Controller.handleRequest(request, response, service.loginPOST);
 };
@@ -18,6 +22,7 @@ const logoutGET = async (request, response) => {
 
 
 module.exports = {
+  csrf_tokenGET,
   loginPOST,
   logoutGET,
 };

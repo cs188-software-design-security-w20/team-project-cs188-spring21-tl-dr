@@ -2,7 +2,7 @@ import * as React from "react";
 import { Link } from "gatsby";
 import { GoogleLogout } from "react-google-login";
 import logoutIcon from "../images/logout.png";
-import globeIcon from "../images/globe.jpeg";
+import globeIcon from "../images/globe.png";
 import { navigate } from "gatsby";
 
 const topbar: React.CSSProperties = {
@@ -51,7 +51,7 @@ const profPic: React.CSSProperties = {
 
 const TopBar = () => {
   const [user] = React.useState((typeof window !== 'undefined') ? sessionStorage.getItem("userInfo") : null);
-  const [imgURL] = React.useState((typeof window !== 'undefined') ? sessionStorage.getItem("imgUrl"): null);
+  const [imgURL] = React.useState((typeof window !== 'undefined') ? sessionStorage.getItem("imgUrl") : null);
   return (
     <div style={topbar}>
       <div className="flex" style={{ display: "flex-row" }}>
