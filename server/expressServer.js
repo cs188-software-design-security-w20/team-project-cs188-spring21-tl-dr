@@ -11,6 +11,7 @@ const bodyParser = require("body-parser");
 const { OpenApiValidator } = require("express-openapi-validator");
 const logger = require("./logger");
 const config = require("./config");
+const csurf = require("csurf");
 
 class ExpressServer {
   constructor(port, openApiYaml) {
@@ -32,6 +33,13 @@ class ExpressServer {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(cookieParser());
+    // Uncomment for logging
+    // this.app.use((req, res, next) => {
+    //   console.log(req.method);
+    //   console.log(req.cookies);
+    //   console.log(req.headers);
+    //   next();
+    // });
     //Simple test to see that the server is up and responding
     this.app.get("/hello", (req, res) =>
       res.send(`Hello World. path: ${this.openApiPath}`)
@@ -42,14 +50,7 @@ class ExpressServer {
     );
     //View the openapi document in a visual interface. Should be able to test from this page
     this.app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(this.schema));
-    this.app.get("/login-redirect", (req, res) => {
-      res.status(200);
-      res.json(req.query);
-    });
-    this.app.get("/oauth2-redirect.html", (req, res) => {
-      res.status(200);
-      res.json(req.query);
-    });
+    this.app.use(csurf({ cookie: true }));
   }
 
   launch() {
