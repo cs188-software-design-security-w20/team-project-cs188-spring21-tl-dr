@@ -99,6 +99,17 @@ paths:
         default:
           $ref: '#/components/responses/Error'
       security: []
+  /csrf-token:
+    get:
+      tags:
+      - auth
+      summary: Get anti-CSRF token. Use on app startup.
+      responses:
+        '200':
+          description: Set anti-CSRF cookie.
+        default:
+          $ref: '#/components/responses/Error'
+      security: []
   /summarize:
     post:
       tags:

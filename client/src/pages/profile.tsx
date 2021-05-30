@@ -138,7 +138,7 @@ class Profile extends React.Component<
         };
       }),
     });
-    console.log(res);
+    // console.log(res);
     return res;
   };
   componentDidMount() {

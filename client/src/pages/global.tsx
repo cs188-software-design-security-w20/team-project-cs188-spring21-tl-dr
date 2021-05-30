@@ -40,11 +40,11 @@ class Global extends React.Component<
   getUserSummaries = async () => {
     const userSummaryEndpoint = `${SERVER_URL}/feed`;
     const res = await axios.get(userSummaryEndpoint, { withCredentials: true });
-    console.log(res);
+    // console.log(res);
     this.setState({
       summaries: res.data.map((s) => {
         let created = date.parse(s.summary.createdAt, "YYYY-MM-DD[T]hh:mm...");
-        console.log(s.summary.createdAt);
+        // console.log(s.summary.createdAt);
         return {
           plaintext: s.summary.plaintext,
           summarizedText: s.summary.summarizedText,
